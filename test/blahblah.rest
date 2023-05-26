@@ -1,0 +1,13 @@
+GET  http://localhost:5000/goals/diary
+
+###
+GET  http://localhost:5000/goals/diary/64712b15164016e78c99d0a8
+
+###
+POST  http://localhost:5000/goals/diary
+Content-Type: application/json
+
+{
+    "title":"This is title 2",
+    "body":"This is fucking body 2"
+}

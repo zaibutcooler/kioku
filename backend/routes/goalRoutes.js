@@ -23,11 +23,11 @@ router.put("/notes/:id", noteController.updateNote);
 router.delete("/notes/:id", noteController.deleteNote);
 
 // Routes for diaries
-router.get("/diaries", diaryController.getAllDiaries);
-router.get("/diaries/:id", diaryController.getDiaryById);
-router.post("/diaries", diaryController.createDiary);
-router.put("/diaries/:id", diaryController.updateDiary);
-router.delete("/diaries/:id", diaryController.deleteDiary);
+router.get("/diary", diaryController.getAllDiaries);
+router.get("/diary/:id", diaryController.getDiaryById);
+router.post("/diary", diaryController.createDiary);
+router.put("/diary/:id", diaryController.updateDiary);
+router.delete("/diary/:id", diaryController.deleteDiary);
 
 // Routes for summaries
 router.get("/summaries", summaryController.getAllSummaries);

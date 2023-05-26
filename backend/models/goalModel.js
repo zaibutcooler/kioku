@@ -20,13 +20,13 @@ const noteSchema = mongoose.Schema({
 
 const Note = mongoose.model("Note", noteSchema);
 
-const diarySchema = mongoose.Schema({
-  title: { type: String },
-  body: { type: String },
-  created: { type: Date, default: Date.now },
-});
+// const diarySchema = mongoose.Schema({
+//   title: { type: String },
+//   body: { type: String },
+//   created: { type: Date, default: Date.now },
+// });
 
-const Diary = mongoose.model("Diary", diarySchema);
+// const Diary = mongoose.model("Diary", diarySchema);
 
 const summarySchema = mongoose.Schema({
   title: { type: String },
@@ -49,7 +49,6 @@ const History = mongoose.model("History", historySchema); // Update model name t
 module.exports = {
   Goal,
   Note,
-  Diary,
   Summary,
   History,
 };
