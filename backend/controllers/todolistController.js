@@ -24,11 +24,12 @@ const getOneTodo = async (req, res) => {
 };
 
 const createTodo = async (req, res) => {
+  const { title, description, created } = req.body;
+
   try {
-    const { title, description, created } = req.body;
     const item = new Todo({ title, description, created });
-    await item.save();
-    res.status(200).json(item);
+    const savedItem = await item.save();
+    res.status(200).json(savedItem);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });

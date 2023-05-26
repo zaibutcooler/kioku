@@ -1,4 +1,4 @@
-const History = require("../../models/historyModel");
+const History = require("../../models/goalModel");
 
 // Controller methods for histories
 const getAllHistories = async (req, res) => {

@@ -1,4 +1,4 @@
-const Diary = require("../../models/diaryModel");
+const Diary = require("../../models/goalModel");
 
 // Controller methods for diaries
 const getAllDiaries = async (req, res) => {

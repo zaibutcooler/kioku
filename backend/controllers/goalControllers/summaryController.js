@@ -1,4 +1,4 @@
-const Summary = require("../../models/summaryModel");
+const Summary = require("../../models/goalModel");
 
 // Controller methods for summaries
 const getAllSummaries = async (req, res) => {

@@ -1,0 +1,11 @@
+POST http://localhost:5000/todolist/create
+Content-Type: application/json
+
+{
+    "title": "Do Eveything",
+    "description": "Doing Nothing"
+}
+
+###
+DELETE  http://localhost:5000/todolist/6470f8a8394250fcd9a23dfa
+

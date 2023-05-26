@@ -2,6 +2,9 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 
+const bodyParser = require("body-parser");
+app.use(bodyParser.json());
+
 const uri = "mongodb://127.0.0.1:27017/todolist";
 
 mongoose
@@ -14,16 +17,16 @@ mongoose
   });
 
 const goalRoutes = require("./routes/goalRoutes");
-app.use("goals/", goalRoutes);
+app.use("/goals", goalRoutes);
 
 const timeTableRoutes = require("./routes/timeTableRoutes");
-app.use("timetable/", timeTableRoutes);
+app.use("/timetable", timeTableRoutes);
 
 const todolistRoutes = require("./routes/todolistRoutes");
-app.use("todolist/", todolistRoutes);
+app.use("/todolist", todolistRoutes);
 
-const authRoutes = require("./routes/authRoutes");
-app.use("auth/", authRoutes);
+// const authRoutes = require("./routes/authRoutes");
+// app.use("auth/", authRoutes);
 
 app.listen(5000, () => {
   console.log("Listening without error at port 5000");

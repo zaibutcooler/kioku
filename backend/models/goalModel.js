@@ -35,7 +35,7 @@ const summarySchema = mongoose.Schema({
   created: { type: Date, default: Date.now },
 });
 
-const Summary = mongoose.model("Diary", summarySchema);
+const Summary = mongoose.model("Summary", summarySchema); // Update model name to "Summary"
 
 const historySchema = mongoose.Schema({
   title: { type: String },
@@ -44,7 +44,7 @@ const historySchema = mongoose.Schema({
   created: { type: Date, default: Date.now },
 });
 
-const History = mongoose.model("Diary", historySchema);
+const History = mongoose.model("History", historySchema); // Update model name to "History"
 
 module.exports = {
   Goal,

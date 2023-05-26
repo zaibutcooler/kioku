@@ -1,10 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const goalController = require("../controllers/goalController/goalController");
-const noteController = require("../controllers/goalController/noteController");
-const diaryController = require("../controllers/goalController/diaryController");
-const summaryController = require("../controllers/goalController/summaryController");
-const historyController = require("../controllers/goalController/historyController");
+const goalController = require("../controllers/goalControllers/goalController");
+const noteController = require("../controllers/goalControllers/noteController");
+const diaryController = require("../controllers/goalControllers/diaryController");
+const summaryController = require("../controllers/goalControllers/summaryController");
+const historyController = require("../controllers/goalControllers/historyController");
+
+router.use(express.json());
 
 // Routes for goals
 router.get("/goals", goalController.getAllGoals);
