@@ -52,7 +52,6 @@ const updateDiary = async (req, res) => {
 };
 
 const deleteDiary = async (req, res) => {
-  const { title, body } = req.body;
   try {
     diary = Diary.findByIdAndDelete(req.params.id);
     if (!diary) {

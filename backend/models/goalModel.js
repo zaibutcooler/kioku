@@ -11,15 +11,6 @@ const goalSchema = mongoose.Schema({
 
 const Goal = mongoose.model("Goal", goalSchema);
 
-const noteSchema = mongoose.Schema({
-  title: { type: String, required: true },
-  note: { type: String },
-  created: { type: Date, default: Date.now },
-  keyword: { type: String },
-});
-
-const Note = mongoose.model("Note", noteSchema);
-
 // const diarySchema = mongoose.Schema({
 //   title: { type: String },
 //   body: { type: String },
@@ -48,7 +39,6 @@ const History = mongoose.model("History", historySchema); // Update model name t
 
 module.exports = {
   Goal,
-  Note,
   Summary,
   History,
 };
