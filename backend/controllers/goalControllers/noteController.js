@@ -1,4 +1,3 @@
-const Diary = require("../../models/goalModels/diaryModel");
 const Note = require("../../models/goalModels/notesModel");
 
 // Controller methods for notes
@@ -28,8 +27,8 @@ const createNote = async (req, res) => {
   const { title, note, keyword } = req.body;
 
   try {
-    const newNote = new Diary({ title, note, keyword });
-    res.status(200).json(newNote);
+    const item = new Diary({ title, note, keyword });
+    res.status(200).json(item);
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
   }

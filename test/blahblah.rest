@@ -1,13 +1,14 @@
-GET  http://localhost:5000/goals/diary
+GET  http://localhost:5000/goals/notes
 
 ###
 GET  http://localhost:5000/goals/diary/64712b15164016e78c99d0a8
 
 ###
-POST  http://localhost:5000/goals/diary
+POST  http://localhost:5000/goals/notes
 Content-Type: application/json
 
 {
     "title":"This is title 2",
-    "body":"This is fucking body 2"
+    "notes":"This is fucking body 2",
+    "keyword":"abc"
 }
