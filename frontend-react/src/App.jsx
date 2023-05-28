@@ -4,10 +4,14 @@ import Home from "./pages/Home";
 import GoalApp from "./pages/GoalApp";
 import Todolist from "./pages/Todolist";
 import Timetable from "./pages/Timetable";
+
 import Calendar from "./components/Calendar";
-import DigitalClock from "./components/DigitalClock"; // Add this line
+import DigitalClock from "./components/DigitalClock";
 
 import { Router, Routes, Route } from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
+import LogoutPage from "./pages/LogoutPage";
+import RegisterPage from "./pages/RegisterPage";
 
 function App() {
   return (
@@ -22,10 +26,15 @@ function App() {
               <Route path="/todolist" element={<Todolist />} />
               <Route path="/timetable" element={<Timetable />} />
               <Route path="/calendar" element={<Calendar />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/logout" element={<LogoutPage />} />
+              <Route path="/register" element={<RegisterPage />} />
             </Routes>
           </div>
           <div className="flex-none">
-            <DigitalClock />
+            <div className="pt-4">
+              <DigitalClock />
+            </div>
 
             <MiniCalendar />
           </div>
