@@ -28,24 +28,25 @@ const createDiary = async (req, res) => {
 
   try {
     const newDiary = new Diary({ title, body });
+    newDiary.save();
+
     res.status(200).json(newDiary);
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
-
 const updateDiary = async (req, res) => {
   const { title, body } = req.body;
   try {
-    diary = Diary.findByIdAndUpdate(
+    const updatedDiary = await Diary.findByIdAndUpdate(
       req.params.id,
       { title, body },
       { new: true }
     );
-    if (!diary) {
-      res.staus(404).json({ message: "Not found" });
+    if (!updatedDiary) {
+      return res.status(404).json({ message: "Not found" });
     }
-    res.status(200).json(diary);
+    res.status(200).json(updatedDiary);
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
   }
@@ -53,11 +54,11 @@ const updateDiary = async (req, res) => {
 
 const deleteDiary = async (req, res) => {
   try {
-    diary = Diary.findByIdAndDelete(req.params.id);
-    if (!diary) {
-      res.staus(404).json({ message: "Not found" });
+    const deletedDiary = await Diary.findByIdAndDelete(req.params.id);
+    if (!deletedDiary) {
+      return res.status(404).json({ message: "Not found" });
     }
-    res.status(200).json(diary);
+    res.status(200).json(deletedDiary);
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
   }

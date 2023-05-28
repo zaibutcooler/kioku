@@ -27,7 +27,8 @@ const createNote = async (req, res) => {
   const { title, note, keyword } = req.body;
 
   try {
-    const item = new Diary({ title, note, keyword });
+    const item = new Note({ title, note, keyword });
+    item.save();
     res.status(200).json(item);
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
@@ -38,7 +39,7 @@ const updateNote = async (req, res) => {
   const { title, note, keyword } = req.body;
 
   try {
-    const item = Diary.findByIdAndUpdate(
+    const updatedItem = await Note.findByIdAndUpdate(
       req.params.id,
       {
         title,
@@ -47,7 +48,10 @@ const updateNote = async (req, res) => {
       },
       { new: true }
     );
-    res.status(200).json(item);
+    if (!updatedItem) {
+      return res.status(404).json({ message: "Not found" });
+    }
+    res.status(200).json(updatedItem);
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
   }
@@ -55,11 +59,11 @@ const updateNote = async (req, res) => {
 
 const deleteNote = async (req, res) => {
   try {
-    item = Note.findByIdAndDelete(req.params.id);
-    if (!item) {
-      res.staus(404).json({ message: "Not found" });
+    const deletedItem = await Note.findByIdAndDelete(req.params.id);
+    if (!deletedItem) {
+      return res.status(404).json({ message: "Not found" });
     }
-    res.status(200).json(item);
+    res.status(200).json(deletedItem);
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
   }

@@ -27,8 +27,9 @@ const createSummary = async (req, res) => {
   const { title, body, item } = req.body;
 
   try {
-    const item = new Summary({ title, body, item });
-    res.status(200).json(item);
+    const it = new Summary({ title, body, item });
+    it.save();
+    res.status(200).json(it);
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
   }
@@ -38,7 +39,7 @@ const updateSummary = async (req, res) => {
   const { title, body, item } = req.body;
 
   try {
-    const item = Summary.findByIdAndUpdate(
+    const updatedItem = await Summary.findByIdAndUpdate(
       req.params.id,
       {
         title,
@@ -47,7 +48,10 @@ const updateSummary = async (req, res) => {
       },
       { new: true }
     );
-    res.status(200).json(item);
+    if (!updatedItem) {
+      return res.status(404).json({ message: "Not found" });
+    }
+    res.status(200).json(updatedItem);
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
   }
@@ -55,11 +59,11 @@ const updateSummary = async (req, res) => {
 
 const deleteSummary = async (req, res) => {
   try {
-    item = Summary.findByIdAndDelete(req.params.id);
-    if (!item) {
-      res.staus(404).json({ message: "Not found" });
+    const deletedItem = await Summary.findByIdAndDelete(req.params.id);
+    if (!deletedItem) {
+      return res.status(404).json({ message: "Not found" });
     }
-    res.status(200).json(item);
+    res.status(200).json(deletedItem);
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
   }

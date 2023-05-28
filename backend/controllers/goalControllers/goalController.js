@@ -15,7 +15,7 @@ const getGoalById = async (req, res) => {
   try {
     const item = await Goal.findById(req.params.id);
     if (!item) {
-      res.staus(404).json({ message: "Not found" });
+      res.status(404).json({ message: "Not found" }); // Fix: Corrected 'staus' to 'status'
     }
     res.status(200).json(item);
   } catch (error) {
@@ -28,6 +28,7 @@ const createGoal = async (req, res) => {
 
   try {
     const item = new Goal({ title, note, deadline, isCompleted, risks });
+    await item.save(); // Fix: Added 'await' to ensure the item is saved before responding
     res.status(200).json(item);
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
@@ -38,7 +39,7 @@ const updateGoal = async (req, res) => {
   const { title, note, deadline, isCompleted, risks } = req.body;
 
   try {
-    const item = Goal.findByIdAndUpdate(
+    const item = await Goal.findByIdAndUpdate(
       req.params.id,
       {
         title,
@@ -57,9 +58,9 @@ const updateGoal = async (req, res) => {
 
 const deleteGoal = async (req, res) => {
   try {
-    item = Goal.findByIdAndDelete(req.params.id);
+    const item = await Goal.findByIdAndDelete(req.params.id); // Fix: Declare 'item' using 'const'
     if (!item) {
-      res.staus(404).json({ message: "Not found" });
+      res.status(404).json({ message: "Not found" });
     }
     res.status(200).json(item);
   } catch (error) {

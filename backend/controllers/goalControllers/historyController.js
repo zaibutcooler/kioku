@@ -15,7 +15,7 @@ const getHistoryById = async (req, res) => {
   try {
     const item = await History.findById(req.params.id);
     if (!item) {
-      res.staus(404).json({ message: "Not found" });
+      res.status(404).json({ message: "Not found" });
     }
     res.status(200).json(item);
   } catch (error) {
@@ -28,6 +28,7 @@ const createHistory = async (req, res) => {
 
   try {
     const item = new History({ title, win, why });
+    await item.save(); // Fix: Added 'await' to ensure the item is saved before responding
     res.status(200).json(item);
   } catch (error) {
     res.status(500).json({ message: "Internal Server Error" });
@@ -38,7 +39,7 @@ const updateHistory = async (req, res) => {
   const { title, win, why } = req.body;
 
   try {
-    const item = History.findByIdAndUpdate(
+    const item = await History.findByIdAndUpdate(
       req.params.id,
       {
         title,
@@ -55,9 +56,9 @@ const updateHistory = async (req, res) => {
 
 const deleteHistory = async (req, res) => {
   try {
-    item = History.findByIdAndDelete(req.params.id);
+    const item = await History.findByIdAndDelete(req.params.id); // Fix: Declare 'item' using 'const'
     if (!item) {
-      res.staus(404).json({ message: "Not found" });
+      res.status(404).json({ message: "Not found" });
     }
     res.status(200).json(item);
   } catch (error) {

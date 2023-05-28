@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
+import Todo from "../components/Todo";
 
-const Todolist = () => {
-  return <div>Todolist</div>;
-};
+function TodoList() {
+  return (
+    <>
+      <Todo />
+    </>
+  );
+}
 
-export default Todolist;
+export default TodoList;
