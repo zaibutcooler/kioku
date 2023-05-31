@@ -21,13 +21,19 @@ function Navbar() {
                   <Link
                     to="/goals"
                     className="text-blue-950 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">
-                    Goals
+                    Reflect
+                  </Link>
+                  <Link
+                    to="/memories"
+                    className="text-blue-950 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">
+                    Sub-Memory
                   </Link>
                   <Link
                     to="/todolist"
                     className="text-blue-950 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">
-                    Todo List
+                    TodoList
                   </Link>
+
                   <Link
                     to="/timetable"
                     className="text-blue-950 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium">
