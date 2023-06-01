@@ -5,6 +5,9 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 
+const cors = require("cors");
+app.use(cors());
+
 const uri = "mongodb://127.0.0.1:27017/todolist";
 
 mongoose

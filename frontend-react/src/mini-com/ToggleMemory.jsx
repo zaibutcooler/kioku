@@ -22,14 +22,14 @@ const ToggleMemory = ({ selectedButton }) => {
           activeButton === 2 ? "bg-gray-300" : "bg-gray-200"
         } text-sm text-black font-semibold w-auto`}
         onClick={() => handleButtonClick(2)}>
-        Summary
+        Diary
       </button>
       <button
         className={`px-10 py-2 w-48 rounded-r-full ${
           activeButton === 3 ? "bg-gray-300" : "bg-gray-200"
         } text-sm text-black font-semibold w-auto`}
         onClick={() => handleButtonClick(3)}>
-        Diary
+        Summary
       </button>
       {/* <button
         className={`px-10 py-2 rounded-r-full ${

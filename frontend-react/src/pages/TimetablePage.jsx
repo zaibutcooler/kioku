@@ -1,8 +1,19 @@
 import React from "react";
+import { useState,useEffect } from "react";
 
 const Timetable = () => {
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const hours = Array.from({ length: 16 }, (_, index) => ` ${index + 1}`);
+
+  const [datas, setDatas] = useState();
+  useEffect(() => {
+    fetch("http://localhost:5000/timetable/")
+      .then((res) => res.json())
+      .then((data) => setDatas(data))
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <div className="container mx-auto p-4" style={{ width: "75%" }}>

@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Todo from "../components/Todo";
 import axios from "axios";
+import fetchData from "../hooks/fetchData";
 
 function TodoList() {
   const [datas, setDatas] = useState();
   useEffect(() => {
-    // axios
-    //   .get("http://localhost:5000/todolist/")
-    //   .then((res) => setDatas(res.data))
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-
     fetch("http://localhost:5000/todolist/")
-      .then((res) => res.json)
-      .then((data) => setDatas(data));
+      .then((res) => res.json())
+      .then((data) => setDatas(data))
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return (
