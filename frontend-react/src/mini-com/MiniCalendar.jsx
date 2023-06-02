@@ -1,14 +1,28 @@
 import React from "react";
 
 const MiniCalendar = () => {
-  // Generate calendar data (dummy data for demonstration)
-  const calendarData = [
-    [1, 2, 3, 4, 5, 6, 7],
-    [8, 9, 10, 11, 12, 13, 14],
-    [15, 16, 17, 18, 19, 20, 21],
-    [22, 23, 24, 25, 26, 27, 28],
-    [29, 30, 31, "", "", "", ""],
-  ];
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth();
+  const currentYear = currentDate.getFullYear();
+
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+  const firstDayOfWeek = new Date(currentYear, currentMonth, 1).getDay();
+
+  const calendarData = [];
+  let dayCounter = 1;
+
+  for (let i = 0; i < 5; i++) {
+    const week = [];
+    for (let j = 0; j < 7; j++) {
+      if ((i === 0 && j < firstDayOfWeek) || dayCounter > daysInMonth) {
+        week.push("");
+      } else {
+        week.push(dayCounter);
+        dayCounter++;
+      }
+    }
+    calendarData.push(week);
+  }
 
   return (
     <div className="container mx-auto p-4">
@@ -16,7 +30,7 @@ const MiniCalendar = () => {
         <div className="bg-white shadow rounded-lg overflow-hidden">
           <table className="w-full">
             <thead>
-              <tr className="bg-gray-200 text-gray-800">
+              <tr className="bg-gray-300 text-gray-800">
                 <th className="py-1 text-xs px-1">Sun</th>
                 <th className="py-1 text-xs px-1">Mon</th>
                 <th className="py-1 text-xs px-1">Tue</th>
@@ -32,7 +46,7 @@ const MiniCalendar = () => {
                   {week.map((day, index) => (
                     <td
                       key={index}
-                      className={`py-1 text-center text-xs ${
+                      className={`py-1 text-center text-xs border ${
                         day ? "bg-white" : "bg-gray-200"
                       }`}>
                       {day}
