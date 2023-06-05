@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function Navbar() {
-  const isAuthenticated = true;
+  const isAuthenticated = false;
   return (
     <nav className="bg-white border-blue-950">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -54,9 +54,10 @@ function Navbar() {
                   <>
                     <Link
                       to="/login"
-                      className="flex items-center justify-center w-24 border border-black bg-white text-black hover:bg-gray-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                      className="flex items-center justify-center mx-4 w-24 border border-black bg-black text-white hover:bg-gray-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                       Login
                     </Link>
+
                     <Link
                       to="/register"
                       className="flex items-center justify-center w-24 border border-black bg-white text-black hover:bg-gray-800 hover:text-white px-3 py-2 rounded-md text-sm font-medium">

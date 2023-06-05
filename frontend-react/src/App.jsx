@@ -5,6 +5,7 @@ import GoalApp from "./pages/GoalPage";
 import Todolist from "./pages/TodolistPage";
 import Timetable from "./pages/TimetablePage";
 import MemoryPage from "./pages/MemoryPage";
+import HistoryPage from "./pages/HistoryPage";
 
 import DigitalClock from "./mini-com/DigitalClock";
 
@@ -30,6 +31,7 @@ function App() {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/logout" element={<LogoutPage />} />
               <Route path="/register" element={<RegisterPage />} />
+              <Route path="/history" element={<HistoryPage />} />
             </Routes>
           </div>
           <div className="flex-none">

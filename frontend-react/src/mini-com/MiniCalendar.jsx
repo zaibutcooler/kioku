@@ -49,7 +49,7 @@ const MiniCalendar = () => {
                       className={`py-1 text-center text-xs border ${
                         day ? "bg-white" : "bg-gray-200"
                       }`}>
-                      {day}
+                      <a href="/history">{day}</a>
                     </td>
                   ))}
                 </tr>

@@ -15,6 +15,10 @@ const Diary = () => {
   return (
     <div>
       {datas && datas.map((data) => <div key={data._id}>{data.title}</div>)}
+      <div className="flex justify-center">
+        <div className="w-1/2 bg-blue-400">Xi</div>
+        <div className="w-1/2 bg-slate-400">Xi</div>
+      </div>
     </div>
   );
 };
