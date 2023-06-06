@@ -2,7 +2,9 @@ import Navbar from "./components/Navbar";
 import MiniCalendar from "./mini-com/MiniCalendar";
 import Home from "./pages/HomePage";
 import GoalApp from "./pages/GoalPage";
-import Todolist from "./pages/TodolistPage";
+import TodolistPage from "./pages/TodolistPage";
+import CreateTodoPage from "./pages/CreateTodoPage";
+
 import Timetable from "./pages/TimetablePage";
 import MemoryPage from "./pages/MemoryPage";
 import HistoryPage from "./pages/HistoryPage";
@@ -24,8 +26,11 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/goals" element={<GoalApp />} />
-              <Route path="/todolist" element={<Todolist />} />
+              <Route path="/todolist" element={<TodolistPage />} />
+              <Route path="/create-todo" element={<CreateTodoPage />} />
+
               <Route path="/timetable" element={<Timetable />} />
+
               <Route path="/memories" element={<MemoryPage />} />
 
               <Route path="/login" element={<LoginPage />} />
