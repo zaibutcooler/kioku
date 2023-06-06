@@ -24,10 +24,10 @@ const getOneTodo = async (req, res) => {
 };
 
 const createTodo = async (req, res) => {
-  const { title, description, created } = req.body;
+  const { title, description, dueDate, created } = req.body;
 
   try {
-    const item = new Todo({ title, description, created });
+    const item = new Todo({ title, description, dueDate, created });
     const savedItem = await item.save();
     res.status(200).json(savedItem);
   } catch (error) {
@@ -38,10 +38,10 @@ const createTodo = async (req, res) => {
 
 const updateTodo = async (req, res) => {
   try {
-    const { title, description, completed } = req.body;
+    const { title, description, dueDate, completed } = req.body;
     const item = await Todo.findByIdAndUpdate(
       req.params.id,
-      { title, description, completed },
+      { title, description, dueDate, completed },
       { new: true }
     );
     if (!item) {

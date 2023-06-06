@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Todo from "../components/Todo";
+import TaskCard from "../mini-com/TaskCard";
+import SearchCard from "../mini-com/SearchCard";
+import CompletedTaskCard from "../mini-com/CompletedTaskCard";
 import axios from "axios";
 import fetchData from "../hooks/fetchData";
 
-function TodoList() {
-  const [datas, setDatas] = useState();
+function TodolistPage() {
+  const [datas, setDatas] = useState([]);
   useEffect(() => {
     fetch("http://localhost:5000/todolist/")
       .then((res) => res.json())
@@ -15,17 +18,21 @@ function TodoList() {
   }, []);
 
   return (
-    <>
-      <div>
-        {datas &&
-          datas.map((data) => (
-            <div key={data._id} className="ml-4">
-              {data.title}
-            </div>
-          ))}
+    <div className="flex flex-col md:flex-row px-6">
+      <div className="md:w-2/5 p-4">
+        <Todo />
       </div>
-    </>
+      <div className="md:w-3/5 p-4">
+        <div className="mb-4">
+          <SearchCard />
+        </div>
+        {/* <TaskList tasks={datas} /> */}
+        <TaskCard />
+        <CompletedTaskCard />
+        <TaskCard />
+      </div>
+    </div>
   );
 }
 
-export default TodoList;
+export default TodolistPage;
