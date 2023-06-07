@@ -11,7 +11,7 @@ router.get("/", todoController.getAllTodos);
 router.get("/:id", todoController.getOneTodo);
 
 // CREATE a new todo
-router.post("/create", todoController.createTodo);
+router.post("/", todoController.createTodo);
 
 // UPDATE a todo by ID
 router.put("/:id", todoController.updateTodo);

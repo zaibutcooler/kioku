@@ -1,6 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 
-const Todo = () => {
+const Todo = ({ handleSubmit }) => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [dueDate, setDueDate] = useState("");
+
+  const handleSubmitClick = () => {
+    event.preventDefault();
+    handleSubmit({ title, description, dueDate });
+    console.log("Submitted successfully");
+    setTitle("");
+    setDescription("");
+    setDueDate("");
+  };
+
   return (
     <div className="flex">
       <div className="max-w-md w-full px-8 py-8 bg-white rounded-lg shadow-md">
@@ -15,6 +28,10 @@ const Todo = () => {
             <input
               type="text"
               id="taskName"
+              value={title}
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
               placeholder="Enter task name"
             />
@@ -29,6 +46,10 @@ const Todo = () => {
             <input
               type="date"
               id="dueDate"
+              value={dueDate}
+              onChange={(e) => {
+                setDueDate(e.target.value);
+              }}
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
               placeholder="Select due date"
             />
@@ -41,11 +62,16 @@ const Todo = () => {
             </label>
             <textarea
               id="description"
+              value={description}
+              onChange={(e) => {
+                setDescription(e.target.value);
+              }}
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
               placeholder="Enter task description"></textarea>
           </div>
           <button
             type="submit"
+            onClick={handleSubmitClick}
             className="w-1/2 mx-auto py-2 px-4 bg-white border border-black text-black font-semibold rounded-md hover:bg-black hover:text-white hover:border-transparent">
             Add
           </button>

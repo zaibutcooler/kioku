@@ -8,7 +8,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:5000/goals/summaries
+GET http://localhost:5000/todolist/
 
 # Get a Summary by ID
 GET http://localhost:5000/goals/summaries/64725360f778401d7d6d2dde
@@ -26,5 +26,5 @@ Content-Type: application/json
 # Replace `:id` with the actual ID of the goals/summaries entry you want to update.
 
 ###
-DELETE http://localhost:5000/goals/summaries/64725360f778401d7d6d2dde
+DELETE http://localhost:5000/todolist/6470f97d394250fcd9a23e00
 # Replace `:id` with the actual ID of the summary you want to delete.
