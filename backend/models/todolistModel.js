@@ -4,6 +4,7 @@ const todoSchema = mongoose.Schema({
   description: { type: String },
   dueDate: { type: Date, requried: true },
   completed: { type: Boolean, default: false },
+  completedDate: { type: Date },
   created: { type: Date, default: Date.now },
 });
 

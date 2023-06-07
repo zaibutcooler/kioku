@@ -14,7 +14,7 @@ router.get("/:id", todoController.getOneTodo);
 router.post("/", todoController.createTodo);
 
 // UPDATE a todo by ID
-router.put("/:id", todoController.updateTodo);
+router.patch("/:id", todoController.updateTodo);
 
 // DELETE a todo by ID
 router.delete("/:id", todoController.deleteTodo);
