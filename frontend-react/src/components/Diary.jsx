@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import DiaryForm from "../mini-com/DiaryForm";
 
 const Diary = () => {
   const [datas, setDatas] = useState();
@@ -13,11 +14,24 @@ const Diary = () => {
   }, []);
 
   return (
-    <div>
-      {datas && datas.map((data) => <div key={data._id}>{data.title}</div>)}
-      <div className="flex justify-center">
-        <div className="w-1/2 bg-blue-400">Xi</div>
-        <div className="w-1/2 bg-slate-400">Xi</div>
+    <div className="flex flex-col md:flex-row">
+      <div className="md:w-3/5 p-4">
+        <DiaryForm />
+      </div>
+      <div className="md:w-2/5 p-4">
+        <div className="mb-4">
+          {datas &&
+            datas.map((entry) => (
+              <div
+                key={entry.id}
+                className="flex flex-col mb-2 bg-white rounded-lg shadow-md p-4 cursor-pointer">
+                <h2 className="text-xl font-semibold text-gray-800 hover:text-indigo-500 transition-colors duration-300">
+                  {entry.title}
+                </h2>
+                <p className="text-gray-500">{entry.created}</p>
+              </div>
+            ))}
+        </div>
       </div>
     </div>
   );
