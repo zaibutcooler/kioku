@@ -9,7 +9,7 @@ const CompletedTaskCard = ({ task, handleDelete }) => {
         <button
           className="px-4 py-2 bg-black text-white font-semibold rounded-md hover:bg-gray-700"
           onClick={handleDelete}>
-          Hide
+          Delete
         </button>
       </div>
     </div>
