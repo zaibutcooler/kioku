@@ -1,19 +1,17 @@
 import React, { useState } from "react";
 
-const NoteForm = ({ handleSubmit }) => {
+const SummaryForm = ({ handleSubmit }) => {
   const [title, setTitle] = useState("");
   const [note, setNote] = useState("");
-  const [created, setCreated] = useState("");
-  const [keyword, setKeyword] = useState("");
+  const [item, setItem] = useState("");
 
   const handleSubmitClick = (event) => {
     event.preventDefault();
-    handleSubmit({ title, note, created, keyword });
+    handleSubmit({ title, note, item });
     console.log("Submitted successfully");
     setTitle("");
     setNote("");
-    setCreated("");
-    setKeyword("");
+    setItem("");
   };
 
   return (
@@ -26,13 +24,24 @@ const NoteForm = ({ handleSubmit }) => {
           Write
         </button>
         <div className="mb-4">
+          <select
+            id="item"
+            value={item}
+            onChange={(e) => setItem(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500">
+            <option value="">Select Topic</option>
+            <option value="books">Books</option>
+            <option value="course">Course</option>
+            <option value="meeting">Meeting</option>
+            <option value="article">Article</option>
+          </select>
+        </div>
+        <div className="mb-4">
           <input
             type="text"
             id="title"
             value={title}
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
+            onChange={(e) => setTitle(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
             placeholder="Title"
           />
@@ -41,27 +50,13 @@ const NoteForm = ({ handleSubmit }) => {
           <textarea
             id="note"
             value={note}
-            onChange={(e) => {
-              setNote(e.target.value);
-            }}
+            onChange={(e) => setNote(e.target.value)}
             className="w-full h-80 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
-            placeholder="Note"></textarea>
-        </div>
-        <div className="mb-4">
-          <input
-            type="text"
-            id="keyword"
-            value={keyword}
-            onChange={(e) => {
-              setKeyword(e.target.value);
-            }}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
-            placeholder="Keyword"
-          />
+            placeholder="Body"></textarea>
         </div>
       </form>
     </div>
   );
 };
 
-export default NoteForm;
+export default SummaryForm;

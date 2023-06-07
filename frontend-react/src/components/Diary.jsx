@@ -13,6 +13,12 @@ const Diary = () => {
       });
   }, []);
 
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    const date = new Date(dateString);
+    return date.toLocaleDateString(undefined, options);
+  };
+
   return (
     <div className="flex flex-col md:flex-row">
       <div className="md:w-3/5 p-4">
@@ -28,7 +34,7 @@ const Diary = () => {
                 <h2 className="text-xl font-semibold text-gray-800 hover:text-indigo-500 transition-colors duration-300">
                   {entry.title}
                 </h2>
-                <p className="text-gray-500">{entry.created}</p>
+                <p className="text-gray-500">{formatDate(entry.created)}</p>
               </div>
             ))}
         </div>
