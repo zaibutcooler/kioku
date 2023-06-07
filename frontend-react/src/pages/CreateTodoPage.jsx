@@ -9,12 +9,13 @@ function CreateTodoPage() {
   const url = "http://localhost:5000/todolist/";
   const [rawData, setRawData] = useState([]);
   const [datas, setDatas] = useState([]);
+  const [showAll, setShowAll] = useState(false);
   const [toggleFinish, setToggleFinish] = useState([]);
   const [toggleHide, setToggleHide] = useState([]);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [showAll]);
 
   const fetchData = async () => {
     try {
@@ -44,11 +45,20 @@ function CreateTodoPage() {
   };
 
   const filterAndSortData = (data) => {
-    const filterIncomplete = data
-      .filter((item) => !item.completed)
-      .sort((a, b) => b.created.localeCompare(a.created));
-    setDatas(filterIncomplete);
-    setToggleFinish(new Array(filterIncomplete.length).fill(false));
+    if (!showAll) {
+      const filterIncomplete = data
+        .filter((item) => !item.completed)
+        .sort((a, b) => b.created.localeCompare(a.created));
+      setDatas(filterIncomplete);
+      setToggleFinish(new Array(filterIncomplete.length).fill(false));
+    }
+    if (showAll) {
+      const filterIncomplete = data.sort((a, b) =>
+        b.created.localeCompare(a.created)
+      );
+      setDatas(filterIncomplete);
+      setToggleFinish(new Array(filterIncomplete.length).fill(false));
+    }
   };
 
   const handleSubmit = (formData) => {
@@ -78,10 +88,6 @@ function CreateTodoPage() {
   };
 
   const handleFinish = (id, index) => {
-    const updatedToggleFinish = [...toggleFinish];
-    updatedToggleFinish[index] = true;
-    setToggleFinish(updatedToggleFinish);
-
     axios
       .patch(`${url}/${id}`, {
         completed: true,
@@ -89,6 +95,8 @@ function CreateTodoPage() {
       })
       .then((res) => {
         console.log("Task completed successfully");
+        const updatedData = datas.filter((data, i) => i !== index);
+        setDatas(updatedData);
       })
       .catch((err) => {
         console.log(err);
@@ -105,6 +113,7 @@ function CreateTodoPage() {
   return (
     <div className="flex flex-col md:flex-row px-6">
       <div className="md:w-2/5 p-4">
+        <button onClick={() => setShowAll(!showAll)}>Show All</button>
         <Todo handleSubmit={handleSubmit} />
       </div>
       <div className="md:w-3/5 p-4">
@@ -114,11 +123,10 @@ function CreateTodoPage() {
         {datas &&
           datas.map((data, index) => (
             <div key={data._id}>
-              {toggleFinish[index] ? (
+              {data.completed ? (
                 <CompletedTaskCard
                   task={data}
                   handleDelete={() => handleDelete(data._id)}
-                  handleHide={() => handleHide(index)}
                 />
               ) : (
                 <TaskCard
