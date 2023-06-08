@@ -2,14 +2,14 @@ import React, { useState } from "react";
 
 const DiaryForm = ({ handleSubmit }) => {
   const [title, setTitle] = useState("");
-  const [entry, setEntry] = useState("");
+  const [body, setBody] = useState("");
 
   const handleSubmitClick = (event) => {
     event.preventDefault();
-    handleSubmit({ title, entry });
+    handleSubmit({ title, body });
     console.log("Submitted successfully");
     setTitle("");
-    setEntry("");
+    setBody("");
   };
 
   return (
@@ -36,12 +36,12 @@ const DiaryForm = ({ handleSubmit }) => {
         <div className="mb-4">
           <textarea
             id="diaryEntry"
-            value={entry}
+            value={body}
             onChange={(e) => {
-              setEntry(e.target.value);
+              setBody(e.target.value);
             }}
             className="w-full h-80 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
-            placeholder="Write your diary entry here"></textarea>
+            placeholder="Write your diary body here"></textarea>
         </div>
       </form>
     </div>
