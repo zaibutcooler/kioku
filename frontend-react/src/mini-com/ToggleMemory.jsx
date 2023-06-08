@@ -9,7 +9,7 @@ const ToggleMemory = ({ selectedButton }) => {
   };
 
   return (
-    <div className="flex my-4 justify-center">
+    <div className="flex mt-4 justify-center">
       <button
         className={`px-10 py-2 w-48 rounded-l-full ${
           activeButton === 1 ? "bg-gray-300" : "bg-gray-200"
