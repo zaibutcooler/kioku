@@ -3,16 +3,14 @@ import React, { useState } from "react";
 const NoteForm = ({ handleSubmit }) => {
   const [title, setTitle] = useState("");
   const [note, setNote] = useState("");
-  const [created, setCreated] = useState("");
   const [keyword, setKeyword] = useState("");
 
   const handleSubmitClick = (event) => {
     event.preventDefault();
-    handleSubmit({ title, note, created, keyword });
+    handleSubmit({ title, note, keyword });
     console.log("Submitted successfully");
     setTitle("");
     setNote("");
-    setCreated("");
     setKeyword("");
   };
 

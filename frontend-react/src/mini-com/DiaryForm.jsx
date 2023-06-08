@@ -13,7 +13,7 @@ const DiaryForm = ({ handleSubmit }) => {
   };
 
   return (
-    <div className="w-full px-8 py-8 bg-white rounded-lg shadow-md">
+    <div className="w-full px-8 py-8 bg-white rounded-md shadow-md">
       <form className="flex flex-col">
         <button
           type="submit"
