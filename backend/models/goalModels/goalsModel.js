@@ -5,6 +5,7 @@ const goalSchema = mongoose.Schema({
   note: { type: String },
   created: { type: Date, default: Date.now },
   isCompleted: { type: Boolean, default: false },
+  completedDate: { type: Date },
   deadline: { type: Date, required: true },
   risks: [{ type: String }],
 });

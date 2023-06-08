@@ -12,7 +12,10 @@ const Goal = () => {
     axios
       .get(url)
       .then((res) => {
-        setDatas(res.data.sort((a, b) => b.created.localeCompare(a.created)));
+        const filteredData = res.data.filter((item) => !item.isCompleted);
+        setDatas(
+          filteredData.sort((a, b) => b.created.localeCompare(a.created))
+        );
       })
       .catch((err) => console.log(err));
   }, []);
@@ -30,6 +33,24 @@ const Goal = () => {
       });
   };
 
+  const handleSucceed = (toSend, id) => {
+    axios
+      .patch(`${url}/${id}`, toSend)
+      .then((res) => console.log("Updated"))
+      .catch((err) => console.log(err));
+    const updatedData = datas.filter((data) => data._id !== id);
+    setDatas(updatedData);
+  };
+
+  const handleDelete = (id) => {
+    axios
+      .delete(`${url}/${id}`)
+      .then((res) => console.log("Deleted"))
+      .catch((err) => console.log(err));
+    const updatedData = datas.filter((data) => data._id !== id);
+    setDatas(updatedData);
+  };
+
   return (
     <div className="flex">
       <div className="w-2/5 p-2">
@@ -38,7 +59,11 @@ const Goal = () => {
       <div className="w-3/5 p-2">
         {datas.map((entry) => (
           <div key={entry.id}>
-            <GoalCard goal={entry} />
+            <GoalCard
+              goal={entry}
+              handleSucceed={handleSucceed}
+              handleDelete={() => handleDelete(entry._id)}
+            />
           </div>
         ))}
       </div>

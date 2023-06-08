@@ -1,42 +1,41 @@
 import React from "react";
 
-const GoalCard = ({ goal, handleEdit, handleDelete, handleSucceed }) => {
+const SummaryDetailCard = ({ note, handleEdit, handleDelete, handleBack }) => {
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     const date = new Date(dateString);
     return date.toLocaleDateString(undefined, options);
   };
-  const handleSucceedClick = () => {
-    const toSend = { isCompleted: true, completedDate: Date.now() };
-    handleSucceed(toSend, goal._id);
-    console.log("Done Done");
-  };
 
   return (
     <div className="p-6 mb-4 bg-white rounded-lg shadow-md">
-      <h3 className="text-2xl font-semibold mb-6">{goal.title}</h3>
-      <p className="text-black text-lg mb-4">{formatDate(goal.deadline)}</p>
+      <button
+        className="mb-6 text-black text-lg font-semibold hover:text-gray-700"
+        onClick={handleBack}>
+        Back
+      </button>
+      <h3 className="text-2xl font-semibold mb-6">{note.title}</h3>
 
-      <p className="text-gray-600">{goal.note}</p>
-      <p className="text-gray-600 mt-2 mb-4">Risks: {goal.risks.join(", ")}</p>
+      <p className="text-gray-900">{note.note}</p>
+      <p className="text-gray-400 mt-2 mb-4">Keywords :{note.keywords}</p>
       <hr></hr>
       <div className="flex items-center mt-4">
         <button
           className="px-4 py-2 bg-black border border-black text-white font-semibold rounded-md hover:bg-gray-200 hover:text-black mr-2"
-          onClick={handleSucceedClick}>
-          Succeed
+          onClick={() => {}}>
+          Edit
         </button>
         <button
           className="px-4 py-2 bg-white border border-black text-black font-semibold rounded-md hover:bg-black hover:text-white hover:border-transparent"
           onClick={handleDelete}>
-          Give Up
+          Delete
         </button>
         <span className="text-gray-500 text-sm ml-auto">
-          created-at :{formatDate(goal.created)}
+          created-at :{formatDate(note.created)}
         </span>
       </div>
     </div>
   );
 };
 
-export default GoalCard;
+export default SummaryDetailCard;
