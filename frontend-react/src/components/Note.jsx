@@ -64,8 +64,7 @@ const Note = () => {
 
   const renderDetailCard = () => {
     const detailData = datas.find((item) => item._id === detailId);
-    console.log(detailData);
-
+    
     return (
       <div className="md:w-3/5 p-4">
         <div className="mb-4">

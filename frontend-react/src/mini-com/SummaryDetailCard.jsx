@@ -1,6 +1,11 @@
 import React from "react";
 
-const SummaryDetailCard = ({ note, handleEdit, handleDelete, handleBack }) => {
+const SummaryDetailCard = ({
+  summary,
+  handleEdit,
+  handleDelete,
+  handleBack,
+}) => {
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     const date = new Date(dateString);
@@ -14,10 +19,10 @@ const SummaryDetailCard = ({ note, handleEdit, handleDelete, handleBack }) => {
         onClick={handleBack}>
         Back
       </button>
-      <h3 className="text-2xl font-semibold mb-6">{note.title}</h3>
+      <h3 className="text-2xl font-semibold mb-6">{summary.title}</h3>
 
-      <p className="text-gray-900">{note.note}</p>
-      <p className="text-gray-400 mt-2 mb-4">Keywords :{note.keywords}</p>
+      <p className="text-gray-900">{summary.body}</p>
+      <p className="text-gray-400 mt-2 mb-4">Topic :{summary.item}</p>
       <hr></hr>
       <div className="flex items-center mt-4">
         <button
@@ -31,7 +36,7 @@ const SummaryDetailCard = ({ note, handleEdit, handleDelete, handleBack }) => {
           Delete
         </button>
         <span className="text-gray-500 text-sm ml-auto">
-          created-at :{formatDate(note.created)}
+          created-at :{formatDate(summary.created)}
         </span>
       </div>
     </div>
