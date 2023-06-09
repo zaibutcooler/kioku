@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
@@ -8,10 +9,14 @@ app.use(bodyParser.json());
 const cors = require("cors");
 app.use(cors());
 
-const uri = "mongodb://127.0.0.1:27017/todolist";
+const uri = process.env.LOCAL_URI;
+const atlas_uri = process.env.ATLAS_URI;
 
 mongoose
-  .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     console.log("Connected to MongoDB");
   })
@@ -28,8 +33,8 @@ app.use("/timetable", timeTableRoutes);
 const todolistRoutes = require("./routes/todolistRoutes");
 app.use("/todolist", todolistRoutes);
 
-// const authRoutes = require("./routes/authRoutes");
-// app.use("auth/", authRoutes);
+const authRoutes = require("./routes/authRoutes");
+app.use("/auth", authRoutes);
 
 app.listen(5000, () => {
   console.log("Listening without error at port 5000");

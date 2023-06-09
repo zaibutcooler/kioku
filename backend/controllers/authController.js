@@ -1,18 +1,21 @@
 const User = require("../models/authModel");
-const bcript = requre("bcriptjs");
+require("dotenv").config();
 
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const secretKey = process.env.SECRET_KEY;
 const register = async (req, res) => {
   try {
-    const { username: password } = req.body;
-    const existingUser = await User.findOne({ username });
-    if (existingUser) {
-      res.status(400).json({ message: "User already taken" });
+    const { username, password, email } = req.body;
+    const alreadyExist = await User.findOne({ $or: [{ username }, { email }] });
+    if (alreadyExist) {
+      return res.status(400).json({ message: "User already exists" });
     }
-    const hashedPassword = bcript.hash(password, 10);
-    const user = new User({ username, password: hashedPassword });
 
-    await user.save();
-    res.status(200).json({ message: "Created new user" });
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({ username, email, password: hashedPassword });
+    await newUser.save();
+    res.status(200).json(newUser);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
@@ -23,15 +26,13 @@ const login = async (req, res) => {
   try {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
-    if (!user) {
-      res.status(400).json({ message: "Invalid Username" });
-    }
-    const isPasswordValid = bcript.compare(password, user.password);
-    if (!sPasswordValid) {
+    if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(401).json({ message: "Invalid username or password" });
     }
-    const token = jwt.sign({ userId: user._id }, "secretKey");
-    res.status(200).json({ token });
+    const token = jwt.sign({ userId: user._id }, secretKey, {
+      expiresIn: "1h",
+    });
+    res.json({ token });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal server error" });
