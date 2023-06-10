@@ -1,11 +1,10 @@
 import React from "react";
-import BackButton from "./BackButton";
 
 const DiaryDetailCard = ({ diary, formatDate, handleBack }) => {
   const bodyLines = diary.body.split("\n");
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center mt-2">
       <div className="w-4/5 bg-white shadow-md rounded-lg p-10">
         <button
           className="mb-4 text-lg font-semibold hover:text-gray-500"

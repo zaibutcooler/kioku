@@ -15,15 +15,12 @@ GET http://localhost:5000/goals/summaries/64725360f778401d7d6d2dde
 # Replace `:id` with the actual ID of the goals/summaries entry you want to retrieve.
 
 ###
-PATCH http://localhost:5000/todolist/647fd41de2b29b53b45d175d
+POST http://localhost:5000/auth/login/
 Content-Type: application/json
 
 {
-  "title": "Dummy Title",
-  "description": "Dummy Description",
-  "dueDate": "2023-06-08T12:00:00Z",
-  "completed": true,
-  "completedDate": "${new Date().toISOString()}"
+    "username":"jack",
+    "password":"abc123"
 }
 
 

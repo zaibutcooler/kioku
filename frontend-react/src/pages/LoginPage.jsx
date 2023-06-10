@@ -1,7 +1,24 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const LoginPage = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = () => {
+    event.preventDefault();
+    axios
+      .post("http://localhost:5000/auth/login/", { username, password })
+      .then((res) => {
+        console.log(res);
+        console.log("Successfully logged in");
+      })
+      .catch((err) => console.log(err));
+    setUsername("");
+    setPassword("");
+  };
+
   return (
     <div className="flex items-center justify-center mt-36">
       <div className="max-w-md w-full mx-auto rounded-lg shadow-lg bg-white p-8">
@@ -17,6 +34,9 @@ const LoginPage = () => {
             </label>
             <input
               type="text"
+              required
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               id="username"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
             />
@@ -29,12 +49,16 @@ const LoginPage = () => {
             </label>
             <input
               type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               id="password"
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
             />
           </div>
           <button
             type="submit"
+            onClick={handleSubmit}
             className="w-full bg-gray-400 text-black font-semibold py-2 rounded-md hover:bg-gray-500">
             Login
           </button>

@@ -6,6 +6,12 @@ const DiaryForm = ({ handleSubmit }) => {
 
   const handleSubmitClick = (event) => {
     event.preventDefault();
+
+    if (!title || !body) {
+      console.log("Fields cannot be empty");
+      return;
+    }
+
     handleSubmit({ title, body });
     console.log("Submitted successfully");
     setTitle("");
@@ -31,6 +37,7 @@ const DiaryForm = ({ handleSubmit }) => {
             }}
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
             placeholder="Diary Title"
+            required
           />
         </div>
         <div className="mb-4">
@@ -41,7 +48,8 @@ const DiaryForm = ({ handleSubmit }) => {
               setBody(e.target.value);
             }}
             className="w-full h-80 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
-            placeholder="Write your diary body here"></textarea>
+            placeholder="Write your diary body here"
+            required></textarea>
         </div>
       </form>
     </div>
