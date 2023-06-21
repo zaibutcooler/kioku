@@ -5,13 +5,11 @@ const App = () => {
   return (
     <>
       <Navbar />
-      <main>
-        <section>
+      <main className="lg:grid lg:grid-cols-6 flex">
+        <section className="lg:col-span-5 ">
           <IndexPage />
         </section>
-        <section>
-          <IndexPage />
-        </section>
+        <section className="hidden lg:block lg:col-span-1">Sidebar</section>
       </main>
     </>
   );

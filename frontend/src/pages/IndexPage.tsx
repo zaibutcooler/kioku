@@ -12,7 +12,7 @@ const IndexPage = () => {
   const isAuthenticated = true;
 
   return (
-    <div>
+    <div className="lg:px-8 md:px-2 sm:px-1">
       <Routes>
         <Route path="/home" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
