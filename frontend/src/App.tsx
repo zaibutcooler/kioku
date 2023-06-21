@@ -1,5 +1,7 @@
 import IndexPage from "./pages/IndexPage";
 import Navbar from "./components/main/Navbar";
+import Calendar from "./components/main/Calendar";
+import Clock from "./components/main/Clock";
 
 const App = () => {
   return (
@@ -9,7 +11,10 @@ const App = () => {
         <section className="lg:col-span-5 ">
           <IndexPage />
         </section>
-        <section className="hidden lg:block lg:col-span-1">Sidebar</section>
+        <section className="hidden xl:block lg:col-span-1">
+          <Clock />
+          <Calendar />
+        </section>
       </main>
     </>
   );
