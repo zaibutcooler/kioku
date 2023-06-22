@@ -3,7 +3,8 @@ const Goal = require("../../models/goalModels/goalsModel");
 // Controller methods for goals
 const getAllGoals = async (req, res) => {
   try {
-    const items = await Goal.find();
+    const userId = req.user;
+    const items = await Goal.find({ creator: userId });
     res.status(200).json(items);
   } catch (error) {
     console.error(error);
@@ -58,6 +59,15 @@ const updateGoal = async (req, res) => {
 
 const deleteGoal = async (req, res) => {
   try {
+    const foundItem = await Goal.findById(req.params.id);
+    if (!foundItem) {
+      return res.status(404).json({ message: "Not found" });
+    }
+    if (req.user != foundItem.creator) {
+      res
+        .staus(400)
+        .json({ message: "You don't have any permissions for this" });
+    }
     const item = await Goal.findByIdAndDelete(req.params.id); // Fix: Declare 'item' using 'const'
     if (!item) {
       res.status(404).json({ message: "Not found" });

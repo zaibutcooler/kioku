@@ -3,7 +3,8 @@ const Summary = require("../../models/goalModels/summaryModel");
 // Controller methods for summaries
 const getAllSummaries = async (req, res) => {
   try {
-    const items = await Summary.find();
+    const userId = req.user;
+    const items = await Summary.find({ creator: userId });
     res.status(200).json(items);
   } catch (error) {
     console.error(error);
@@ -59,6 +60,15 @@ const updateSummary = async (req, res) => {
 
 const deleteSummary = async (req, res) => {
   try {
+    const foundItem = await Summary.findById(req.params.id);
+    if (!foundItem) {
+      return res.status(404).json({ message: "Not found" });
+    }
+    if (req.user != foundItem.creator) {
+      res
+        .staus(400)
+        .json({ message: "You don't have any permissions for this" });
+    }
     const deletedItem = await Summary.findByIdAndDelete(req.params.id);
     if (!deletedItem) {
       return res.status(404).json({ message: "Not found" });

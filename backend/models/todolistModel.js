@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const todoSchema = mongoose.Schema({
+  creator: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   title: { type: String, required: true },
   description: { type: String },
   dueDate: { type: Date, requried: true },

@@ -3,7 +3,8 @@ const Note = require("../../models/goalModels/notesModel");
 // Controller methods for notes
 const getAllNotes = async (req, res) => {
   try {
-    const items = await Note.find();
+    const userId = req.user;
+    const items = await Note.find({ creator: userId });
     res.status(200).json(items);
   } catch (error) {
     console.error(error);
@@ -59,6 +60,15 @@ const updateNote = async (req, res) => {
 
 const deleteNote = async (req, res) => {
   try {
+    const foundItem = await Note.findById(req.params.id);
+    if (!foundItem) {
+      return res.status(404).json({ message: "Not found" });
+    }
+    if (req.user != foundItem.creator) {
+      res
+        .staus(400)
+        .json({ message: "You don't have any permissions for this" });
+    }
     const deletedItem = await Note.findByIdAndDelete(req.params.id);
     if (!deletedItem) {
       return res.status(404).json({ message: "Not found" });

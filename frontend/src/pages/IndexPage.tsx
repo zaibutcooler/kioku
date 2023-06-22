@@ -7,11 +7,11 @@ import TodoPage from "./apps/TodoPage";
 import TimeTablePage from "./apps/TimeTablePage";
 import LoginPage from "./auth/LoginPage";
 import RegisterPage from "./auth/RegisterPage";
-import GoalPage from "./minipages/GoalPage";
-import AccomplishPage from "./minipages/AccomplishPage";
-import NotePage from "./minipages/NotePage";
-import DiaryPage from "./minipages/DiaryPage";
-import SummaryPage from "./minipages/SummaryPage";
+import GoalPage from "./apps/GoalPage";
+import AccomplishPage from "./apps/AccomplishPage";
+import NotePage from "./apps/NotePage";
+import DiaryPage from "./apps/DiaryPage";
+import SummaryPage from "./apps/SummaryPage";
 
 const IndexPage = () => {
   const isAuthenticated = true;

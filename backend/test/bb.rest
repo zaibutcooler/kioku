@@ -1,11 +1,35 @@
-POST http://localhost:5000/todolist/create
+POST http://localhost:5000/auth/register
 Content-Type: application/json
 
 {
-    "title": "Do Eveything",
-    "description": "Doing Nothing"
+    "username": "Zai Sama",
+    "email": "zaiyellyintaung@billionare.com",
+    "password": "123"
+}
+
+# 64939309cdd2727e639223d3
+
+###
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+    "username": "Zai Sama",
+    "password": "123"
+}
+
+#eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDkzOTMwOWNkZDI3MjdlNjM5MjIzZDMiLCJpYXQiOjE2ODczOTMwNDgsImV4cCI6MTY4NzM5NjY0OH0.ZE-7QMwKq6TXbZWT8ZRpYb4l-FlHdDfeMxYKX8mbG5U
+
+###
+POST http://localhost:5000/goals/diary
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDkzOGIzMWViNGNhZTQxNjc0YTg0MDEiLCJpYXQiOjE2ODczOTExMzcsImV4cCI6MTY4NzM5NDczN30.rasOIrhCw9wj7tUX-gSm7FB_l5BWuk6YKb2sfl-t_MM
+
+{
+    "title": "Diary one",
+    "body": "Welcome"
 }
 
 ###
-DELETE  http://localhost:5000/todolist/6470f8a8394250fcd9a23dfa
-
+GET http://localhost:5000/goals/diary
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDkzOTMwOWNkZDI3MjdlNjM5MjIzZDMiLCJpYXQiOjE2ODczOTMwNDgsImV4cCI6MTY4NzM5NjY0OH0.ZE-7QMwKq6TXbZWT8ZRpYb4l-FlHdDfeMxYKX8mbG5U

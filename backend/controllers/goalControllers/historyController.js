@@ -3,7 +3,8 @@ const History = require("../../models/goalModels/historyModel");
 // Controller methods for histories
 const getAllHistories = async (req, res) => {
   try {
-    const items = await History.find();
+    const userId = req.user;
+    const items = await History.find({ creator: userId });
     res.status(200).json(items);
   } catch (error) {
     console.error(error);
@@ -56,6 +57,15 @@ const updateHistory = async (req, res) => {
 
 const deleteHistory = async (req, res) => {
   try {
+    const foundItem = await History.findById(req.params.id);
+    if (!foundItem) {
+      return res.status(404).json({ message: "Not found" });
+    }
+    if (req.user != foundItem.creator) {
+      res
+        .staus(400)
+        .json({ message: "You don't have any permissions for this" });
+    }
     const item = await History.findByIdAndDelete(req.params.id); // Fix: Declare 'item' using 'const'
     if (!item) {
       res.status(404).json({ message: "Not found" });
