@@ -3,8 +3,7 @@ const Goal = require("../../models/goalModels/goalsModel");
 // Controller methods for goals
 const getAllGoals = async (req, res) => {
   try {
-    const userId = req.user;
-    const items = await Goal.find({ creator: userId });
+    const items = await Goal.find();
     res.status(200).json(items);
   } catch (error) {
     console.error(error);
