@@ -1,17 +1,25 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../state/userSlice";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const dispath = useDispatch();
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    let uname;
+    let token = "";
     try {
       axios
         .post("http://localhost:5000/auth/login", { username, password })
-        .then((res) => console.log(res.data));
+        .then((res) => (token = res.data));
+      uname = username;
+      dispath(setUser({ username: uname, token }));
       console.log("success");
     } catch {
       console.log("Error");

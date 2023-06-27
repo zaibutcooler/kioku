@@ -7,11 +7,11 @@ const App = () => {
   return (
     <>
       <Navbar />
-      <main className="lg:grid lg:grid-cols-6 flex">
-        <section className="lg:col-span-5 ">
+      <main className="flex">
+        <section className="sm:w-full w-5/6">
           <IndexPage />
         </section>
-        <section className="hidden xl:block lg:col-span-1">
+        <section className=" lg:block lg:w-1/6 hidden">
           <Clock />
           <Calendar />
         </section>
