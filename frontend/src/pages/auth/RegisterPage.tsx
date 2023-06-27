@@ -8,7 +8,22 @@ const RegisterPage = () => {
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
 
-  const handleSubmit = () => {};
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      if (password1 === password2) {
+        axios
+          .post("http://localhost:5000/auth/register", {
+            username,
+            email,
+            password: password1,
+          })
+          .then((res) => console.log(res.data));
+      }
+    } catch {
+      console.log("error");
+    }
+  };
 
   return (
     <div className="flex items-center justify-center mt-12">
@@ -16,7 +31,7 @@ const RegisterPage = () => {
         <h2 className="text-3xl text-center font-semibold text-gray-800 mb-6">
           Sign Up
         </h2>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="mb-6">
             <label
               htmlFor="username"
@@ -75,7 +90,6 @@ const RegisterPage = () => {
           </div>
           <button
             type="submit"
-            onClick={handleSubmit}
             className="w-full bg-gray-400 text-black font-semibold py-2 rounded-md hover:bg-gray-500">
             Sign Up
           </button>

@@ -6,15 +6,25 @@ const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      axios
+        .post("http://localhost:5000/auth/login", { username, password })
+        .then((res) => console.log(res.data));
+      console.log("success");
+    } catch {
+      console.log("Error");
+    }
+  };
 
   return (
-    <div className="flex items-center justify-center mt-36">
+    <div className="flex items-center justify-center mt-24">
       <div className="max-w-md w-full mx-auto rounded-lg shadow-lg bg-white p-8">
         <h2 className="text-3xl text-center font-semibold text-gray-800 mb-6">
           Login
         </h2>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="mb-6">
             <label
               htmlFor="username"
@@ -47,7 +57,6 @@ const LoginPage = () => {
           </div>
           <button
             type="submit"
-            onClick={handleSubmit}
             className="w-full bg-gray-400 text-black font-semibold py-2 rounded-md hover:bg-gray-500">
             Login
           </button>
