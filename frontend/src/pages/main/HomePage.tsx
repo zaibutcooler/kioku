@@ -2,10 +2,10 @@ import { useSelector } from "react-redux/es/hooks/useSelector";
 import { RootState } from "../../state/store";
 
 const HomePage = () => {
-  const user = useSelector((state: RootState) => {
-    state.userState;
+  const { username } = useSelector((state: RootState) => {
+    state.user;
   });
-  return <div>{user.username}</div>;
+  return <div>{username}</div>;
 };
 
 export default HomePage;
