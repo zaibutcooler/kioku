@@ -1,12 +1,15 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -18,7 +21,8 @@ const RegisterPage = () => {
             email,
             password: password1,
           })
-          .then((res) => console.log(res.data));
+          .then((res) => console.log(res.data))
+          .then(() => navigate("/login"));
       }
     } catch {
       console.log("error");

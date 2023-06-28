@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../state/userSlice";
 
@@ -9,6 +9,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
 
   const dispath = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -24,6 +25,7 @@ const LoginPage = () => {
           dispath(setUser({ username, token, isAuthenticated: true }));
           console.log("Token" + token);
           console.log("success");
+          navigate("/");
         });
     } catch {
       console.log("Error");
@@ -70,7 +72,7 @@ const LoginPage = () => {
           <button
             type="submit"
             className="w-full bg-black text-white font-semibold py-2 rounded-md hover:bg-gray-100 hover:text-black">
-            Sign Up
+            Login
           </button>
         </form>
         <p className="text-gray-600 text-center mt-4">

@@ -22,7 +22,9 @@ export const userSlice = createSlice({
       state.isAuthenticated = action.payload.isAuthenticated;
     },
     clearUser: (state) => {
-      state = initialState;
+      state.username = "";
+      state.isAuthenticated = false;
+      state.token = "";
     },
   },
 });
