@@ -12,23 +12,27 @@ const LoginPage = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    let uname;
-    let token = "";
+    let token = "no token";
     try {
       axios
         .post("http://localhost:5000/auth/login", { username, password })
-        .then((res) => (token = res.data));
-      uname = username;
-      dispath(setUser({ username: uname, token }));
-      console.log("success");
+        .then((res) => {
+          token = res.data.token;
+          console.log(res.data);
+        })
+        .then(() => {
+          dispath(setUser({ username, token, isAuthenticated: true }));
+          console.log("Token" + token);
+          console.log("success");
+        });
     } catch {
       console.log("Error");
     }
   };
 
   return (
-    <div className="flex items-center justify-center mt-24">
-      <div className="max-w-md w-full mx-auto rounded-lg shadow-lg bg-white p-8">
+    <div className="flex items-center justify-center mt-20">
+      <div className="max-w-md w-5/6 mx-auto rounded-lg shadow-lg bg-white p-8">
         <h2 className="text-3xl text-center font-semibold text-gray-800 mb-6">
           Login
         </h2>
@@ -65,8 +69,8 @@ const LoginPage = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-gray-400 text-black font-semibold py-2 rounded-md hover:bg-gray-500">
-            Login
+            className="w-full bg-black text-white font-semibold py-2 rounded-md hover:bg-gray-100 hover:text-black">
+            Sign Up
           </button>
         </form>
         <p className="text-gray-600 text-center mt-4">

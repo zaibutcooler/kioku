@@ -26,7 +26,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center mt-12">
+    <div className="flex items-center justify-center mt-4">
       <div className="max-w-md w-full mx-auto rounded-lg shadow-lg bg-white p-8">
         <h2 className="text-3xl text-center font-semibold text-gray-800 mb-6">
           Sign Up
@@ -90,7 +90,7 @@ const RegisterPage = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-gray-400 text-black font-semibold py-2 rounded-md hover:bg-gray-500">
+            className="w-full bg-black text-white font-semibold py-2 rounded-md hover:bg-gray-100 hover:text-black">
             Sign Up
           </button>
         </form>

@@ -8,10 +8,10 @@ const App = () => {
     <>
       <Navbar />
       <main className="flex">
-        <section className="sm:w-full w-5/6">
+        <section className="w-full xl:w-5/6">
           <IndexPage />
         </section>
-        <section className=" lg:block lg:w-1/6 hidden">
+        <section className="xl:block xl:w-1/6 hidden">
           <Clock />
           <Calendar />
         </section>
