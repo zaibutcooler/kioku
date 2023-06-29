@@ -8,28 +8,33 @@ const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    let token = "no token";
     try {
-      axios
-        .post("http://localhost:5000/auth/login", { username, password })
-        .then((res) => {
-          token = res.data.token;
-          localStorage.setItem("token", token);
-          console.log(res.data);
+      const response = await axios.post("http://localhost:5000/auth/login", {
+        username,
+        password,
+      });
+
+      const { token } = response.data;
+
+      localStorage.setItem("username", username);
+      localStorage.setItem("token", token);
+
+      dispatch(
+        setUser({
+          username,
+          token,
+          isAuthenticated: true,
         })
-        .then(() => {
-          dispath(setUser({ username, token, isAuthenticated: true }));
-          console.log("Token" + token);
-          console.log("success");
-          navigate("/");
-        });
-    } catch {
-      console.log("Error");
+      );
+
+      navigate("/");
+    } catch (error) {
+      console.log("Error:", error);
     }
   };
 

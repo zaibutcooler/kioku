@@ -2,8 +2,11 @@ import IndexPage from "./pages/IndexPage";
 import Navbar from "./components/main/Navbar";
 import Calendar from "./components/main/Calendar";
 import Clock from "./components/main/Clock";
+import useAuthentication from "./hooks/useAuthentication";
 
 const App = () => {
+  useAuthentication();
+
   return (
     <>
       <Navbar />
