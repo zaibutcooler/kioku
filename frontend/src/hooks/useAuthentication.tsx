@@ -1,15 +1,16 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setUser } from "../state/userSlice";
-import jwt_decode from "jwt-decode";
 
-const isTokenValid = (token: string) => {
+import jwt_decode, { JwtPayload } from "jwt-decode";
+
+const isTokenValid = (token: string): boolean => {
   try {
-    const decoded = jwt_decode(token);
+    const decoded: JwtPayload = jwt_decode(token);
 
     // Check token expiration
     const currentTime = Math.floor(Date.now() / 1000);
-    if (decoded.exp < currentTime) {
+    if (decoded.exp && decoded.exp < currentTime) {
       console.log("Token has expired");
       return false;
     }
@@ -28,6 +29,16 @@ const useAuthentication = () => {
   useEffect(() => {
     const username = localStorage.getItem("username");
     const token = localStorage.getItem("token");
+    const validToken = isTokenValid(String(token));
+    if (validToken) {
+      dispatch(
+        setUser({
+          username: String(username),
+          token: String(token),
+          isAuthenticated: true,
+        })
+      );
+    }
   }, [dispatch]);
 
   return null;
