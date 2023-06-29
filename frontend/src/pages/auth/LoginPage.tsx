@@ -19,6 +19,7 @@ const LoginPage = () => {
         .post("http://localhost:5000/auth/login", { username, password })
         .then((res) => {
           token = res.data.token;
+          localStorage.setItem("token", token);
           console.log(res.data);
         })
         .then(() => {

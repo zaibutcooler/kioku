@@ -111,8 +111,6 @@ function Navbar() {
                   </NavLink>
                 </>
               )}
-            </div>
-            <div className="block">
               <div className="flex items-center space-x-2">
                 {isAuthenticated ? (
                   <>
