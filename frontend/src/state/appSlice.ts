@@ -32,7 +32,15 @@ const appSlice = createSlice({
         state.todos[todoIndex] = updatedTodo;
       }
     },
-    deleteTodos: (state, action: PayloadAction<any>) => {},
+    deleteTodo: (state, action: PayloadAction<number>) => {
+      const todoId = action.payload;
+      const todoIndex = state.todos.findIndex(
+        (todo: any) => todo.id === todoId
+      );
+      if (todoIndex !== -1) {
+        state.todos.splice(todoIndex, 1);
+      }
+    },
     setDiaries: (state, action: PayloadAction<any>) => {
       state.diaries = action.payload;
     },
