@@ -8,14 +8,12 @@ const isTokenValid = (token: string): boolean => {
   try {
     const decoded: JwtPayload = jwt_decode(token);
 
-    // Check token expiration
     const currentTime = Math.floor(Date.now() / 1000);
     if (decoded.exp && decoded.exp < currentTime) {
       console.log("Token has expired");
       return false;
     }
 
-    // Token is valid
     return true;
   } catch (error) {
     console.error("Error decoding token:", error);
