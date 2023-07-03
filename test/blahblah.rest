@@ -14,13 +14,30 @@ GET http://localhost:5000/todolist/
 GET http://localhost:5000/goals/summaries/64725360f778401d7d6d2dde
 # Replace `:id` with the actual ID of the goals/summaries entry you want to retrieve.
 
-###
-POST http://localhost:5000/auth/login/
+###64a2b1922cf985a572b52ac2
+POST http://localhost:5000/register/
 Content-Type: application/json
 
 {
-    "username":"jack",
-    "password":"abc123"
+    "username":"zai",
+    "email":"zai@gmail.com",
+    "password":"123"
+}
+###
+POST http://localhost:5000/login/username
+Content-Type: application/json
+
+{
+    "username":"zai",
+    "password":"123"
+}
+###
+POST http://localhost:5000/login/email
+Content-Type: application/json
+
+{
+    "email":"zai@gmail.com",
+    "password":"123"
 }
 
 

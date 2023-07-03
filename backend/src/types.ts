@@ -2,22 +2,23 @@ export interface UserType {
   username: string;
   password: string;
   email: string;
+  created: Date;
 }
 
 export interface TaskType {
-  creator: string;
+  user: string;
   created: Date;
 }
 
 export interface DiaryType {
-  creator: string;
+  user: string;
   title: string;
   body: string;
   created: Date;
 }
 
 export interface GoalType {
-  creator: string;
+  user: string;
   title: string;
   description: string;
   deadline: string;
@@ -26,11 +27,11 @@ export interface GoalType {
 }
 
 export interface TimerType {
-  creator: string;
+  user: string;
   created: Date;
 }
 
 export interface TrackerType {
-  creator: string;
+  user: string;
   created: Date;
 }
