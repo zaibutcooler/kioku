@@ -1,3 +1,5 @@
+import { Types } from "mongoose";
+
 export interface UserType {
   username: string;
   password: string;
@@ -6,19 +8,20 @@ export interface UserType {
 }
 
 export interface TaskType {
-  user: string;
+  user: Types.ObjectId | UserType;
   created: Date;
 }
 
 export interface DiaryType {
-  user: string;
+  user: Types.ObjectId | UserType;
   title: string;
   body: string;
+  //photo
   created: Date;
 }
 
 export interface GoalType {
-  user: string;
+  user: Types.ObjectId | UserType;
   title: string;
   description: string;
   deadline: string;
@@ -27,11 +30,11 @@ export interface GoalType {
 }
 
 export interface TimerType {
-  user: string;
+  user: Types.ObjectId | UserType;
   created: Date;
 }
 
 export interface TrackerType {
-  user: string;
+  user: Types.ObjectId | UserType;
   created: Date;
 }

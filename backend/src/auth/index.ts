@@ -24,7 +24,9 @@ router.post("/login/email", async (req: Request, res: Response) => {
     const token = jwt.sign({ userID: existUser._id }, secretKey, {
       expiresIn: "7d",
     });
-    res.status(200).json(token);
+    const username = existUser.username;
+    const userID = existUser._id;
+    res.status(200).json({ token, username, userID });
   } catch (err) {
     res.status(500).json({ message: "Internal Server Error =>", err });
   }
@@ -44,7 +46,8 @@ router.post("/login/username", async (req: Request, res: Response) => {
     const token = jwt.sign({ userID: existUser._id }, secretKey, {
       expiresIn: "7d",
     });
-    res.status(200).json(token);
+    const userID = existUser._id;
+    res.status(200).json({ token, username, userID });
   } catch (err) {
     res.status(500).json({ message: "Internal Server Error =>", err });
   }
