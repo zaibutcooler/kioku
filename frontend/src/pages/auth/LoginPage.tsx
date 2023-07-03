@@ -14,12 +14,15 @@ const LoginPage = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/auth/login", {
-        username,
-        password,
-      });
+      const response = await axios.post(
+        "http://localhost:5000/login/username",
+        {
+          username,
+          password,
+        }
+      );
 
-      const { token } = response.data;
+      const { token, userID } = response.data;
 
       localStorage.setItem("username", username);
       localStorage.setItem("token", token);
@@ -28,6 +31,7 @@ const LoginPage = () => {
         setUser({
           username,
           token,
+          userID,
           isAuthenticated: true,
         })
       );
@@ -52,7 +56,7 @@ const LoginPage = () => {
               Username
             </label>
             <input
-              type="text"
+              type="name"
               required
               value={username}
               onChange={(e) => setUsername(e.target.value)}

@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 
 app.use(authRoutes);
-app.use(diaryRoutes);
+app.use("/diaries/", diaryRoutes);
 
 app.listen(5000, () => {
   connectDB();

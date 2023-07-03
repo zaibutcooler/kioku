@@ -16,7 +16,7 @@ const RegisterPage = () => {
     try {
       if (password1 === password2) {
         axios
-          .post("http://localhost:5000/auth/register", {
+          .post("http://localhost:5000/register", {
             username,
             email,
             password: password1,

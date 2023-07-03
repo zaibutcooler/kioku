@@ -12,6 +12,8 @@ import AccomplishPage from "./apps/AccomplishPage";
 import NotePage from "./apps/NotePage";
 import DiaryPage from "./apps/DiaryPage";
 import SummaryPage from "./apps/SummaryPage";
+import NotFoundPage from "./main/NotFoundPage";
+import DetailPage from "./main/DetailPage";
 
 const IndexPage = () => {
   const isAuthenticated = true;
@@ -23,17 +25,14 @@ const IndexPage = () => {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-
         {/* <Route
           path="/apps/goals"
           element={isAuthenticated ? <ReflectPage /> : <Navigate to="/login" />}
         /> */}
-
         <Route
           path="/apps/mygoals"
           element={isAuthenticated ? <GoalPage /> : <Navigate to="/login" />}
         />
-
         <Route
           path="/apps/accomplishments"
           element={
@@ -44,10 +43,13 @@ const IndexPage = () => {
           path="/apps/notes"
           element={isAuthenticated ? <NotePage /> : <Navigate to="/login" />}
         />
-        <Route
+        {/* <Route
           path="/apps/diaries"
           element={isAuthenticated ? <DiaryPage /> : <Navigate to="/login" />}
-        />
+        /> */}
+        //
+        <Route path="/apps/diaries" element={<DiaryPage />} />
+        //
         <Route
           path="/apps/summaries"
           element={isAuthenticated ? <SummaryPage /> : <Navigate to="/login" />}
@@ -66,6 +68,8 @@ const IndexPage = () => {
             isAuthenticated ? <TimeTablePage /> : <Navigate to="/login" />
           }
         />
+        <Route path="/details/:type" element={<DetailPage />} />
+        <Route path="/" element={<NotFoundPage />} />
       </Routes>
     </div>
   );
