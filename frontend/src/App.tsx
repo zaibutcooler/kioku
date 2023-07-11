@@ -11,7 +11,7 @@ const App = () => {
     <>
       <Navbar />
       <main className="flex">
-        <section className="w-full xl:w-5/6">
+        <section className="w-full xl:w-5/6 text-sm">
           <IndexPage />
         </section>
         <section className="xl:block xl:w-1/6 hidden">

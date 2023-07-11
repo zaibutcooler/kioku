@@ -33,13 +33,13 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center mt-4">
-      <div className="max-w-md w-full mx-auto rounded-lg shadow-lg bg-white p-8">
-        <h2 className="text-3xl text-center font-semibold text-gray-800 mb-6">
+    <div className="flex items-center justify-center px-4 mt-4 text-xs lg:text-sm min-h-[92vh] ">
+      <div className="max-w-md w-full mx-auto rounded-lg shadow-lg bg-white p-6">
+        <h2 className="text-lg text-center font-semibold text-gray-800 mb-4">
           Sign Up
         </h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-6">
+          <div className="mb-4">
             <label
               htmlFor="username"
               className="block text-gray-800 font-semibold mb-2">
@@ -53,7 +53,7 @@ const RegisterPage = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
             />
           </div>
-          <div className="mb-6">
+          <div className="mb-4">
             <label
               htmlFor="email"
               className="block text-gray-800 font-semibold mb-2">
@@ -67,7 +67,7 @@ const RegisterPage = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
             />
           </div>
-          <div className="mb-6">
+          <div className="mb-4">
             <label
               htmlFor="password"
               className="block text-gray-800 font-semibold mb-2">
@@ -81,7 +81,7 @@ const RegisterPage = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
             />
           </div>
-          <div className="mb-6">
+          <div className="mb-4">
             <label
               htmlFor="confirm-password"
               className="block text-gray-800 font-semibold mb-2">
@@ -101,7 +101,7 @@ const RegisterPage = () => {
             Sign Up
           </button>
         </form>
-        <p className="text-gray-600 text-center mt-4">
+        <p className="text-gray-600 text-center mt-4 text-[0.65rem]">
           Already have an account?{" "}
           <Link to="/login" className="text-blue-500 hover:underline">
             Login

@@ -44,13 +44,30 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center mt-20">
-      <div className="max-w-md w-5/6 mx-auto rounded-lg shadow-lg bg-white p-8">
-        <h2 className="text-3xl text-center font-semibold text-gray-800 mb-6">
+    <div className="flex items-center justify-center px-4 text-xs lg:text-sm min-h-[95vh] ">
+      <Link to="/" className="absolute left-4 top-4">
+        <button className="text-gray-500">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            />
+          </svg>
+        </button>
+      </Link>
+      <div className="max-w-md w-full mx-auto rounded-lg shadow-lg bg-white p-8">
+        <h2 className="text-xl text-center font-semibold text-gray-800 mb-4">
           Login
         </h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-6">
+          <div className="mb-4">
             <label
               htmlFor="username"
               className="block text-gray-800 font-semibold mb-2">
@@ -65,7 +82,7 @@ const LoginPage = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
             />
           </div>
-          <div className="mb-6">
+          <div className="mb-4">
             <label
               htmlFor="password"
               className="block text-gray-800 font-semibold mb-2">
@@ -86,9 +103,9 @@ const LoginPage = () => {
             Login
           </button>
         </form>
-        <p className="text-gray-600 text-center mt-4">
+        <p className="text-gray-600 text-center mt-4 text-[0.65rem]">
           Don't have an account?{" "}
-          <Link to="/register" className="text-blue-500 hover:underline">
+          <Link to="/register" className="text-blue-500 hover:underline ">
             Sign up
           </Link>
         </p>
