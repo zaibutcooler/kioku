@@ -13,19 +13,20 @@ function Navbar() {
   const [isSecondDropDown, setIsSecondDropDown] = useState(false);
 
   const personalLinks = [
-    { name: "My Goals", go: "/", icon: "" },
-    { name: "My tasks", go: "/", icon: "" },
-    { name: "My Notes", go: "/", icon: "" },
-    { name: "Diary", go: "/", icon: "" },
-    { name: "Time Table", go: "/", icon: "" },
-    { name: "Timer", go: "/", icon: "" },
+    { name: "My Goals", go: "/", icon: "fas fa-flag" },
+    { name: "My tasks", go: "/", icon: "fas fa-tasks" },
+    { name: "My Notes", go: "/", icon: "fas fa-sticky-note" },
+    { name: "Diary", go: "/", icon: "fas fa-book" },
+    { name: "Time Table", go: "/", icon: "fas fa-clock" },
+    { name: "Timer", go: "/", icon: "fas fa-hourglass" },
   ];
   const projectLinks = [
-    { name: "", go: "" },
-    { name: "", go: "" },
-    { name: "", go: "" },
-    { name: "", go: "" },
-    { name: "", go: "" },
+    { name: "Project Overview", go: "/", icon: "fas fa-project-diagram" },
+    { name: "Tasks", go: "/", icon: "fas fa-clipboard-list" },
+    { name: "Team Members", go: "/", icon: "fas fa-users" },
+    { name: "Documents", go: "/", icon: "fas fa-file-alt" },
+    { name: "Calendar", go: "/", icon: "fas fa-calendar-alt" },
+    { name: "Progress", go: "/", icon: "fas fa-check-circle" },
   ];
 
   //bottom nav
@@ -170,42 +171,60 @@ function Navbar() {
       </nav>
       <section className="block md:hidden text-sm">
         {showBottom ? (
-          <nav className="fixed bottom-0 left-0 w-full shadow-sm py-3 bg-gray-300 px-3">
+          <nav className="fixed bottom-0 left-0 w-full shadow-sm pt-3 bg-white rounded-t-lg px-3">
             <section>
               <div>
                 {toggleLinks ? (
                   <div className="grid grid-cols-3 text-center  my-1">
-                    {personalLinks.map((item) => (
-                      <div key={item.name} className="col-span-1 my-2">
+                    {projectLinks.map((item) => (
+                      <div key={item.name} className="col-span-1 my-3">
                         <NavLink to="/" className="">
-                          <i className="fa-regular fa-home"></i>
+                          <i className={item.icon}></i>
                           <div>{item.name}</div>
                         </NavLink>
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <div>Personal</div>
+                  <div className="grid grid-cols-3 text-center  my-1">
+                    {personalLinks.map((item) => (
+                      <div key={item.name} className="col-span-1 my-3">
+                        <NavLink to="/" className="">
+                          <i className={item.icon}></i>
+                          <div>{item.name}</div>
+                        </NavLink>
+                      </div>
+                    ))}
+                  </div>
                 )}
               </div>
             </section>
-            <div className="grid grid-cols-2 text-center">
-              <div className="col-span-1 border-1 border-gray-100">
+            <div className="grid grid-cols-2 text-center border-t border-b border-gray-100 ">
+              <div className="col-span-1 border-r py-3 border-100">
                 <button onClick={() => setToggleLinks(false)}>Personal</button>
               </div>
-              <div className="col-span-1">
+              <div className="col-span-1 py-3">
                 <button onClick={() => setToggleLinks(true)}>Project</button>
               </div>
             </div>
 
-            <div className="flex justify-end">
-              <button onClick={() => setShowBottom(false)}>Close</button>
+            <div className="flex justify-between py-2">
+              <NavLink to="/" className="flex">
+                <i className="fas fa-home text-lg pl-2"></i>
+              </NavLink>
+
+              <button onClick={() => setShowBottom(false)}>
+                <i className="fas fa-xmark"></i>
+              </button>
             </div>
           </nav>
         ) : (
           <nav className="fixed bottom-0 left-0 w-full shadow-sm py-3 flex justify-end">
-            <button className="" onClick={() => setShowBottom(true)}>
-              Show
+            <button
+              className="text-xl rounded-full p-2 bg-white  shadow-md flex items-center justify-center"
+              onClick={() => setShowBottom(true)}
+              style={{ width: "40px", height: "40px" }}>
+              <i className="fas fa-compass" style={{ fontSize: "20px" }} />
             </button>
           </nav>
         )}

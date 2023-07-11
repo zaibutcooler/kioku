@@ -3,10 +3,13 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../state/userSlice";
+import getUrl from "../../hooks/getUrl";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const url = getUrl();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -14,13 +17,10 @@ const LoginPage = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:5000/login/username",
-        {
-          username,
-          password,
-        }
-      );
+      const response = await axios.post(`${url}/login/username`, {
+        username,
+        password,
+      });
 
       const { token, userID } = response.data;
 

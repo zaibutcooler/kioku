@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState: any = {};
+const initialState: any = {
+  url: "",
+};
 
 const displaySlice = createSlice({
   name: "display",

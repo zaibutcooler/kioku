@@ -2,8 +2,11 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import getUrl from "../../hooks/getUrl";
 
 const RegisterPage = () => {
+  const url = getUrl();
+
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password1, setPassword1] = useState("");
@@ -16,7 +19,7 @@ const RegisterPage = () => {
     try {
       if (password1 === password2) {
         axios
-          .post("http://localhost:5000/register", {
+          .post(`${url}/register`, {
             username,
             email,
             password: password1,
