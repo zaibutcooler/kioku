@@ -52,3 +52,5 @@ const appSlice = createSlice({
     },
   },
 });
+
+export default appSlice.reducer;

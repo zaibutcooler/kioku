@@ -28,11 +28,13 @@ const useAuthentication = () => {
     const username = localStorage.getItem("username");
     const token = localStorage.getItem("token");
     const validToken = isTokenValid(String(token));
+    const userID = localStorage.getItem("userID");
     if (validToken) {
       dispatch(
         setUser({
           username: String(username),
           token: String(token),
+          userID: String(userID),
           isAuthenticated: true,
         })
       );

@@ -43,13 +43,11 @@ const IndexPage = () => {
           path="/apps/notes"
           element={isAuthenticated ? <NotePage /> : <Navigate to="/login" />}
         />
-        {/* <Route
+        <Route
           path="/apps/diaries"
           element={isAuthenticated ? <DiaryPage /> : <Navigate to="/login" />}
-        /> */}
-        //
-        <Route path="/apps/diaries" element={<DiaryPage />} />
-        //
+        />
+
         <Route
           path="/apps/summaries"
           element={isAuthenticated ? <SummaryPage /> : <Navigate to="/login" />}
@@ -69,7 +67,7 @@ const IndexPage = () => {
           }
         />
         <Route path="/details/:type" element={<DetailPage />} />
-        <Route path="/" element={<NotFoundPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </div>
   );
