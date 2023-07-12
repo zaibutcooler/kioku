@@ -1,19 +1,21 @@
 "use client";
-
-import { FaCircleUser, FaListUl } from "react-icons/fa6";
-import { FiMenu } from "react-icons/fi";
 import { useState } from "react";
+import MobileNavbar from "./main/MobileNavbar";
+import DesktopNavbar from "./main/DesktopNavbar";
+import LandingNavbar from "./main/LandingNavbar";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 
-const Navbar = () => {
+function Navbar() {
+  const isAuthenticated = true;
+
   const [isDisplayed, setIsDisplayed] = useState("");
 
   const toggleDisplay = (input: string) => {
     setIsDisplayed(input);
   };
 
-  const display = () => {
+  const displayAuth = () => {
     switch (isDisplayed) {
       case "login":
         return <Login toggleDisplay={toggleDisplay} />;
@@ -24,33 +26,45 @@ const Navbar = () => {
     }
   };
 
+  const personalLinks = [
+    { name: "My Goals", go: "/", icon: "fas fa-flag" },
+    { name: "My tasks", go: "/", icon: "fas fa-tasks" },
+    { name: "My Notes", go: "/", icon: "fas fa-sticky-note" },
+    { name: "Diary", go: "/", icon: "fas fa-book" },
+    { name: "Time Table", go: "/", icon: "fas fa-clock" },
+    { name: "Timer", go: "/", icon: "fas fa-hourglass" },
+  ];
+  const projectLinks = [
+    { name: "Project Overview", go: "/", icon: "fas fa-project-diagram" },
+    { name: "Tasks", go: "/", icon: "fas fa-clipboard-list" },
+    { name: "Team Members", go: "/", icon: "fas fa-users" },
+    { name: "Documents", go: "/", icon: "fas fa-file-alt" },
+    { name: "Calendar", go: "/", icon: "fas fa-calendar-alt" },
+    { name: "Progress", go: "/", icon: "fas fa-check-circle" },
+  ];
+
+  //bottom nav
+
+  const handleLogout = () => {};
+
   return (
-    <main className="bg-superwhite text-superblack font-semibold container mx-auto">
-      <div className="flex w-full justify-between py-1.5 px-2 lg:px-4 items-center border-b border-gray-100">
-        <section className="flex items-center">
-          <a className="ml-2 mr-4 font-bold text-lg">Home</a>
-          <div className="flex item-center font-semibold text-sm text-slate-600 hover:text-superblack">
-            <a className="mx-4 ">Features</a>
-            <a className="mx-4 ">About</a>
-            <a className="mx-4 ">Contact</a>
-            <a className="mx-4 ">Blank</a>
-          </div>
-        </section>
-        <section>
-          <div>
-            <button
-              onClick={() => {
-                toggleDisplay("login");
-              }}
-              className="mx-3 px-4 py-1.5 border border-superblack rounded-lg w-[80px] font-normal text-center text-sm bg-black text-superwhite">
-              Login
-            </button>
-          </div>
-        </section>
-      </div>
-      {display()}
-    </main>
+    <div>
+      {isAuthenticated ? (
+        <DesktopNavbar />
+      ) : (
+        <LandingNavbar openAuth={() => toggleDisplay("login")} />
+      )}
+
+      <MobileNavbar
+        toggleDisplay={toggleDisplay}
+        personalLinks={personalLinks}
+        projectLinks={projectLinks}
+        isAuthenticated={isAuthenticated}
+        handleLogout={handleLogout}
+      />
+      {displayAuth()}
+    </div>
   );
-};
+}
 
 export default Navbar;
