@@ -1,5 +1,23 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import {
+  AiOutlineFlag,
+  AiOutlineUnorderedList,
+  AiOutlineFileText,
+  AiOutlineBook,
+  AiOutlineHome,
+  AiOutlineProject,
+  AiOutlineTeam,
+  AiOutlineFile,
+  AiOutlineCalendar,
+  AiOutlineCheckCircle,
+  AiOutlineTrophy,
+  AiOutlineInfoCircle,
+  AiOutlineStar,
+  AiOutlineMail,
+  AiOutlineQuestionCircle,
+} from "react-icons/ai";
+
 import MobileNavbar from "./main/MobileNavbar";
 import DesktopNavbar from "./main/DesktopNavbar";
 import LandingNavbar from "./main/LandingNavbar";
@@ -15,6 +33,14 @@ function Navbar() {
     setIsDisplayed(input);
   };
 
+  useEffect(() => {
+    if (isDisplayed === "login" || isDisplayed === "register") {
+      document.body.classList.add("no-scrollbar");
+    } else {
+      document.body.classList.remove("no-scrollbar");
+    }
+  }, [isDisplayed]);
+
   const displayAuth = () => {
     switch (isDisplayed) {
       case "login":
@@ -26,24 +52,43 @@ function Navbar() {
     }
   };
 
-  const personalLinks = [
-    { name: "My Goals", go: "/", icon: "fas fa-flag" },
-    { name: "My tasks", go: "/", icon: "fas fa-tasks" },
-    { name: "My Notes", go: "/", icon: "fas fa-sticky-note" },
-    { name: "Diary", go: "/", icon: "fas fa-book" },
-    { name: "Time Table", go: "/", icon: "fas fa-clock" },
-    { name: "Timer", go: "/", icon: "fas fa-hourglass" },
-  ];
-  const projectLinks = [
-    { name: "Project Overview", go: "/", icon: "fas fa-project-diagram" },
-    { name: "Tasks", go: "/", icon: "fas fa-clipboard-list" },
-    { name: "Team Members", go: "/", icon: "fas fa-users" },
-    { name: "Documents", go: "/", icon: "fas fa-file-alt" },
-    { name: "Calendar", go: "/", icon: "fas fa-calendar-alt" },
-    { name: "Progress", go: "/", icon: "fas fa-check-circle" },
+  const landingLinks = [
+    { name: "About", go: "#about", icon: <AiOutlineInfoCircle /> },
+    { name: "Features", go: "#personalFeatures", icon: <AiOutlineStar /> },
+    { name: "Collaborating", go: "#projectFeatures", icon: <AiOutlineTeam /> },
+    { name: "Contact", go: "#contact", icon: <AiOutlineMail /> },
+    { name: "Support", go: "#support", icon: <AiOutlineQuestionCircle /> },
   ];
 
-  //bottom nav
+  const personalLinks = [
+    { name: "Home", go: "/home/", icon: <AiOutlineHome /> },
+    { name: "My Goals", go: "/home/personal/goals", icon: <AiOutlineFlag /> },
+    {
+      name: "My tasks",
+      go: "/home/personal/tasks",
+      icon: <AiOutlineUnorderedList />,
+    },
+    {
+      name: "My Notes",
+      go: "/home/personal/notes",
+      icon: <AiOutlineFileText />,
+    },
+    { name: "Diary", go: "/home/personal/diary", icon: <AiOutlineBook /> },
+    {
+      name: "Achievements",
+      go: "/home/personal/accomplishments",
+      icon: <AiOutlineTrophy />,
+    },
+  ];
+
+  const projectLinks = [
+    { name: "Project Overview", go: "/", icon: <AiOutlineProject /> },
+    { name: "Tasks", go: "/", icon: <AiOutlineUnorderedList /> },
+    { name: "Team Members", go: "/", icon: <AiOutlineTeam /> },
+    { name: "Documents", go: "/", icon: <AiOutlineFile /> },
+    { name: "Calendar", go: "/", icon: <AiOutlineCalendar /> },
+    { name: "Progress", go: "/", icon: <AiOutlineCheckCircle /> },
+  ];
 
   const handleLogout = () => {};
 
@@ -52,7 +97,10 @@ function Navbar() {
       {isAuthenticated ? (
         <DesktopNavbar />
       ) : (
-        <LandingNavbar openAuth={() => toggleDisplay("login")} />
+        <LandingNavbar
+          toggleDisplay={toggleDisplay}
+          landingLinks={landingLinks}
+        />
       )}
 
       <MobileNavbar
@@ -61,6 +109,7 @@ function Navbar() {
         projectLinks={projectLinks}
         isAuthenticated={isAuthenticated}
         handleLogout={handleLogout}
+        landingLinks={landingLinks}
       />
       {displayAuth()}
     </div>
