@@ -4,6 +4,7 @@
     "module": "commonjs",
     "outDir": "dist",
     "strict": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "types": ["express", "./express-custom.d.ts"]
   }
 }

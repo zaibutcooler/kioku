@@ -1,4 +1,5 @@
-import { Request, Response, NextFunction } from "express";
+import { Response, NextFunction } from "express";
+import { MyRequest } from "../types";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
@@ -9,7 +10,7 @@ interface DecodedToken {
   userID: string;
 }
 
-const protectRoutes = (req: Request, res: Response, next: NextFunction) => {
+const protectRoutes = (req: MyRequest, res: Response, next: NextFunction) => {
   try {
     const token = req.headers.authorization?.split(" ")[1];
     if (!token) {
@@ -27,3 +28,5 @@ const protectRoutes = (req: Request, res: Response, next: NextFunction) => {
       .json({ message: "Authentication failed. Invalid token." });
   }
 };
+
+export default protectRoutes;

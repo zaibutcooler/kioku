@@ -1,0 +1,18 @@
+GET http://127.0.0.1:5000/trackers/scaffold/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2NGI0MzA3YTJlMzJjY2FhYjM4NDIyMzkiLCJpYXQiOjE2ODk1MzI0NDIsImV4cCI6MTY5MDEzNzI0Mn0.bN3wd_ZJduUWoiHRCWZaZM_9kMqmUpuQu6iSZZkZPpY
+
+###
+POST http://127.0.0.1:5000/trackers/scaffold/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2NGI0MzA3YTJlMzJjY2FhYjM4NDIyMzkiLCJpYXQiOjE2ODk1MzI0NDIsImV4cCI6MTY5MDEzNzI0Mn0.bN3wd_ZJduUWoiHRCWZaZM_9kMqmUpuQu6iSZZkZPpY
+
+{
+  "user": "60f0d7f3d1b50b7e2c63d5de",
+  "name": "Study",
+  "countType": "count",
+  "count": 5,
+  "everyday": true,
+  "repeat": [],
+  "type": "learning",
+  "hide": false,
+  "created": "2022-07-15T10:00:00.000Z"
+}

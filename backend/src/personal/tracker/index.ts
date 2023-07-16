@@ -1,31 +1,32 @@
-import { Router } from "express";
+import express from "express";
 
 import scaffoldController from "./ScaffoldController";
 import trackercontroller from "./Trackercontroller";
+import protectRoute from "../../middlewares/protectRoute";
 
-const router = Router();
+const router = express.Router();
 
 //Scaffold
-router.get("/", scaffoldController.getAll);
+router.get("/scaffold/", protectRoute, scaffoldController.getAll);
 
-router.get("/:id", scaffoldController.getOne);
+router.get("/scaffold/:id", protectRoute, scaffoldController.getOne);
 
-router.post("/", scaffoldController.createOne);
+router.post("/scaffold/", protectRoute, scaffoldController.createOne);
 
-router.patch("/:id", scaffoldController.updateOne);
+router.patch("/scaffold/:id", protectRoute, scaffoldController.updateOne);
 
-router.delete("/:id", scaffoldController.deleteOne);
+router.delete("/scaffold/:id", protectRoute, scaffoldController.deleteOne);
 
 //Tracker
 
-router.get("/", trackercontroller.getAll);
+router.get("/", protectRoute, trackercontroller.getAll);
 
-router.get("/:id", trackercontroller.getOne);
+router.get("/:id", protectRoute, trackercontroller.getOne);
 
-router.post("/", trackercontroller.createOne);
+router.post("/", protectRoute, trackercontroller.createOne);
 
-router.patch("/:id", trackercontroller.updateOne);
+router.patch("/:id", protectRoute, trackercontroller.updateOne);
 
-router.delete("/:id", trackercontroller.deleteOne);
+router.delete("/:id", protectRoute, trackercontroller.deleteOne);
 
 export default router;
