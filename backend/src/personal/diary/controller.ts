@@ -1,12 +1,16 @@
-import { Response } from "express";
-import { MyRequest } from "../../types";
+import { Request, Response } from "express";
 import Model from "./Diary";
+import getUserID from "../../middlewares/getUserID";
 
-export const getAll = async (req: MyRequest, res: Response) => {
+export const getAll = async (req: Request, res: Response) => {
   try {
-    const user = req.userID;
+    const user = getUserID(req);
+    if (!user) {
+      return res.status(401).json({ message: "Get User ID error" });
+    }
+
     const items = await Model.find({ user: user });
-    console.log(user);
+
     res.status(200).json(items);
   } catch (err) {
     res.status(500).json({ message: "Internal Server Error" });
@@ -14,12 +18,24 @@ export const getAll = async (req: MyRequest, res: Response) => {
   }
 };
 
-export const getOne = async (req: MyRequest, res: Response) => {
+export const getOne = async (req: Request, res: Response) => {
   try {
+    const user = getUserID(req);
+    if (!user) {
+      return res.status(401).json({ message: "Get User ID error" });
+    }
+
     const item = await Model.findById(req.params.id);
     if (!item) {
       return res.status(404).json({ message: "Item not found" });
     }
+
+    if (user != String(item?.user)) {
+      return res
+        .status(404)
+        .json({ message: "Only the user can get this item." });
+    }
+
     res.status(200).json(item);
   } catch (err) {
     res.status(500).json({ message: "Internal Server Error" });
@@ -27,11 +43,14 @@ export const getOne = async (req: MyRequest, res: Response) => {
   }
 };
 
-export const createOne = async (req: MyRequest, res: Response) => {
+export const createOne = async (req: Request, res: Response) => {
   try {
-    const user = req.userID;
+    const user = getUserID(req);
+    if (!user) {
+      return res.status(401).json({ message: "Get User ID error" });
+    }
+
     const { title, body } = req.body;
-    //
     const newItem = new Model({ user, title, body });
     await newItem.save();
     res.status(200).json(newItem);
@@ -41,13 +60,20 @@ export const createOne = async (req: MyRequest, res: Response) => {
   }
 };
 
-export const updateOne = async (req: MyRequest, res: Response) => {
+export const updateOne = async (req: Request, res: Response) => {
   try {
-    const user = req.userID;
+    const user = getUserID(req);
+    if (!user) {
+      return res.status(401).json({ message: "Get User ID error" });
+    }
+
     const { title, body } = req.body;
     const item = await Model.findById(req.params.id);
+    if (!item) {
+      return res.status(404).json({ message: "Item not found" });
+    }
 
-    if (user !== item?.user) {
+    if (user != String(item?.user)) {
       return res
         .status(404)
         .json({ message: "Only the user can make changes" });
@@ -69,12 +95,19 @@ export const updateOne = async (req: MyRequest, res: Response) => {
   }
 };
 
-export const deleteOne = async (req: MyRequest, res: Response) => {
+export const deleteOne = async (req: Request, res: Response) => {
   try {
-    const user = req.userID;
-    const item = await Model.findById(req.params.id);
+    const user = getUserID(req);
+    if (!user) {
+      return res.status(401).json({ message: "Get User ID error" });
+    }
 
-    if (user !== item?.user) {
+    const item = await Model.findById(req.params.id);
+    if (!item) {
+      return res.status(404).json({ message: "Item not found" });
+    }
+
+    if (user != String(item?.user)) {
       return res
         .status(404)
         .json({ message: "Only the user can make changes" });
