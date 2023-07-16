@@ -1,6 +1,6 @@
 import { Response, Request } from "express";
 import Model from "./Diary";
-import Auth from "../../auth/Auth";
+import User from "../../auth/User";
 
 export const getAll = async (req: Request, res: Response) => {
   try {
@@ -19,7 +19,7 @@ export const getOne = async (req: Request, res: Response) => {
 export const createOne = async (req: Request, res: Response) => {
   try {
     const { user, title, body } = req.body;
-    const userExists = await Auth.findById(user);
+    const userExists = await User.findById(user);
     if (!userExists) {
       return res.status(401).json({ message: "Invalid User" });
     }
