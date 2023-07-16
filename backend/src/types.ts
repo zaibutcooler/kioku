@@ -25,7 +25,18 @@ export interface DiaryType {
   created: Date;
 }
 
-export interface GoalType {
+export interface MajorGoalType {
+  user: Types.ObjectId | UserType;
+  title: string;
+  description: string;
+  rank: string;
+  deadline: string;
+  why: string;
+  minor: Types.ObjectId[];
+  created: Date;
+}
+
+export interface MinorGoalType {
   user: Types.ObjectId | UserType;
   title: string;
   description: string;
@@ -57,5 +68,31 @@ export interface TrackScaffoldType {
   repeat: string | string[]; // daily, every sunday or etc
   type: string; //job, learning ,studying, mindfullness
   hide: boolean; // hide after done
+  created: Date;
+}
+
+export interface NoteFolderType {
+  user: Types.ObjectId | UserType;
+  name: string;
+  created: Date;
+}
+
+export interface NoteType {
+  user: Types.ObjectId | UserType;
+  title: string;
+  content: string;
+  folder: Types.ObjectId | NoteFolderType;
+  related: string[]; //study,
+  updated: Date;
+  created: Date;
+}
+
+export interface MarkType {
+  user: Types.ObjectId | UserType;
+  positive: boolean;
+  title: string;
+  why: string[];
+  lessons: string[];
+  note: string;
   created: Date;
 }

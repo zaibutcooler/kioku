@@ -7,7 +7,6 @@ const getAll = async (req: MyRequest, res: Response) => {
   try {
     const userId = req.userID;
     const items = await Model.find({ user: userId });
-
     res.status(200).json(items);
   } catch (err) {
     res.status(500).json({ message: "Internal Server Error" });

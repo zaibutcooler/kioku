@@ -5,6 +5,7 @@ import trackercontroller from "./Trackercontroller";
 import protectRoute from "../../middlewares/protectRoute";
 
 const router = express.Router();
+router.use(express.json());
 
 //Scaffold
 router.get("/scaffold/", protectRoute, scaffoldController.getAll);
