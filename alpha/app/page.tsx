@@ -1,6 +1,6 @@
 export default function LandingPage() {
   return (
-    <main>
+    <main className="container mx-auto">
       <section className="min-h-screen md:pt-12 lg:pt-14 " id="root">
         <div>Pic</div>
         <div>
