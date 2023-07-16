@@ -30,9 +30,10 @@ export interface MajorGoalType {
   title: string;
   description: string;
   rank: string;
-  deadline: string;
-  why: string;
-  minor: Types.ObjectId[];
+  deadline: Date;
+  why: string[];
+  // minor: Types.ObjectId[];
+  finished: boolean;
   created: Date;
 }
 
@@ -40,8 +41,10 @@ export interface MinorGoalType {
   user: Types.ObjectId | UserType;
   title: string;
   description: string;
-  deadline: string;
-  why: string;
+  deadline: Date;
+  why: string[];
+  major: Types.ObjectId;
+  finished: boolean;
   created: Date;
 }
 
