@@ -7,7 +7,7 @@ import "../public/styles/global.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Kazeki",
+  title: "LaiFu",
 };
 
 export default function RootLayout({
@@ -18,11 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header />
-        <main className="min-h-[100vh] flex">
-          <section>{children}</section>
-        </main>
-        <Footer />
+        <main>{children}</main>
       </body>
     </html>
   );
