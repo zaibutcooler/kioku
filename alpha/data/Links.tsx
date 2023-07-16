@@ -15,6 +15,7 @@ import {
   AiOutlineMail,
   AiOutlineQuestionCircle,
 } from "react-icons/ai";
+
 export const landingLinks = [
   { name: "About", go: "#about", icon: <AiOutlineInfoCircle /> },
   { name: "Features", go: "#personalFeatures", icon: <AiOutlineStar /> },

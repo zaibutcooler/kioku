@@ -8,6 +8,6 @@ const authSchema = new Schema<UserType>({
   created: { type: Date, default: Date.now },
 });
 
-const Auth = mongoose.model("Auth", authSchema);
+const Auth = mongoose.model("User", authSchema);
 
 export default Auth;

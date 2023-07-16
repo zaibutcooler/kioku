@@ -36,5 +36,21 @@ export interface TimerType {
 
 export interface TrackerType {
   user: Types.ObjectId | UserType;
+  item: Types.ObjectId | TrackScaffoldType;
+  countType: string;
+  count: number;
+  note: string;
+  created: Date;
+}
+
+export interface TrackScaffoldType {
+  user: Types.ObjectId | UserType;
+  name: string;
+  countType: string; //min,count, etc etc
+  count: number; // amount
+  everyday: boolean;
+  repeat: string | string[]; // daily, every sunday or etc
+  type: string; //job, learning ,studying, mindfullness
+  hide: boolean; // hide after done
   created: Date;
 }

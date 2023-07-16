@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Login from "../auth/Login";
 import Register from "../auth/Register";
-import { LinkType } from "@/public/types";
 import { landingLinks } from "@/data/Links";
 
 const LandingNavbar = () => {

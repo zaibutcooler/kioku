@@ -1,27 +1,23 @@
 import mongoose, { Schema } from "mongoose";
-import { TrackerType } from "../../types";
+import { TrackScaffoldType } from "../../types";
 
-const trackerSchema = new Schema<TrackerType>({
+const trackScaffoldSchema = new Schema<TrackScaffoldType>({
   user: { type: Schema.Types.ObjectId, ref: "User" },
-  item: { type: Schema.Types.ObjectId, ref: "TrackScaffold" },
+  //required
+  name: { type: String },
   countType: { type: String },
   count: { type: Number },
-  note: { type: String },
-  created: { type: Date, default: Date.now },
+  everyday: { type: Boolean },
+  repeat: { type: [String] },
+  type: { type: String },
+  // default
+  hide: { type: Boolean, default: false },
+  created: { type: Date, default: Date.now() },
 });
 
-const Auth = mongoose.model("Auth", trackerSchema);
+const TrackScaffold = mongoose.model("TrackScaffold", trackScaffoldSchema);
 
-export default Auth;
-
-// export interface TrackerType {
-//     user: Types.ObjectId | UserType;
-//     item: Types.ObjectId | TrackScaffoldType;
-//     countType: string;
-//     count: number;
-//     note: string;
-//     created: Date;
-//   }
+export default TrackScaffold;
 
 //   export interface TrackScaffoldType {
 //     user: Types.ObjectId | UserType;
