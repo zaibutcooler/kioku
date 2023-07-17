@@ -3,7 +3,13 @@
 import { useState } from "react";
 import Login from "../auth/Login";
 import Register from "../auth/Register";
-import { AiOutlineCalendar, AiOutlineMenu } from "react-icons/ai";
+import {
+  AiOutlineCalendar,
+  AiOutlineHourglass,
+  AiOutlineMenu,
+  AiOutlineProfile,
+  AiOutlineUser,
+} from "react-icons/ai";
 import Calendar from "../home/Calendar";
 import { store } from "@/store/store";
 import { toggleSidebar } from "@/store/displaySlice";
@@ -29,15 +35,27 @@ const DesktopNavbar: React.FC<Props> = () => {
           <div>
             <button
               onClick={() => {}}
-              className="mx-3 px-4 py-1.5 border font-bold border-black rounded-3xl w-[80px] text-center text-sm text-superblack">
-              Login
+              className="mx-2 px-1.5 py-1.5 items-center hover:bg-gray-100 rounded-sm border text-xl">
+              <AiOutlineHourglass />
             </button>
             <button
               onClick={() => {
                 setShowCalendar(!showCalendar);
               }}
-              className="mx-3 px-1 py-1 rounded-sm border text-lg">
+              className={`mx-2 px-1.5 py-1.5 items-center hover:bg-gray-100  rounded-sm border text-xl ${
+                showCalendar && "bg-gray-200"
+              }`}>
               <AiOutlineCalendar />
+            </button>
+            <button
+              onClick={() => {}}
+              className="mx-2 px-1.5 py-1.5 items-center hover:bg-gray-100  rounded-sm border text-xl">
+              <AiOutlineProfile />
+            </button>
+            <button
+              onClick={() => {}}
+              className="mx-2 px-1.5 py-1.5 items-center hover:bg-gray-100  rounded-sm border text-xl">
+              <AiOutlineUser />
             </button>
           </div>
         </section>
