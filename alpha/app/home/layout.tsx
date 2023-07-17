@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import Sidebar from "../_components/main/Sidebar";
 import MainHeader from "../_components/MainHeader";
 
@@ -19,9 +18,7 @@ export default function HomeLayout({
         <nav>
           <Sidebar />
         </nav>
-        <section className="container mx-auto px-2 md:px-4 lg:px-8">
-          {children}
-        </section>
+        <section className="px-2 md:px-4 lg:px-8">{children}</section>
       </section>
     </main>
   );

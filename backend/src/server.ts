@@ -9,11 +9,13 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+const port = process.env.PORT || 3000;
+
 app.use(authRoutes);
 app.use("/diaries/", diaryRoutes);
 app.use("/trackers/", trackerRoutes);
 
-app.listen(5000, () => {
+app.listen(port, () => {
   connectDB();
-  console.log("Listening at port 5000");
+  console.log("Listening at port " + port);
 });

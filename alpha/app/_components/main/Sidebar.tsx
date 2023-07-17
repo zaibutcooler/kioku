@@ -2,15 +2,24 @@
 import { useState } from "react";
 
 const Sidebar = () => {
-  const [isFull, setIsFull] = useState(true);
+  const [isFull, setIsFull] = useState(false);
 
   return (
-    <main className="h-[100vh] border-r hidden md:block">
-      {isFull ? (
-        <section className="w-48 lg:w-52">Full</section>
-      ) : (
-        <section className="w-12">Not full</section>
-      )}
+    <main className="h-screen border-r hidden md:block">
+      <section className="flex">
+        <button
+          className={
+            "w-12 h-12 hidden md:block fixed left-0 top-0 bg-transparent focus:outline-none "
+          }
+          onClick={() => setIsFull(!isFull)}></button>
+        <div className="w-2/3">
+          {isFull ? (
+            <div className="w-48 lg:w-52">Full</div>
+          ) : (
+            <div>Not full</div>
+          )}
+        </div>
+      </section>
     </main>
   );
 };

@@ -5,33 +5,23 @@ import Login from "../auth/Login";
 import Register from "../auth/Register";
 import { AiOutlineCalendar, AiOutlineMenu } from "react-icons/ai";
 import Calendar from "../home/Calendar";
+import { store } from "@/store/store";
+import { toggleSidebar } from "@/store/displaySlice";
 
 interface Props {}
 
 const DesktopNavbar: React.FC<Props> = () => {
-  const [isDisplayed, setIsDisplayed] = useState("");
   const [showCalendar, setShowCalendar] = useState(false);
 
-  const toggleDisplay = (input: string) => {
-    setIsDisplayed(input);
-  };
-
-  const displayAuth = () => {
-    switch (isDisplayed) {
-      case "login":
-        return <Login toggleDisplay={toggleDisplay} />;
-      case "register":
-        return <Register toggleDisplay={toggleDisplay} />;
-      default:
-        return null;
-    }
+  const toggleBar = () => {
+    store.dispatch(toggleSidebar());
   };
 
   return (
     <main className="hidden md:block bg-superwhite text-superblack font-semibold">
       <div className="flex w-full justify-between py-1.5 px-2 lg:px-4 items-center border-b border-gray-100">
         <section className="flex items-center">
-          <button>
+          <button onClick={toggleBar}>
             <AiOutlineMenu />
           </button>
         </section>

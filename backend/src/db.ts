@@ -3,11 +3,11 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const local = String(process.env.LOCAL_DB);
-const atals = String(process.env.ATLAS_DB);
+const atlas = String(process.env.ATLAS_DB);
 
 const connectDB = () => {
   mongoose
-    .connect(local, {
+    .connect(atlas, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     } as ConnectOptions)
