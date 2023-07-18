@@ -1,6 +1,6 @@
 export default function WelcomePage() {
   return (
-    <main className="container mx-auto">
+    <main className="container mx-auto scrollbar scrollbar-black">
       <section className="min-h-screen md:pt-12 lg:pt-14 " id="root">
         <div>Pic</div>
         <div>
