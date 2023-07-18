@@ -1,8 +1,8 @@
-import HeroSection from "../_components/landing/HeroSection";
-import AboutSection from "../_components/landing/AboutSection";
-import ManageTimeSection from "../_components/landing/ManageTimeSection";
-import ManageJobSection from "../_components/landing/ManageJobSection";
-import ContactSection from "../_components/landing/ContactSection";
+import HeroSection from "../_components/landing/sections/HeroSection";
+import AboutSection from "../_components/landing/sections/AboutSection";
+import ManageTimeSection from "../_components/landing/sections/ManageTimeSection";
+import ManageJobSection from "../_components/landing/sections/ManageJobSection";
+import ContactSection from "../_components/landing/sections/ContactSection";
 
 export default function WelcomePage() {
   return (

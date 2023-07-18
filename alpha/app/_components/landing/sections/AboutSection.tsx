@@ -1,10 +1,15 @@
+"use client";
 import Image from "next/image";
 import about from "@/public/images/about.png";
-import { FaCheckCircle } from "react-icons/fa";
+import AboutDetail from "./../AboutDetail";
+import { FaCheckCircle, FaCheckDouble, FaCheckSquare } from "react-icons/fa";
 import { problemSolving } from "@/data/LandingInfo";
 import { FaAngleDoubleLeft } from "react-icons/fa";
+import { useState } from "react";
 
 const AboutSection = () => {
+  const [showDetail, setShowDetail] = useState(false);
+
   return (
     <section className="min-h-screen md:pt-12 lg:pt-14 pb-12 md:pb-0" id="root">
       <div className="w-full flex justify-center">
@@ -30,20 +35,25 @@ const AboutSection = () => {
             What problems am I solving?
           </h1>
           <ul className="text-xs text-gray-500">
-            {problemSolving.map((item) => (
-              <li className="mb-1.5 font-semibold flex items-center px-0 lg:px-3">
-                <FaCheckCircle />
+            {problemSolving.map((item, index) => (
+              <li
+                className="mb-1.5 font-semibold flex items-center px-0 lg:px-3"
+                key={index}>
+                <FaCheckDouble />
                 <span className="ml-3">{item}</span>
               </li>
             ))}
           </ul>
         </div>
         <div className="md:hidden w-1/5 border border-r-0 border-black h-[300px] rounded-l-lg flex items-center">
-          <button className="text-2xl font-light px-2 py-2 m-1 rounded-lg hover:bg-gray-300">
+          <button
+            className="text-2xl font-light px-2 py-2 m-1 rounded-lg hover:bg-gray-300"
+            onClick={() => setShowDetail(true)}>
             <FaAngleDoubleLeft />
           </button>
         </div>
       </div>
+      {showDetail && <AboutDetail toggleDisplay={() => setShowDetail(false)} />}
     </section>
   );
 };
