@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function LandingPage() {
   return (
     <main className="container mx-auto">
@@ -43,7 +45,9 @@ export default function LandingPage() {
         </div>
         <div>Plans</div>
       </section> */}
-      Redirect
+      <Link href="/home">redirect to Home</Link>
+      <hr />
+      <Link href="/home">redirect to Welcome</Link>
     </main>
   );
 }

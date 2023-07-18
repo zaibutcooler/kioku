@@ -51,3 +51,16 @@ export const personalAppDetail = [
     alternativeTitle: "Achievement Tracker",
   },
 ];
+
+export const problemSolving = [
+  "Struggling to maintain focus and boost productivity in daily tasks",
+  "Can't even recall what was the most wonderful moments of your life",
+  "Finding it challenging to efficiently manage and prioritize multiple tasks",
+  "Dealing with frequent procrastination and energy management",
+  "Encountering difficulties in effectively setting and tracking goals",
+  "Lacking motivation and struggling to stay accountable for personal progress",
+  "Not knowing where to go and when to go throughout your life",
+  "Feeling overwhelmed by the abundance of information and responsibilities",
+  "Finding it hard to establish and sustain positive habits and routines",
+  "Facing limited progress and growth in personal and professional endeavors",
+];
