@@ -13,12 +13,10 @@ const Register: React.FC<Props> = ({ toggleDisplay }) => {
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Password validation
     if (password.length < 8) {
       console.log("Password should be at least 8 characters long");
     }
 
-    // Confirm password validation
     if (password !== confirmPassword) {
       console.log("Password and confirm password do not match");
     }
