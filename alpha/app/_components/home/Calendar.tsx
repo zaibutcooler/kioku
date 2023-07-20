@@ -56,6 +56,10 @@ const Calendar = () => {
     });
   };
 
+  //Calendar on move over
+
+  //
+
   return (
     <div className="container mx-auto text-[0.5rem]">
       <div className="max-w-xs mx-auto">
@@ -94,6 +98,8 @@ const Calendar = () => {
                   {week.map((day, index) => (
                     <td
                       key={index}
+                      onMouseOverCapture={() => {}}
+                      onMouseOut={() => {}}
                       className={`py-1 text-center border hover:bg-gray-200 border-gray-100 ${
                         day ? "bg-white" : "bg-gray-50"
                       } ${

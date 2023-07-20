@@ -1,3 +1,7 @@
 export default function DiaryPage() {
-  return <main>Diary Page</main>;
+  return (
+    <main>
+      <button className="p-4 ">Create Diary</button>
+    </main>
+  );
 }

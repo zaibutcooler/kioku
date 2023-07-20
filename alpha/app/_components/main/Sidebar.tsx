@@ -18,7 +18,7 @@ const Sidebar = () => {
   const [isFull, setIsFull] = useState(false);
 
   return (
-    <main className="h-screen border-r hidden md:block">
+    <main className="fixed left-0 top-[48px] h-[calc(100vh-48px)] border-r hidden md:block md:overflow-hidden">
       <section className="flex">
         <button
           className={
