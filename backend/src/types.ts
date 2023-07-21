@@ -65,6 +65,7 @@ export interface TrackerType {
 export interface TrackScaffoldType {
   user: Types.ObjectId | UserType;
   name: string;
+  goal: string; //** New  **/
   countType: string; //min,count, etc etc
   count: number; // amount
   everyday: boolean;

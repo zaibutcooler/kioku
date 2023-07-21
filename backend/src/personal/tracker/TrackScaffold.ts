@@ -7,6 +7,7 @@ const trackScaffoldSchema = new Schema<TrackScaffoldType>({
   name: { type: String },
   countType: { type: String },
   count: { type: Number },
+  goal: { type: String },
   everyday: { type: Boolean },
   repeat: { type: [String] },
   type: { type: String },

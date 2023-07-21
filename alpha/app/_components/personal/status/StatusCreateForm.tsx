@@ -15,7 +15,7 @@ const StatusCreateForm: React.FC<Props> = ({}) => {
 
   return (
     <main className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-gray-200 bg-opacity-50 backdrop-filter backdrop-blur z-50 px-2">
-      <div className="bg-white shadow-md rounded-md py-4 w-full md:w-[600px] lg:w-[750px] text-xs md:text-sm font-normal mx-3 md:mx-0">
+      <div className="bg-white shadow-md rounded-md py-4 w-[500px] md:w-[600px] lg:w-[750px] text-xs md:text-sm font-normal mx-3 md:mx-0">
         <div className="h-[40px] px-8 flex border-b border-gray-100 justify-between items-top">
           <span className="font-semibold">Leave a mark!!</span>
           <button onClick={() => {}}>
