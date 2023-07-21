@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Link from "next/link";
 
-const Calendar = () => {
+interface Props {}
+
+const Calendar: React.FC<Props> = ({}) => {
   const currentDate = new Date();
   const [displayedMonth, setDisplayedMonth] = useState(currentDate.getMonth());
   const [displayedYear, setDisplayedYear] = useState(currentDate.getFullYear());
@@ -61,60 +63,62 @@ const Calendar = () => {
   //
 
   return (
-    <div className="container mx-auto text-[0.5rem]">
-      <div className="max-w-xs mx-auto">
-        <div className="bg-white shadow rounded-md overflow-hidden">
-          <div className="w-full py-1 font-bold flex justify-between bg-gray-100 items-center">
-            <span className="px-1" onClick={prevMonth}>
-              <FaChevronLeft />
-            </span>
-            <span>
-              {new Date(displayedYear, displayedMonth).toLocaleDateString(
-                "en-US",
-                {
-                  month: "long",
-                }
-              )}
-            </span>
-            <span className="px-1" onClick={nextMonth}>
-              <FaChevronRight />
-            </span>
-          </div>
-          <table className="w-full">
-            <thead className=" text-gray-800">
-              <tr className=" ">
-                <th className="py-1 px-1 border-b border-gray-200">Sun</th>
-                <th className="py-1 px-1 border-b border-gray-200">Mon</th>
-                <th className="py-1 px-1 border-b border-gray-200">Tue</th>
-                <th className="py-1 px-1 border-b border-gray-200">Wed</th>
-                <th className="py-1 px-1 border-b border-gray-200">Thu</th>
-                <th className="py-1 px-1 border-b border-gray-200">Fri</th>
-                <th className="py-1 px-1 border-b border-gray-200">Sat</th>
-              </tr>
-            </thead>
-            <tbody>
-              {calendarData.map((week, index) => (
-                <tr key={index} className="text-gray-700">
-                  {week.map((day, index) => (
-                    <td
-                      key={index}
-                      onMouseOverCapture={() => {}}
-                      onMouseOut={() => {}}
-                      className={`py-1 text-center border hover:bg-gray-200 border-gray-100 ${
-                        day ? "bg-white" : "bg-gray-50"
-                      } ${
-                        currentMonth === displayedMonth &&
-                        Number(day) === currentDay
-                          ? "text-sky-600"
-                          : ""
-                      }`}>
-                      <Link href="/">{day}</Link>
-                    </td>
-                  ))}
+    <div className="fixed right-0 mt-6 mr-4">
+      <div className="container mx-auto text-[0.5rem]">
+        <div className="max-w-xs mx-auto">
+          <div className="bg-white shadow rounded-md overflow-hidden">
+            <div className="w-full py-1 font-bold flex justify-between bg-gray-100 items-center">
+              <span className="px-1" onClick={prevMonth}>
+                <FaChevronLeft />
+              </span>
+              <span>
+                {new Date(displayedYear, displayedMonth).toLocaleDateString(
+                  "en-US",
+                  {
+                    month: "long",
+                  }
+                )}
+              </span>
+              <span className="px-1" onClick={nextMonth}>
+                <FaChevronRight />
+              </span>
+            </div>
+            <table className="w-full">
+              <thead className=" text-gray-800">
+                <tr className=" ">
+                  <th className="py-1 px-1 border-b border-gray-200">Sun</th>
+                  <th className="py-1 px-1 border-b border-gray-200">Mon</th>
+                  <th className="py-1 px-1 border-b border-gray-200">Tue</th>
+                  <th className="py-1 px-1 border-b border-gray-200">Wed</th>
+                  <th className="py-1 px-1 border-b border-gray-200">Thu</th>
+                  <th className="py-1 px-1 border-b border-gray-200">Fri</th>
+                  <th className="py-1 px-1 border-b border-gray-200">Sat</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {calendarData.map((week, index) => (
+                  <tr key={index} className="text-gray-700">
+                    {week.map((day, index) => (
+                      <td
+                        key={index}
+                        onMouseOverCapture={() => {}}
+                        onMouseOut={() => {}}
+                        className={`py-1 text-center border hover:bg-gray-200 border-gray-100 ${
+                          day ? "bg-white" : "bg-gray-50"
+                        } ${
+                          currentMonth === displayedMonth &&
+                          Number(day) === currentDay
+                            ? "text-sky-600"
+                            : ""
+                        }`}>
+                        <Link href="/">{day}</Link>
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

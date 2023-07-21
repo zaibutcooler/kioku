@@ -1,24 +1,14 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import {
-  AiOutlineHome,
-  AiOutlineIdcard,
-  AiOutlineProject,
-  AiOutlineLogout,
-  AiOutlineMan,
-  AiOutlineAccountBook,
-  AiOutlineGroup,
-  AiOutlineAim,
-  AiOutlineDashboard,
-} from "react-icons/ai";
+import { AiOutlineHome } from "react-icons/ai";
 import { FiLogOut, FiUser, FiUsers } from "react-icons/fi";
 
 const Sidebar = () => {
   const [isFull, setIsFull] = useState(false);
 
   return (
-    <main className="fixed left-0 top-[48px] h-[calc(100vh-48px)] border-r hidden md:block md:overflow-hidden">
+    <main className="h-[calc(100vh-48px)] border-r hidden md:block md:overflow-hidden">
       <section className="flex">
         <button
           className={
@@ -37,13 +27,13 @@ const Sidebar = () => {
                 <span className="text-[0.6rem] font-bold mt-0.5">Home</span>
               </Link>
               <Link
-                href="/home"
+                href="/home/personal"
                 className="flex flex-col items-center justify-center hover:bg-gray-300 w-full py-2 mt-3 rounded-lg">
                 <FiUser />
                 <span className="text-[0.6rem] font-bold mt-0.5">Personal</span>
               </Link>
               <Link
-                href="/home"
+                href="/home/collabrate"
                 className="flex flex-col items-center justify-center hover:bg-gray-300 w-full py-2 mt-3 rounded-lg">
                 <FiUsers />
                 <span className="text-[0.6rem] font-bold mt-0.5">Connect</span>
