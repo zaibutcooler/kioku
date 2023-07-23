@@ -1,6 +1,6 @@
-import LandingMobileNavbar from "../_components/landing/LandingMobileNavbar";
-import LandingNavbar from "../_components/landing/LandingNavbar";
-import LandingFooter from "../_components/landing/LandingFooter";
+import LandingMobileNavbar from "@/components/landing/LandingMobileNavbar";
+import LandingNavbar from "@/components/landing/LandingNavbar";
+import LandingFooter from "@/components/landing/LandingFooter";
 
 export default function WelcomeLayout({
   children,

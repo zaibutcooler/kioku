@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Sidebar from "../_components/main/Sidebar";
-import MainHeader from "../_components/MainHeader";
+import MainHeader from "@/components/MainHeader";
+import Sidebar from "@/components/main/Sidebar";
 
 export const metadata: Metadata = {
   title: "Kazeki",
