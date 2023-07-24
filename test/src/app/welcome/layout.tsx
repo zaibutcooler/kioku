@@ -1,17 +1,18 @@
-import LandingNavbar from "@/components/landing/LandingNavbar";
 import LandingMobileNavbar from "@/components/landing/LandingMobileNavbar";
+import LandingNavbar from "@/components/landing/LandingNavbar";
 import LandingFooter from "@/components/landing/LandingFooter";
-import LandingContents from "@/components/landing/LandingContents";
 
-export default function LandingPage() {
+export default function WelcomeLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <main>
       <LandingNavbar />
       <LandingMobileNavbar />
       <div className="">
-        <section>
-          <LandingContents />
-        </section>
+        <section>{children}</section>
       </div>
       <LandingFooter />
     </main>

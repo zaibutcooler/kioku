@@ -1,8 +1,3 @@
-"use client";
-import { useUsernameLogin } from "@/utils/auth/login";
-import axios from "axios";
-import { redirect } from "next/dist/server/api-utils";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface Props {
@@ -12,22 +7,19 @@ interface Props {
 const Login: React.FC<Props> = ({ toggleDisplay }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const router = useRouter();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
     // Password validation
-    // if (password.length < 8) {
-    //   console.log("Password should be at least 8 characters long");
-    // }
+    if (password.length < 8) {
+      console.log("Password should be at least 8 characters long");
+    }
 
     // Perform login logic here
     console.log("Login clicked");
     console.log("Username:", username);
     console.log("Password:", password);
-    useUsernameLogin({ username, password });
-    router.push("/home");
   };
 
   return (

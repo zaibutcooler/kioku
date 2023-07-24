@@ -7,7 +7,7 @@ const atlas = String(process.env.ATLAS_DB);
 
 const connectDB = () => {
   mongoose
-    .connect(atlas, {
+    .connect(local, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     } as ConnectOptions)

@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
-import about from "@/public/images/about.png";
-import AboutDetail from "./AboutDetail";
+import about from "@/assets/images/about.png";
+import AboutDetail from "./../AboutDetail";
 import { FaCheckCircle, FaCheckDouble, FaCheckSquare } from "react-icons/fa";
 import { problemSolving } from "@/data/LandingInfo";
 import { FaAngleDoubleLeft } from "react-icons/fa";
