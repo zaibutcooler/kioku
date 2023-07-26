@@ -12,7 +12,7 @@ export const connectDB = () => {
       return;
     }
 
-    mongoose.connect(String(process.env.ATLAS_DB), {
+    mongoose.connect(String(process.env.LOCAL_DB), {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       dbName: "Kioku",
