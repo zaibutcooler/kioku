@@ -4,9 +4,12 @@ import { useState, useEffect } from "react";
 import Login from "../auth/Login";
 import Register from "../auth/Register";
 import { landingLinks } from "@/data/Links";
+import { signOut, useSession } from "next-auth/react";
 
 const LandingNavbar = () => {
   const [isDisplayed, setIsDisplayed] = useState("");
+
+  const { data: session } = useSession();
 
   const toggleDisplay = (input: string) => {
     setIsDisplayed(input);
@@ -48,11 +51,19 @@ const LandingNavbar = () => {
             ))}
           </div>
           <div>
-            <button
-              onClick={() => toggleDisplay("login")}
-              className="mx-3 px-4 py-1.5 border border-superblack rounded-lg w-[80px] font-normal text-center text-sm bg-black text-superwhite">
-              Login
-            </button>
+            {session ? (
+              <button
+                onClick={() => signOut()}
+                className="mx-3 px-2 py-1.5 border border-superblack rounded-lg w-[80px] font-normal text-center text-sm bg-black text-superwhite">
+                Log Out
+              </button>
+            ) : (
+              <button
+                onClick={() => toggleDisplay("login")}
+                className="mx-3 px-4 py-1.5 border border-superblack rounded-lg w-[80px] font-normal text-center text-sm bg-black text-superwhite">
+                Login
+              </button>
+            )}
           </div>
         </section>
       </div>

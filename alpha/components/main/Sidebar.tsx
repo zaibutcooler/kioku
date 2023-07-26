@@ -1,4 +1,5 @@
 "use client";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 import { AiOutlineHome } from "react-icons/ai";
@@ -38,7 +39,9 @@ const Sidebar = () => {
                 <FiUsers />
                 <span className="text-[0.6rem] font-bold mt-0.5">Connect</span>
               </Link>
-              <button className="flex flex-col items-center justify-center hover:bg-gray-300 w-full py-2 mt-3 rounded-lg">
+              <button
+                onClick={() => signOut()}
+                className="flex flex-col items-center justify-center hover:bg-gray-300 w-full py-2 mt-3 rounded-lg">
                 <FiLogOut />
                 <span className="text-[0.6rem] font-bold mt-0.5">Logout</span>
               </button>
