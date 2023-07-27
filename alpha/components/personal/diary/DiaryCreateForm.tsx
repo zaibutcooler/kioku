@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import ReactQuill from "react-quill";
@@ -7,50 +6,60 @@ import "react-quill/dist/quill.snow.css";
 
 interface Props {}
 
-const StatusCreateForm: React.FC<Props> = ({}) => {
+const DiaryCreateForm: React.FC<Props> = ({}) => {
   const [body, setBody] = useState("");
+  const [title, setTitle] = useState("");
 
   return (
-    <main className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-gray-200 bg-opacity-50 backdrop-filter backdrop-blur z-50 px-2">
+    <main className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-gray-200 bg-opacity-50 backdrop-filter backdrop-blur z-50 px-2 h-screen">
       <div className="bg-white shadow-md rounded-md w-[500px] md:w-[600px] lg:w-3/4 h-[80vh] md:h-[90vh] lg:h-[95vh] text-xs md:text-sm font-normal mx-3 md:mx-0 relative">
-        {" "}
-        {/* <-- Add relative positioning */}
-        <div className="w-full h-full p-3 flex">
-          <section className="w-1/5 border-r hidden md:block font-normal">
-            <div>
-              <h1 className="text-center text-lg font-bold pt-4">
-                Write Diary
-              </h1>
-              <div>
-                <label
-                  htmlFor="title"
-                  className="block text-xs font-medium text-gray-700">
-                  Title
-                </label>
+        <form className="w-full h-full p-3 flex">
+          <section className="w-1/5 p-3"></section>
+          <section className="flex-grow p-3 w-4/5 flex flex-col">
+            <div className="flex-grow">
+              <textarea
+                id="description"
+                name="description"
+                value={body}
+                required
+                onChange={(e) => setBody(e.target.value)}
+                className="mt-1 border focus:ring-gray-400 focus:border-gray-400 block w-full text-xs border-gray-200 p-2 h-full"
+                placeholder="Start Writing Your Diary"
+              />
+            </div>
+            <div className="mt-3 flex justify-between ">
+              <div className="flex items-center">
                 <input
                   type="text"
                   id="title"
                   name="title"
-                  required
-                  className="mt-1 focus:ring-gray-400 focus:border-gray-400 block w-full text-xs border-gray-300 rounded-md p-2"
-                  placeholder="Your Title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="mt-1 border focus:ring-gray-400 focus:border-gray-400 block w-[300px] text-xs  border-gray-200 p-1.5 rounded-sm"
+                  placeholder="Give a name to your memory"
                 />
+                <label className="ml-4 cursor-pointer text-gray-500 hover:text-gray-800 border py-1 px-3 mt-0.5 font-bold">
+                  <input
+                    type="file"
+                    accept="image/*" // Only accept image files
+                    onChange={() => {}}
+                    className="hidden"
+                  />
+                  Add Image
+                </label>
               </div>
+
+              <button
+                type="submit"
+                className="px-4 py-1.5 rounded-sm bg-black text-white hover:bg-gray-900">
+                Done
+              </button>
             </div>
           </section>
-          <section className="w-full md:w-4/5 md:pl-3">
-            <ReactQuill
-              value={body}
-              theme="snow"
-              onChange={(newValue: string) => setBody(newValue)}
-              placeholder="Start typing your diary here..."
-              style={{ height: "80vh" }}
-            />
-          </section>
-        </div>
+        </form>
       </div>
     </main>
   );
 };
 
-export default StatusCreateForm;
+export default DiaryCreateForm;
