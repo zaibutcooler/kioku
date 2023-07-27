@@ -5,7 +5,6 @@ const noteSchema = new Schema({
   title: { type: String, required: true },
   content: { type: String, required: true },
   folder: { type: Schema.Types.ObjectId, ref: "NoteFolder" },
-  related: [{ type: String }],
   updated: { type: Date },
   created: { type: Date, default: Date.now },
 });

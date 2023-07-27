@@ -1,9 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AiOutlineClose } from "react-icons/ai";
+import {
+  AiOutlineClose,
+  AiOutlineDelete,
+  AiOutlineFolder,
+  AiOutlineFolderOpen,
+} from "react-icons/ai";
 import NoteFolderCreateForm from "./NoteFolderCreateForm";
 import { FaFolderPlus } from "react-icons/fa";
+import { FiMenu } from "react-icons/fi";
+import { IoFolderOpen } from "react-icons/io5";
+import RelatedDropDown from "./RelatedDropDown";
 
 interface Props {
   handleBack: () => void;
@@ -12,12 +20,11 @@ interface Props {
 const NoteCreateForm: React.FC<Props> = ({ handleBack }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [related, setRelated] = useState("");
+  const [related, setRelated] = useState("default");
 
   const userID = "64c16d804043c533448db52e";
 
-  const [newFolderName, setNewFolderName] = useState("");
-  const [currentFolder, setCurrentFolder] = useState("");
+  const [currentFolder, setCurrentFolder] = useState<any>({});
   const [showFolderForm, setShowFolderForm] = useState(false);
 
   const [folders, setFolders] = useState<any[]>([]);
@@ -33,6 +40,26 @@ const NoteCreateForm: React.FC<Props> = ({ handleBack }) => {
     fillDatas();
   }, []);
 
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch("/api/note", {
+        method: "POST",
+        body: JSON.stringify({
+          user: userID,
+          title,
+          content,
+          related,
+          folder: currentFolder._id,
+        }),
+      });
+      if (response.ok) {
+        handleBack();
+      }
+    } catch (err) {
+      console.log("error");
+    }
+  };
+
   return (
     <main className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-gray-200 bg-opacity-50 backdrop-filter backdrop-blur z-50 px-2">
       {showFolderForm && (
@@ -47,42 +74,54 @@ const NoteCreateForm: React.FC<Props> = ({ handleBack }) => {
             </button>
           </div>
           <section className="flex">
-            <form className="bg-bg_white space-y-4 px-8 py-3 h-[75vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 w-3/4">
+            <form
+              onSubmit={handleSubmit}
+              className="bg-bg_white space-y-4 px-8 py-3 h-[75vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 w-3/4 flex flex-col">
               <div>
                 <label className="block text-xs font-medium text-gray-700">
-                  Title
+                  {currentFolder.name}/{related}-{title}-{currentFolder._id}
                 </label>
-                <input
-                  type="text"
-                  id="title"
-                  name="title"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  required
-                  className="mt-1 border focus:ring-gray-400 focus:border-gray-400 block w-full text-xs border-gray-200 rounded-sm p-2"
-                  placeholder="Your Title"
-                />
+                <div className="flex justify-between items-center">
+                  <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    value={title}
+                    required
+                    onChange={(e) => setTitle(e.target.value)}
+                    className="mt-1 border mr-2 focus:ring-gray-400 focus:border-gray-400 block w-full text-xs border-gray-200 rounded-sm p-2"
+                    placeholder="Your Title"
+                  />
+                  <div className="pt-1">
+                    <RelatedDropDown
+                      selectedOne={(name: string) => setRelated(name)}
+                      related={related}
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div>
+              <div className="flex-grow">
                 <textarea
                   id="description"
                   name="description"
-                  required
                   value={content}
+                  required
                   onChange={(e) => setContent(e.target.value)}
                   rows={4}
-                  className="mt-1 border focus:ring-gray-400 focus:border-gray-400 block w-full text-xs border-gray-200 rounded-sm p-2"
+                  className="mt-1 border focus:ring-gray-400 focus:border-gray-400 block w-full text-xs border-gray-200 rounded-sm p-2 h-full" // Set the height to 100%
                   placeholder="Your Description"
                 />
               </div>
-
-              <button
-                type="submit"
-                className="px-4 py-1 rounded-lg border border-black ">
-                Done
-              </button>
+              <div className="flex justify-end">
+                <button
+                  type="submit"
+                  className="px-4 py-1 rounded-md bg-black text-white hover:bg-gray-900">
+                  Done
+                </button>
+              </div>
             </form>
+
             <div className="py-3 bg-gray-50 w-1/4">
               <main className="w-full h-full bg-white">
                 <div className=" px-3 flex justify-between items-center pb-3 ">
@@ -93,8 +132,28 @@ const NoteCreateForm: React.FC<Props> = ({ handleBack }) => {
                     <FaFolderPlus />
                   </button>
                 </div>
-                <div className="h-full pl-4 pr-3">
-                  {folders && folders.map((item) => <div>{item.name}</div>)}
+                <div className="h-full px-4">
+                  {folders &&
+                    folders.map((item) => (
+                      <div key={item._id}>
+                        <div className=" font-semibold text-gray-700 text-xs flex justify-between w-full py-1 items-center">
+                          <button
+                            onClick={() => setCurrentFolder(item)}
+                            className="flex items-top">
+                            <AiOutlineFolder className="text-base mr-2" />
+                            {item.name}
+                          </button>
+                          <div className="flex items-center">
+                            <button className="p-1 rounded-full hover:bg-gray-100  mr-2">
+                              <AiOutlineDelete />
+                            </button>
+                            <button className="p-1 rounded-full hover:bg-gray-100 ">
+                              <AiOutlineFolderOpen />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                 </div>
               </main>
             </div>
