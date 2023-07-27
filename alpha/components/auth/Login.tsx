@@ -12,10 +12,8 @@ const Login: React.FC<Props> = ({ toggleDisplay }) => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const username = "zai";
-    const password = "123";
 
-    await signIn("credentials", {
+    signIn("credentials", {
       username,
       password,
       redirect: true,

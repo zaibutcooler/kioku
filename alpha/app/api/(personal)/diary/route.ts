@@ -87,6 +87,19 @@ export async function DELETE(req: Request) {
 
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");
+    const userID = searchParams.get("userID");
+
+    const itemExists = await Model.findById(id);
+    if (itemExists) {
+      if (itemExists.user !== userID) {
+        return new Response(
+          JSON.stringify({ message: "It's not the user of this item" }),
+          {
+            status: 400,
+          }
+        );
+      }
+    }
 
     const deletedItem = await Model.findByIdAndDelete(id);
     return new Response(JSON.stringify(deletedItem), {

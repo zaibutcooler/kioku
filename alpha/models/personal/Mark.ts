@@ -10,6 +10,6 @@ const markSchema = new Schema({
   created: { type: Date, default: Date.now },
 });
 
-const User = models.User || model("User", userSchema);
+const Mark = models.Mark || model("Mark", markSchema);
 
-export default User;
+export default Mark;
