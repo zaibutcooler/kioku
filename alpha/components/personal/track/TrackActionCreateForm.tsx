@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import DropDown from "./DropDown";
+import IconDropDown from "./IconDropDown";
+import Checkbox from "./CheckBox";
 
 interface Props {}
 
@@ -9,8 +11,10 @@ const TrackActionCreateForm: React.FC<Props> = ({}) => {
   const [title, setTitle] = useState("");
   const [note, setNote] = useState("");
   const [related, setRelated] = useState("default");
-  const [count, setCount] = useState("default");
-  const [countType, setCountType] = useState("");
+  const [count, setCount] = useState("");
+  const [countType, setCountType] = useState("default");
+  const [everyday, setEveryday] = useState(false);
+  const [repeatEvery, setRepeatEvery] = useState("");
 
   const iconOptions = [{ value: "book" }, { value: "work" }, { value: "idea" }];
   const countOptions = [
@@ -30,10 +34,10 @@ const TrackActionCreateForm: React.FC<Props> = ({}) => {
           </button>
         </div>
         <section className="flex">
-          <div className="p-3 border bg-gray-50 w-1/4 hidden md:block">
+          <div className="p-3 border bg-gray-50 w-2/5 hidden md:block">
             <main className="w-full h-full bg-white"></main>
           </div>
-          <form className="bg-bg_white space-y-4 px-8 py-3 h-[75vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 w-full md:w-3/4">
+          <form className="bg-bg_white space-y-4 px-8 py-3 h-[75vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 w-full md:w-3/5">
             <div className="flex justify-between items-center">
               <input
                 type="text"
@@ -46,24 +50,12 @@ const TrackActionCreateForm: React.FC<Props> = ({}) => {
                 placeholder="Your Title"
               />
               <div className="pt-1">
-                <DropDown
+                <IconDropDown
                   selectedOne={(name: string) => setRelated(name)}
-                  prime={related}
-                  options={iconOptions}
                 />
               </div>
             </div>
 
-            <div>
-              <textarea
-                id="Goal"
-                name="Goal"
-                required
-                rows={4}
-                className="mt-1 focus:ring-gray-400 focus:border-gray-400 border border-gray-200 block w-full text-xs  rounded-sm p-2"
-                placeholder="Leave a Goal"
-              />
-            </div>
             <div className="flex items-center">
               <input
                 type="number"
@@ -73,21 +65,25 @@ const TrackActionCreateForm: React.FC<Props> = ({}) => {
                 required
                 onChange={(e) => setCount(e.target.value)}
                 className="mt-1 border mr-2 focus:ring-gray-400  focus:border-gray-400 block w-[150px] text-xs border-gray-200 rounded-sm p-2"
-                placeholder="Your Title"
+                placeholder="Count"
               />
               <div className="pt-1">
                 <DropDown
-                  selectedOne={(name: string) => setRelated(name)}
-                  prime={related}
-                  options={iconOptions}
+                  selectedOne={(name: string) => setCountType(name)}
+                  prime={countType}
+                  options={countOptions}
                 />
               </div>
             </div>
 
-            <label className="block text-xs font-semibold text-gray-700">
-              Everyday?
-            </label>
-
+            <div className="flex items-center">
+              <Checkbox checked={everyday} onChange={(e) => setEveryday(e)} />
+              <label
+                htmlFor="everyday"
+                className="ml-2 cursor-pointer font-semibold text-xs">
+                Everyday?
+              </label>
+            </div>
             {/* //repeat every .... day */}
             <div>
               <label
@@ -102,6 +98,16 @@ const TrackActionCreateForm: React.FC<Props> = ({}) => {
                 required
                 className="mt-1 focus:ring-gray-400 focus:border-gray-400 border border-gray-200 block w-full text-xs  rounded-sm p-2"
                 placeholder="Your Title"
+              />
+            </div>
+            <div>
+              <textarea
+                id="Goal"
+                name="Goal"
+                required
+                rows={4}
+                className="mt-1 focus:ring-gray-400 focus:border-gray-400 border border-gray-200 block w-full text-xs  rounded-sm p-2"
+                placeholder="Leave a Goal"
               />
             </div>
             {/* //repeat every .... day */}
