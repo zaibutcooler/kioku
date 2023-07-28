@@ -4,6 +4,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import DropDown from "./DropDown";
 import IconDropDown from "./IconDropDown";
 import Checkbox from "./CheckBox";
+import ChooseDays from "./ChooseDays";
 
 interface Props {}
 
@@ -14,7 +15,21 @@ const TrackActionCreateForm: React.FC<Props> = ({}) => {
   const [count, setCount] = useState("");
   const [countType, setCountType] = useState("default");
   const [everyday, setEveryday] = useState(false);
-  const [repeatEvery, setRepeatEvery] = useState("");
+  const [repeatEvery, setRepeatEvery] = useState<string[]>([
+    "sunday",
+    "monday",
+  ]);
+  const days = [
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+  ];
+
+  const [showChooseDays, setShowChooseDays] = useState(false);
 
   const iconOptions = [{ value: "book" }, { value: "work" }, { value: "idea" }];
   const countOptions = [
@@ -55,8 +70,54 @@ const TrackActionCreateForm: React.FC<Props> = ({}) => {
                 />
               </div>
             </div>
+            <section>
+              <div className="flex items-center mb-2">
+                <div className="flex items-center">
+                  <Checkbox
+                    checked={everyday}
+                    onChange={(e) => setEveryday(e)}
+                  />
+                  <label
+                    htmlFor="everyday"
+                    className="ml-2 cursor-pointer font-semibold text-xs">
+                    Everyday?
+                  </label>
+                </div>
+                <button
+                  onClick={() => setShowChooseDays(true)}
+                  className="px-2 py-1 rounded-md border text-gray-800 text-xs font-semibold"
+                  type="button">
+                  Choose Days
+                </button>
+                {showChooseDays && (
+                  <ChooseDays
+                    handleBack={() => setShowChooseDays(false)}
+                    chooseDays={(name) => setRepeatEvery(name)}
+                    days={days}
+                  />
+                )}
+              </div>
 
+              <div className="min-h-[80px] border rounded-lg p-2">
+                <div className="flex space-x-2">
+                  {repeatEvery.map((day) => (
+                    <span
+                      key={day}
+                      className="px-3 text-[0.7rem] py-[3px] rounded-full border border-gray-400 capitalize">
+                      {day}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </section>
             <div className="flex items-center">
+              <div className="pt-1 mr-2">
+                <DropDown
+                  selectedOne={(name: string) => setCountType(name)}
+                  prime={countType}
+                  options={countOptions}
+                />
+              </div>
               <input
                 type="number"
                 id="count"
@@ -67,39 +128,8 @@ const TrackActionCreateForm: React.FC<Props> = ({}) => {
                 className="mt-1 border mr-2 focus:ring-gray-400  focus:border-gray-400 block w-[150px] text-xs border-gray-200 rounded-sm p-2"
                 placeholder="Count"
               />
-              <div className="pt-1">
-                <DropDown
-                  selectedOne={(name: string) => setCountType(name)}
-                  prime={countType}
-                  options={countOptions}
-                />
-              </div>
             </div>
 
-            <div className="flex items-center">
-              <Checkbox checked={everyday} onChange={(e) => setEveryday(e)} />
-              <label
-                htmlFor="everyday"
-                className="ml-2 cursor-pointer font-semibold text-xs">
-                Everyday?
-              </label>
-            </div>
-            {/* //repeat every .... day */}
-            <div>
-              <label
-                htmlFor="title"
-                className="block text-xs font-semibold text-gray-700">
-                Repeat every ...
-              </label>
-              <input
-                type="text"
-                id="title"
-                name="title"
-                required
-                className="mt-1 focus:ring-gray-400 focus:border-gray-400 border border-gray-200 block w-full text-xs  rounded-sm p-2"
-                placeholder="Your Title"
-              />
-            </div>
             <div>
               <textarea
                 id="Goal"
@@ -110,12 +140,10 @@ const TrackActionCreateForm: React.FC<Props> = ({}) => {
                 placeholder="Leave a Goal"
               />
             </div>
-            {/* //repeat every .... day */}
-            <div className="flex justify-between">
-              <p>option to choose type for icon</p>
+            <div className="flex justify-end">
               <button
                 type="submit"
-                className="px-4 py-1 rounded-lg border border-black ">
+                className="px-4 py-1 rounded-md bg-black text-white hover:bg-gray-900">
                 Done
               </button>
             </div>
