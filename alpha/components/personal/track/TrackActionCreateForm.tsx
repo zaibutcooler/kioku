@@ -6,31 +6,31 @@ import IconDropDown from "./IconDropDown";
 import Checkbox from "./CheckBox";
 import ChooseDays from "./ChooseDays";
 
-interface Props {}
+interface Props {
+  handleBack: () => void;
+}
 
-const TrackActionCreateForm: React.FC<Props> = ({}) => {
+const TrackActionCreateForm: React.FC<Props> = ({ handleBack }) => {
   const [title, setTitle] = useState("");
-  const [note, setNote] = useState("");
+  const [goal, setGoal] = useState("");
   const [related, setRelated] = useState("default");
   const [count, setCount] = useState("");
   const [countType, setCountType] = useState("default");
-  const [everyday, setEveryday] = useState(false);
-  const [repeatEvery, setRepeatEvery] = useState<string[]>([
-    "sunday",
-    "monday",
-  ]);
+  const [repeatEvery, setRepeatEvery] = useState<string[]>([]);
+
+  const [datas, setDatas] = useState([]);
+
   const days = [
-    "sunday",
     "monday",
     "tuesday",
     "wednesday",
     "thursday",
     "friday",
     "saturday",
+    "sunday",
   ];
 
   const [showChooseDays, setShowChooseDays] = useState(false);
-
   const iconOptions = [{ value: "book" }, { value: "work" }, { value: "idea" }];
   const countOptions = [
     { value: "hour" },
@@ -38,6 +38,51 @@ const TrackActionCreateForm: React.FC<Props> = ({}) => {
     { value: "rep" },
     { value: "times" },
   ];
+
+  let everyday = () => {
+    if (repeatEvery.length === 7) {
+      return true;
+    } else {
+      false;
+    }
+  };
+
+  const userID = "64c16d804043c533448db52e";
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    const submitData = {
+      user: userID,
+      name: title,
+      countType,
+      count,
+      goal,
+      everyday,
+      repeat: repeatEvery,
+      type: related,
+    };
+    try {
+      const response = await fetch("/api/track/scaffold", {
+        method: "POST",
+        body: JSON.stringify(submitData),
+      });
+      if (response.ok) {
+        handleBack();
+      }
+    } catch (err) {
+      console.log("error");
+    }
+  };
+
+  const fetchDatas = async () => {
+    try {
+      const response = await fetch(`/api/track/scaffold?userID=${userID}`);
+      if (response.ok) {
+        handleBack();
+      }
+    } catch (err) {
+      console.log("error");
+    }
+  };
 
   return (
     <main className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-gray-200 bg-opacity-50 backdrop-filter backdrop-blur z-50 px-2">
@@ -49,10 +94,13 @@ const TrackActionCreateForm: React.FC<Props> = ({}) => {
           </button>
         </div>
         <section className="flex">
-          <div className="p-3 border bg-gray-50 w-2/5 hidden md:block">
+          <div className="p-3 w-2/5 hidden md:block  border-r">
+            {/* // part one */}
             <main className="w-full h-full bg-white"></main>
           </div>
-          <form className="bg-bg_white space-y-4 px-8 py-3 h-[75vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 w-full md:w-3/5">
+          <form
+            onSubmit={handleSubmit}
+            className="bg-white space-y-4 px-8 py-3 h-[75vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 w-full md:w-3/5">
             <div className="flex justify-between items-center">
               <input
                 type="text"
@@ -72,17 +120,6 @@ const TrackActionCreateForm: React.FC<Props> = ({}) => {
             </div>
             <section>
               <div className="flex items-center mb-2">
-                <div className="flex items-center">
-                  <Checkbox
-                    checked={everyday}
-                    onChange={(e) => setEveryday(e)}
-                  />
-                  <label
-                    htmlFor="everyday"
-                    className="ml-2 cursor-pointer font-semibold text-xs">
-                    Everyday?
-                  </label>
-                </div>
                 <button
                   onClick={() => setShowChooseDays(true)}
                   className="px-2 py-1 rounded-md border text-gray-800 text-xs font-semibold"
@@ -97,13 +134,12 @@ const TrackActionCreateForm: React.FC<Props> = ({}) => {
                   />
                 )}
               </div>
-
               <div className="min-h-[80px] border rounded-lg p-2">
-                <div className="flex space-x-2">
+                <div className="flex flex-wrap font-semibold">
                   {repeatEvery.map((day) => (
                     <span
                       key={day}
-                      className="px-3 text-[0.7rem] py-[3px] rounded-full border border-gray-400 capitalize">
+                      className="px-3 text-[0.7rem] py-[3px] rounded-full border border-gray-400 capitalize mb-2 mr-2">
                       {day}
                     </span>
                   ))}
@@ -132,12 +168,13 @@ const TrackActionCreateForm: React.FC<Props> = ({}) => {
 
             <div>
               <textarea
-                id="Goal"
-                name="Goal"
-                required
+                id="Note"
+                name="Note"
+                value={goal}
+                onChange={(e) => setGoal(e.target.value)}
                 rows={4}
                 className="mt-1 focus:ring-gray-400 focus:border-gray-400 border border-gray-200 block w-full text-xs  rounded-sm p-2"
-                placeholder="Leave a Goal"
+                placeholder="Leave a Note"
               />
             </div>
             <div className="flex justify-end">

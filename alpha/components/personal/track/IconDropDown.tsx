@@ -52,7 +52,7 @@ export default function IconDropDown({
   return (
     <div className="relative text-xs font-semibold">
       <div
-        className="flex  items-center w-[160px] bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm rounded-md cursor-pointer"
+        className="flex border  items-center w-[160px] bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 rounded-md cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}>
         {selected.icon}
         <span className="ml-3 block truncate">{selected.name}</span>
@@ -68,7 +68,7 @@ export default function IconDropDown({
       {/* Render the options when the select box is open */}
       {isOpen && (
         <div
-          className="absolute z-10 mt-2 w-full bg-white rounded-md shadow-lg"
+          className="absolute z-10 mt-2 w-full bg-white rounded-md shadow-lg "
           onMouseLeave={() => setIsOpen(false)}>
           {categories.map((category) => (
             <div

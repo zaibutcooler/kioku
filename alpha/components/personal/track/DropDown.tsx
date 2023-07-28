@@ -19,7 +19,7 @@ const DropDown = ({
       <button
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         type="button"
-        className="inline-flex justify-between gap-x-1.5 rounded-md w-[100px] bg-white px-3 py-2 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+        className="inline-flex justify-between gap-x-1.5 rounded-md w-[100px] bg-white px-3 py-2 text-xs font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
         {prime === "default" ? (
           <span>Type</span>
         ) : (
