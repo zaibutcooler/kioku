@@ -8,6 +8,14 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");
     const userID = searchParams.get("userID");
+    const scaffoldID = searchParams.get("scaffoldID");
+
+    if (userID && scaffoldID) {
+      const items = await Model.find({ user: userID, item: scaffoldID });
+      return new Response(JSON.stringify(items), {
+        status: 200,
+      });
+    }
 
     if (id) {
       const item = await Model.findOne({ _id: id });
@@ -31,7 +39,7 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     await connectDB();
-    const { user, item, countType, count, note } = await req.json();
+    const { user, item, countType, count, note, effort } = await req.json();
 
     const userExists = await User.findById(user);
 
@@ -46,6 +54,7 @@ export async function POST(req: Request) {
       countType,
       count,
       note,
+      effort,
     });
     await newItem.save();
 
@@ -62,7 +71,7 @@ export async function POST(req: Request) {
 export async function PATCH(req: Request) {
   try {
     await connectDB();
-    const { user, item, countType, count, note } = await req.json();
+    const { user, item, countType, count, note, effort } = await req.json();
 
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");
@@ -75,6 +84,7 @@ export async function PATCH(req: Request) {
         countType,
         count,
         note,
+        effort,
       },
       { new: true }
     );
