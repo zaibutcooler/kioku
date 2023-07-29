@@ -1,5 +1,25 @@
 import { Schema, model, models } from "mongoose";
 
+export interface MarkType {
+  _id: string;
+  user: string;
+  positive: boolean;
+  title: string;
+  why: string[];
+  lessons?: string[];
+  note?: string;
+  created: Date;
+}
+
+export interface MarkCreateType {
+  user: string;
+  positive: boolean;
+  title: string;
+  why: string[];
+  lessons?: string[];
+  note?: string;
+}
+
 const markSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: "User", required: true },
   positive: { type: Boolean, required: true },

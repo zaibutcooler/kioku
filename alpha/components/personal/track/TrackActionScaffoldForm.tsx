@@ -1,16 +1,16 @@
 "use client";
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import DropDown from "./DropDown";
-import IconDropDown from "./IconDropDown";
-import Checkbox from "./CheckBox";
-import ChooseDays from "./ChooseDays";
+import DropDown from "./scaffold/DropDown";
+import IconDropDown from "./scaffold/IconDropDown";
+import Checkbox from "./scaffold/CheckBox";
+import ChooseDays from "./scaffold/ChooseDays";
 
 interface Props {
   handleBack: () => void;
 }
 
-const TrackActionCreateForm: React.FC<Props> = ({ handleBack }) => {
+const TrackActionScaffoldForm: React.FC<Props> = ({ handleBack }) => {
   const [title, setTitle] = useState("");
   const [goal, setGoal] = useState("");
   const [related, setRelated] = useState("default");
@@ -191,4 +191,4 @@ const TrackActionCreateForm: React.FC<Props> = ({ handleBack }) => {
   );
 };
 
-export default TrackActionCreateForm;
+export default TrackActionScaffoldForm;

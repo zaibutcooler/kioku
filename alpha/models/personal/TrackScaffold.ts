@@ -1,5 +1,31 @@
 import { Schema, model, models } from "mongoose";
 
+export interface TrackScaffoldType {
+  _id: string;
+  user: string;
+  name: string;
+  countType: string;
+  count: number;
+  goal: string;
+  everyday: boolean;
+  repeat: string[];
+  type: string;
+  hide: boolean;
+  created: Date;
+}
+
+export interface TrackScaffoldCreateType {
+  user: string;
+  name: string;
+  countType: string;
+  count: number;
+  goal: string;
+  everyday: boolean;
+  repeat: string[];
+  type: string;
+  hide?: boolean;
+}
+
 const trackScaffoldSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: "User" },
   //required

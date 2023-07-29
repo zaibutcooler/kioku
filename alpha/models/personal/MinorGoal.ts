@@ -1,5 +1,27 @@
 import { Schema, model, models } from "mongoose";
 
+export interface MinorGoalType {
+  _id: string;
+  user: string;
+  title: string;
+  description: string;
+  deadline: Date;
+  why: string[];
+  major: string;
+  finished: boolean[];
+  created: Date;
+}
+
+export interface MinorGoalCreateType {
+  user: string;
+  title: string;
+  description: string;
+  deadline: Date;
+  why: string[];
+  major: string;
+  finished?: boolean[];
+}
+
 const minorGoalSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: "User" },
   title: { type: String },
