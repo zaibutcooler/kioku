@@ -1,5 +1,6 @@
 "use client";
 
+import createNoteFolder from "@/utils/create/createNoteFolder";
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
@@ -12,17 +13,9 @@ const NoteFolderCreateForm: React.FC<Props> = ({ handleBack }) => {
 
   const userID = "64c16d804043c533448db52e";
 
-  const handleSubmit = async () => {
-    const response = await fetch(`/api/note/folder`, {
-      method: "POST",
-      body: JSON.stringify({
-        user: userID,
-        name: name,
-      }),
-    });
-    if (response.ok) {
-      handleBack();
-    }
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    createNoteFolder({ user: userID, name });
   };
 
   return (

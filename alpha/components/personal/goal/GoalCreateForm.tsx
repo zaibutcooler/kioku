@@ -1,20 +1,33 @@
 "use client";
 
+import createGoal from "@/utils/create/createGoal";
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
 interface Props {}
 
-const StatusCreateForm: React.FC<Props> = ({}) => {
+const GoalCreateForm: React.FC<Props> = ({}) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [rank, setRank] = useState("");
-  const [deadline, setDeadline] = useState("");
+  const [deadline, setDeadline] = useState<Date | null>(null);
   const [why, setWhy] = useState([""]);
+
+  const userID = "64c16d804043c533448db52e";
+  const handleSubmit = () => {
+    createGoal({
+      user: userID,
+      title,
+      description,
+      rank,
+      deadline,
+      why,
+    });
+  };
 
   return (
     <main className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-gray-200 bg-opacity-50 backdrop-filter backdrop-blur z-50 px-2">
-      <div className="bg-white shadow-md rounded-md py-4 w-[500px] md:h-[90vh] lg:h-[95vh] text-xs md:text-sm font-normal mx-3 md:mx-0">
+      <div className="bg-white shadow-md rounded-md py-4 w-[500px] md:w-[600px] lg:w-[130vh] text-xs md:text-sm font-normal mx-3 md:mx-0">
         <div className="h-[40px] px-8 flex border-b border-gray-100 justify-between items-top">
           <span className="font-semibold">Create A Goal</span>
           <button onClick={() => {}}>
@@ -22,22 +35,17 @@ const StatusCreateForm: React.FC<Props> = ({}) => {
           </button>
         </div>
         <section className="flex">
-          <div className="p-3 border bg-gray-50 w-1/4 hidden md:block">
+          <div className="p-3 w-2/6 hidden md:block">
             <main className="w-full h-full bg-white"></main>
           </div>
-          <form className="bg-bg_white space-y-4 px-8 py-3 h-[75vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 w-full md:w-3/4">
+          <form className="bg-white space-y-4 px-8 py-3 h-[75vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 w-full md:w-4/6">
             <div>
-              <label
-                htmlFor="title"
-                className="block text-xs font-medium text-gray-700">
-                Title
-              </label>
               <input
                 type="text"
                 id="title"
                 name="title"
                 required
-                className="mt-1 focus:ring-gray-400 focus:border-gray-400 block w-full text-xs border-gray-300 rounded-md p-2"
+                className="mt-1 focus:ring-gray-400 focus:border-gray-400 block w-full text-xs border-gray-300 rounded-sm border p-2"
                 placeholder="Your Title"
               />
             </div>
@@ -48,38 +56,46 @@ const StatusCreateForm: React.FC<Props> = ({}) => {
                 name="description"
                 required
                 rows={4}
-                className="mt-1 focus:ring-gray-400 focus:border-gray-400 block w-full text-xs border-gray-300 rounded-md p-2"
+                className="mt-1 focus:ring-gray-400 focus:border-gray-400 block w-full text-xs border-gray-300 rounded-sm border p-2"
                 placeholder="Your Description"
               />
             </div>
+            <div>
+              {why.map((why, index) => (
+                <input
+                  type="text"
+                  name={`lessons[${index}].item`}
+                  value={why[index]}
+                  onChange={() => {}}
+                  required
+                  className="focus:ring-gray-400 focus:border-gray-400 block w-full text-xs border-gray-200 rounded-sm border p-2"
+                  placeholder="Why did this happened?"
+                />
+              ))}
+              <button
+                type="button"
+                className="mt-2 inline-flex items-center px-3 py-2  border-transparent text-xs leading-4 font-medium rounded-sm border text-slate-600 bg-white hover:bg-slate-50 focus:outline-none focus:border-slate-700 border-gray-200 focus:ring-slate-500">
+                + Add More
+              </button>
+            </div>
 
             <div>
-              <label
-                htmlFor="title"
-                className="block text-xs font-medium text-gray-700">
-                Rank
-              </label>
               <input
                 type="text"
                 id="title"
                 name="title"
                 required
-                className="mt-1 focus:ring-gray-400 focus:border-gray-400 block w-full text-xs border-gray-300 rounded-md p-2"
+                className="mt-1 focus:ring-gray-400 focus:border-gray-400 block w-full text-xs border-gray-300 rounded-sm border p-2"
                 placeholder="Should be drop down"
               />
             </div>
             <div>
-              <label
-                htmlFor="title"
-                className="block text-xs font-medium text-gray-700">
-                Deadline
-              </label>
               <input
                 type="date"
                 id="formClose"
                 name="formClose"
                 required
-                className="mt-1 mr-2 focus:ring-gray-400 focus:border-gray-400 block w-full border-gray-300 rounded-md p-2"
+                className="mt-1 mr-2 focus:ring-gray-400 focus:border-gray-400 block w-full border-gray-300 rounded-sm border p-2"
               />
             </div>
 
@@ -95,4 +111,4 @@ const StatusCreateForm: React.FC<Props> = ({}) => {
   );
 };
 
-export default StatusCreateForm;
+export default GoalCreateForm;

@@ -17,9 +17,8 @@ export interface GoalCreateType {
   title: string;
   description: string;
   rank: string;
-  deadline: Date;
+  deadline: Date | null;
   why: string[];
-  finished?: boolean[];
 }
 
 const goalSchema = new Schema({

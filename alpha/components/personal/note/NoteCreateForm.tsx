@@ -12,6 +12,7 @@ import { FaFolderPlus } from "react-icons/fa";
 import { FiMenu } from "react-icons/fi";
 import { IoFolderOpen } from "react-icons/io5";
 import RelatedDropDown from "./RelatedDropDown";
+import createNote from "@/utils/create/createNote";
 
 interface Props {
   handleBack: () => void;
@@ -40,24 +41,9 @@ const NoteCreateForm: React.FC<Props> = ({ handleBack }) => {
     fillDatas();
   }, []);
 
-  const handleSubmit = async () => {
-    try {
-      const response = await fetch("/api/note", {
-        method: "POST",
-        body: JSON.stringify({
-          user: userID,
-          title,
-          content,
-          related,
-          folder: currentFolder._id,
-        }),
-      });
-      if (response.ok) {
-        handleBack();
-      }
-    } catch (err) {
-      console.log("error");
-    }
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    createNote({ user: userID, title, content, folder: currentFolder._id });
   };
 
   return (
@@ -76,7 +62,7 @@ const NoteCreateForm: React.FC<Props> = ({ handleBack }) => {
           <section className="flex">
             <form
               onSubmit={handleSubmit}
-              className="bg-bg_white space-y-4 px-8 py-3 h-[75vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 w-3/4 flex flex-col">
+              className="bg-white space-y-4 px-8 py-3 h-[75vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 w-3/4 flex flex-col">
               <div>
                 <label className="block text-xs font-medium text-gray-700">
                   {currentFolder.name}/{related}-{title}-{currentFolder._id}

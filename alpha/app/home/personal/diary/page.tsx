@@ -1,7 +1,9 @@
+import DiaryCreateForm from "@/components/personal/diary/DiaryCreateForm";
+
 export default function DiaryPage() {
   return (
     <main>
-      <button className="p-4 ">Create Diary</button>
+      <DiaryCreateForm />
     </main>
   );
 }

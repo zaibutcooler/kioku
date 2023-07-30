@@ -5,6 +5,7 @@ import DropDown from "./scaffold/DropDown";
 import IconDropDown from "./scaffold/IconDropDown";
 import Checkbox from "./scaffold/CheckBox";
 import ChooseDays from "./scaffold/ChooseDays";
+import createTrackScaffold from "@/utils/create/createTrackScaffold";
 
 interface Props {
   handleBack: () => void;
@@ -42,35 +43,23 @@ const TrackActionScaffoldForm: React.FC<Props> = ({ handleBack }) => {
   let everyday = () => {
     if (repeatEvery.length === 7) {
       return true;
-    } else {
-      false;
     }
+    return false;
   };
 
   const userID = "64c16d804043c533448db52e";
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const submitData = {
+    createTrackScaffold({
       user: userID,
       name: title,
       countType,
-      count,
+      count: parseInt(count),
       goal,
-      everyday,
+      everyday: everyday(),
       repeat: repeatEvery,
       type: related,
-    };
-    try {
-      const response = await fetch("/api/track/scaffold", {
-        method: "POST",
-        body: JSON.stringify(submitData),
-      });
-      if (response.ok) {
-        handleBack();
-      }
-    } catch (err) {
-      console.log("error");
-    }
+    });
   };
 
   const fetchDatas = async () => {

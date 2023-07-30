@@ -23,7 +23,6 @@ export interface TrackScaffoldCreateType {
   everyday: boolean;
   repeat: string[];
   type: string;
-  hide?: boolean;
 }
 
 const trackScaffoldSchema = new Schema({

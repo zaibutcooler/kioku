@@ -14,6 +14,7 @@ import { BsFileMinus } from "react-icons/bs";
 import { RiRestartFill } from "react-icons/ri";
 import Effort from "./daily/Effort";
 import { TrackType } from "@/models/personal/Track";
+import createTrack from "@/utils/create/createTrack";
 
 interface Props {}
 
@@ -46,24 +47,14 @@ const TrackActionForm: React.FC<Props> = ({}) => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    try {
-      const response = await fetch("/api/track", {
-        method: "POST",
-        body: JSON.stringify({
-          user: userID,
-          item: selectedScaffold?._id,
-          countType: selectedScaffold?.countType,
-          count,
-          note,
-          effort,
-        }),
-      });
-      if (response.ok) {
-        window.alert("Okay");
-      }
-    } catch (err) {
-      console.log("error");
-    }
+    createTrack({
+      user: userID,
+      item: selectedScaffold?._id || "",
+      countType: selectedScaffold?.countType || "",
+      count,
+      note,
+      effort,
+    });
   };
 
   const userID = "64c16d804043c533448db52e";

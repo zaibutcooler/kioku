@@ -1,4 +1,5 @@
 "use client";
+import createDiary from "@/utils/create/createDiray";
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import ReactQuill from "react-quill";
@@ -12,22 +13,9 @@ const DiaryCreateForm: React.FC<Props> = ({}) => {
 
   const userID = "64c16d804043c533448db52e";
 
-  const handleSubmit = async () => {
-    try {
-      const response = await fetch("/api/diary", {
-        method: "POST",
-        body: JSON.stringify({
-          user: userID,
-          title,
-          body,
-        }),
-      });
-      if (response.ok) {
-        window.alert("okay");
-      }
-    } catch (err) {
-      console.log("error");
-    }
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    createDiary({ user: userID, title, body });
   };
 
   const dummy = [

@@ -1,46 +1,22 @@
 "use client";
+import createStatus from "@/utils/create/createStatus";
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import { IoRemove, IoRemoveOutline, IoRemoveSharp } from "react-icons/io5";
 
 interface Props {}
 
 const StatusCreateForm: React.FC<Props> = ({}) => {
   const [title, setTitle] = useState("");
   const [why, setWhy] = useState([""]);
-  const [whyCount, setWhyCount] = useState(1);
   const [lessons, setLessons] = useState([""]);
-  const [lessonCount, setLessonCount] = useState(1);
   const [note, setNote] = useState("");
   const [positive, setPositive] = useState(false);
 
   const userID = "";
-  const handleSubmit = async () => {
-    const requestBody = {
-      user: userID,
-      positive,
-      title,
-      why,
-      lessons,
-      note,
-    };
-
-    try {
-      const response = await fetch(`/api/mark?userID=${userID}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      });
-
-      if (response.ok) {
-        console.log("Form submitted successfully!");
-      } else {
-        console.error("Failed to submit the form.");
-      }
-    } catch (error) {
-      console.error("An error occurred while submitting the form:", error);
-    }
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    createStatus({ user: userID, title, why, lessons, note, positive });
   };
 
   return (
@@ -55,7 +31,7 @@ const StatusCreateForm: React.FC<Props> = ({}) => {
         <section className="flex">
           <form
             onSubmit={handleSubmit}
-            className="bg-bg_white space-y-4 px-8 py-3 h-[75vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-gray-100 w-full md:w-3/5">
+            className="bg-white space-y-4 px-8 py-3 h-[75vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-gray-100 w-full md:w-3/5">
             <div>
               <label
                 htmlFor="title"
@@ -99,16 +75,39 @@ const StatusCreateForm: React.FC<Props> = ({}) => {
                 What have you learnt?
               </label>
               {lessons.map((item, index) => (
-                <input
-                  type="text"
-                  name={`lessons[${index}].item`}
-                  required
-                  className="focus:ring-gray-400 focus:border-gray-400 block w-full text-xs border-gray-200 rounded-sm border p-2"
-                  placeholder="What have you learnt"
-                />
+                <div key={index} className="w-full flex my-2">
+                  <input
+                    type="text"
+                    name={`lessons[${index}].item`}
+                    value={lessons[index]}
+                    onChange={(e) => {
+                      const updatedLessons = [...lessons];
+                      updatedLessons[index] = e.target.value;
+                      setLessons([...updatedLessons]);
+                    }}
+                    required
+                    className=" focus:ring-gray-400 focus:border-gray-400 block w-full text-xs border-gray-200 rounded-sm border p-2"
+                    placeholder="What have you learnt"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const removedLessons = [...lessons];
+                      removedLessons.splice(index, 1);
+                      setLessons(removedLessons);
+                    }}
+                    className={`hover:bg-gray-100 py-1 px-2 ml-2 rounded-md ${
+                      index === 0 && "hidden"
+                    }`}>
+                    <IoRemoveOutline />
+                  </button>
+                </div>
               ))}
               <button
                 type="button"
+                onClick={() => {
+                  setLessons([...lessons, ""]);
+                }}
                 className="mt-2 inline-flex items-center px-3 py-2 border border-transparent text-xs leading-4 font-medium rounded-sm text-slate-600 bg-white hover:bg-slate-50 focus:outline-none focus:border-slate-700 border-gray-200 focus:ring-slate-500">
                 + Add More
               </button>
@@ -120,19 +119,40 @@ const StatusCreateForm: React.FC<Props> = ({}) => {
                 className="block text-xs  text-gray-700 font-semibold">
                 Why?
               </label>
-              {why.map((why, index) => (
-                <input
-                  type="text"
-                  name={`lessons[${index}].item`}
-                  value={why[index]}
-                  onChange={() => {}}
-                  required
-                  className="focus:ring-gray-400 focus:border-gray-400 block w-full text-xs border-gray-200 rounded-sm border p-2"
-                  placeholder="Why did this happened?"
-                />
+              {why.map((item, index) => (
+                <div key={index} className="my-2 w-full flex">
+                  <input
+                    type="text"
+                    name={`lessons[${index}].item`}
+                    value={why[index]}
+                    onChange={(e) => {
+                      const updatedWhy = [...why];
+                      updatedWhy[index] = e.target.value;
+                      setWhy(updatedWhy);
+                    }}
+                    required
+                    className=" focus:ring-gray-400 focus:border-gray-400 block w-full text-xs border-gray-200 rounded-sm border p-2"
+                    placeholder="Why did this happened?"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const removedWhy = [...why];
+                      removedWhy.splice(index, 1);
+                      setWhy(removedWhy);
+                    }}
+                    className={`hover:bg-gray-100 py-1 px-2 ml-2 rounded-md ${
+                      index === 0 && "hidden"
+                    }`}>
+                    <IoRemoveSharp />
+                  </button>
+                </div>
               ))}
               <button
                 type="button"
+                onClick={() => {
+                  setWhy([...why, ""]);
+                }}
                 className="mt-2 inline-flex items-center px-3 py-2  border-transparent text-xs leading-4 font-medium rounded-sm border text-slate-600 bg-white hover:bg-slate-50 focus:outline-none focus:border-slate-700 border-gray-200 focus:ring-slate-500">
                 + Add More
               </button>
