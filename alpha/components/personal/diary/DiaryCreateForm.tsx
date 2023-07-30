@@ -1,9 +1,11 @@
 "use client";
+import { RootState } from "@/data/store";
+import { setDiaries } from "@/data/store/diarySlice";
+import { DiaryType } from "@/models/personal/Diary";
 import createDiary from "@/utils/create/createDiray";
-import React, { useState } from "react";
-import { AiOutlineClose } from "react-icons/ai";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import fetchDiaries from "@/utils/fetch/fetchDiaries";
+import { formatClassicDate, formatDateTime } from "@/utils/formatDates";
+import React, { useEffect, useState } from "react";
 
 interface Props {}
 
@@ -11,32 +13,41 @@ const DiaryCreateForm: React.FC<Props> = ({}) => {
   const [body, setBody] = useState("");
   const [title, setTitle] = useState("");
 
+  const [myDiaries, setMyDiaries] = useState<DiaryType[]>([]);
+
   const userID = "64c16d804043c533448db52e";
+
+  useEffect(() => {
+    const getDatas = async () => {
+      const datas = await fetchDiaries(userID);
+      datas && setMyDiaries(datas);
+    };
+    getDatas();
+  }, []);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    createDiary({ user: userID, title, body });
+    const createdDiary = await createDiary({ user: userID, title, body });
+    setMyDiaries([createdDiary, ...myDiaries]);
   };
-
-  const dummy = [
-    { title: "Are You serious??", body: "none", date: "23 March 2023" },
-    { title: "Testing one two three", body: "none", date: "4 March 2023" },
-    { title: "Woww. That's suck", body: "none", date: "21 March 2023" },
-  ];
 
   return (
     <main className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-gray-200 bg-opacity-50 backdrop-filter backdrop-blur z-50 px-2 h-screen">
       <div className="bg-white shadow-md rounded-md w-[500px] md:w-[600px] lg:w-3/4 h-[80vh] md:h-[90vh] lg:h-[95vh] text-xs md:text-sm font-normal mx-3 md:mx-0 relative">
         <form onSubmit={handleSubmit} className="w-full h-full p-3 flex">
-          <section className="w-1/5 px-1 pt-3 pb-2">
-            <div className="w-full h-full border rounded-md px-2 text-xs font-semibold">
-              {dummy.map((item) => (
-                <div
-                  className="w-full p-2 bg-gray-50 my-1 rounded-md"
-                  key={item.title}>
-                  {item.title}
-                </div>
-              ))}
+          <section className="lg:w-1/5 px-1 pt-3 pb-2">
+            <div className="w-full h-full border rounded-md p-2">
+              {myDiaries &&
+                myDiaries.map((item) => (
+                  <div
+                    className="w-full p-2 mb-2 rounded-md font-semibold cursor-pointer hover:bg-gray-100"
+                    key={item.title}>
+                    <h2 className="text-sx mb-1">{item.title}</h2>
+                    <div className="text-[0.6rem] flex w-full justify-end font-medium text-gray-400">
+                      {formatDateTime(item.created).date}
+                    </div>
+                  </div>
+                ))}
             </div>
           </section>
           <section className="flex-grow py-2 px-3 w-4/5 flex flex-col">

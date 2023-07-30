@@ -19,7 +19,6 @@ export interface MinorGoalCreateType {
   deadline: Date;
   why: string[];
   major: string;
-  finished?: boolean[];
 }
 
 const minorGoalSchema = new Schema({

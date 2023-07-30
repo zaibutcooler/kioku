@@ -5,7 +5,7 @@ export interface DiaryType {
   user: string;
   title: string;
   body: string;
-  created: Date;
+  created: Date | string;
 }
 
 export interface DiaryCreateType {

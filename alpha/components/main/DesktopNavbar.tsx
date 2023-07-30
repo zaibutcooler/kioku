@@ -10,8 +10,6 @@ import {
   AiOutlineUser,
 } from "react-icons/ai";
 import Calendar from "../home/Calendar";
-import { store } from "@/store/store";
-import { toggleSidebar } from "@/store/displaySlice";
 import { RiStickyNote2Line } from "react-icons/ri";
 import NoteCreateForm from "../personal/note/NoteCreateForm";
 import TasksBar from "../home/TasksBar";
@@ -22,10 +20,6 @@ interface Props {}
 const DesktopNavbar: React.FC<Props> = () => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [showedTool, setShowedTool] = useState("");
-
-  const toggleBar = () => {
-    store.dispatch(toggleSidebar());
-  };
 
   const displayGadgets = () => {
     switch (showedTool) {
@@ -41,6 +35,8 @@ const DesktopNavbar: React.FC<Props> = () => {
         return null;
     }
   };
+
+  const toggleBar = () => {};
 
   const handleBack = () => {
     setShowedTool("");
