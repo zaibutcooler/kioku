@@ -1,3 +1,5 @@
+"use client";
+import { registerUser } from "@/utils/user";
 import { useState } from "react";
 
 interface Props {
@@ -10,7 +12,7 @@ const Register: React.FC<Props> = ({ toggleDisplay }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleRegister = (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (password.length < 8) {
@@ -21,12 +23,15 @@ const Register: React.FC<Props> = ({ toggleDisplay }) => {
       console.log("Password and confirm password do not match");
     }
 
+    const newUser = await registerUser({ username, email, password });
+    newUser ? console.log("success") : console.log("failed");
+
     // Perform registration logic here
-    console.log("Register clicked");
-    console.log("Username:", username);
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Confirm Password:", confirmPassword);
+    // console.log("Register clicked");
+    // console.log("Username:", username);
+    // console.log("Email:", email);
+    // console.log("Password:", password);
+    // console.log("Confirm Password:", confirmPassword);
   };
 
   return (

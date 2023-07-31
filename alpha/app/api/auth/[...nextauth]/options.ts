@@ -1,4 +1,4 @@
-import User from "@/models/User";
+import User, { UserType } from "@/models/User";
 import bcrypt from "bcrypt";
 import { connectDB } from "@/utils/connectDB";
 import { NextAuthOptions } from "next-auth";
@@ -15,7 +15,9 @@ export const options: NextAuthOptions = {
       },
       async authorize(credentials, req) {
         await connectDB();
-        const user = await User.findOne({ username: credentials?.username });
+        const user = await User.findOne({
+          username: credentials?.username,
+        });
 
         if (!credentials?.password || !user) {
           return null;
@@ -25,6 +27,7 @@ export const options: NextAuthOptions = {
           user.password
         );
         if (user && validPassword) {
+          console.log(user);
           return user;
         } else {
           return null;
@@ -37,11 +40,13 @@ export const options: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    jwt({ token, user }) {
+    async jwt({ token, user }) {
       return { ...token, ...user };
     },
-    session({ session, token }) {
-      return { ...session, ...token };
+    async session({ session, token, user }) {
+      session.user = token._doc as any;
+
+      return { ...session };
     },
   },
   pages: {

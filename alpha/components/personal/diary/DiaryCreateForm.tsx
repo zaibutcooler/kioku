@@ -18,8 +18,7 @@ const DiaryCreateForm: React.FC<Props> = ({}) => {
 
   const [myDiaries, setMyDiaries] = useState<DiaryType[]>([]);
 
-  const userID = ''
-
+  const userID = session?.user._id || "";
   useEffect(() => {
     const getDatas = async () => {
       const datas = await fetchDiaries(userID);
