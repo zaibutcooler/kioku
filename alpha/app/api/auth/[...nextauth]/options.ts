@@ -36,6 +36,14 @@ export const options: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
   ],
+  callbacks: {
+    jwt({ token, user }) {
+      return { ...token, ...user };
+    },
+    session({ session, token }) {
+      return { ...session, ...token };
+    },
+  },
   pages: {
     signIn: "/",
     signOut: "/",

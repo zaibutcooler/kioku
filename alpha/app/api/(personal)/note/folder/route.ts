@@ -83,11 +83,12 @@ export async function PATCH(req: Request) {
 export async function DELETE(req: Request) {
   try {
     await connectDB();
-
+    console.log("received");
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");
-
+    console.log("passs");
     const deletedItem = await Model.findByIdAndDelete(id);
+    console.log("passed");
     return new Response(JSON.stringify(deletedItem), {
       status: 200,
     });

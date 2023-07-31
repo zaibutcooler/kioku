@@ -1,4 +1,7 @@
-import { TrackScaffoldCreateType } from "@/models/personal/TrackScaffold";
+import {
+  TrackScaffoldCreateType,
+  TrackScaffoldType,
+} from "@/models/personal/TrackScaffold";
 
 const createTrackScaffold = async ({
   user,
@@ -28,7 +31,10 @@ const createTrackScaffold = async ({
     });
     if (response.ok) {
       console.log("success");
+      const datas: TrackScaffoldType = await response.json();
+      return datas;
     }
+    return false;
   } catch (err) {
     console.log("error", err);
   }

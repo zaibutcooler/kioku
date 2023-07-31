@@ -1,4 +1,4 @@
-import { DiaryCreateType } from "@/models/personal/Diary";
+import { DiaryCreateType, DiaryType } from "@/models/personal/Diary";
 
 const createDiary = async ({ user, title, body }: DiaryCreateType) => {
   const postBody = {
@@ -12,11 +12,12 @@ const createDiary = async ({ user, title, body }: DiaryCreateType) => {
       method: "POST",
       body: JSON.stringify(postBody),
     });
-    const datas = await response.json();
     if (response.ok) {
       console.log("success");
+      const datas: DiaryType = await response.json();
       return datas;
     }
+    return false;
   } catch (err) {
     console.log("error", err);
   }

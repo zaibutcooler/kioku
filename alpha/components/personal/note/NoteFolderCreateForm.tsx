@@ -1,21 +1,34 @@
 "use client";
 
+import {
+  NoteFolderCreateType,
+  NoteFolderType,
+} from "@/models/personal/NoteFolder";
 import createNoteFolder from "@/utils/create/createNoteFolder";
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
 interface Props {
   handleBack: () => void;
+  handleNewFolder: (newFolder: NoteFolderType) => void;
 }
 
-const NoteFolderCreateForm: React.FC<Props> = ({ handleBack }) => {
+const NoteFolderCreateForm: React.FC<Props> = ({
+  handleBack,
+  handleNewFolder,
+}) => {
   const [name, setName] = useState("");
 
   const userID = "64c16d804043c533448db52e";
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    createNoteFolder({ user: userID, name });
+    const newNote = await createNoteFolder({
+      user: userID,
+      name,
+    });
+    newNote && handleNewFolder(newNote);
+    handleBack();
   };
 
   return (

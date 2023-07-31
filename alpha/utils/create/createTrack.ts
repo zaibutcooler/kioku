@@ -1,4 +1,4 @@
-import { TrackCreateType } from "@/models/personal/Track";
+import { TrackCreateType, TrackType } from "@/models/personal/Track";
 
 const createTrack = async ({
   user,
@@ -24,7 +24,10 @@ const createTrack = async ({
     });
     if (response.ok) {
       console.log("success");
+      const datas: TrackType = await response.json();
+      return datas;
     }
+    return false;
   } catch (err) {
     console.log("error", err);
   }

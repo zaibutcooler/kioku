@@ -1,11 +1,13 @@
-import { NoteFolderCreateType } from "@/models/personal/NoteFolder";
+import {
+  NoteFolderCreateType,
+  NoteFolderType,
+} from "@/models/personal/NoteFolder";
 
 const createNoteFolder = async ({ user, name }: NoteFolderCreateType) => {
   const postBody = {
     user,
     name,
   };
-
   try {
     const response = await fetch("/api/note/folder", {
       method: "POST",
@@ -13,7 +15,10 @@ const createNoteFolder = async ({ user, name }: NoteFolderCreateType) => {
     });
     if (response.ok) {
       console.log("success");
+      const datas: NoteFolderType = await response.json();
+      return datas;
     }
+    return false;
   } catch (err) {
     console.log("error", err);
   }

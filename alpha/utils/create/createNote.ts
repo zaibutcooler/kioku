@@ -1,4 +1,4 @@
-import { NoteCreateType } from "@/models/personal/Note";
+import { NoteCreateType, NoteType } from "@/models/personal/Note";
 
 const createNote = async ({ user, title, content, folder }: NoteCreateType) => {
   const postBody = {
@@ -15,7 +15,10 @@ const createNote = async ({ user, title, content, folder }: NoteCreateType) => {
     });
     if (response.ok) {
       console.log("success");
+      const datas: NoteType = await response.json();
+      return datas;
     }
+    return false;
   } catch (err) {
     console.log("error", err);
   }

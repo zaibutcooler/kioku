@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from "react";
 import {
+  AiFillFolder,
   AiOutlineClose,
   AiOutlineDelete,
   AiOutlineFolder,
   AiOutlineFolderOpen,
+  AiOutlineLike,
 } from "react-icons/ai";
 import NoteFolderCreateForm from "./NoteFolderCreateForm";
 import { FaFolderPlus } from "react-icons/fa";
@@ -13,6 +15,13 @@ import { FiMenu } from "react-icons/fi";
 import { IoFolderOpen } from "react-icons/io5";
 import RelatedDropDown from "./RelatedDropDown";
 import createNote from "@/utils/create/createNote";
+import fetchNotes from "@/utils/fetch/fetchNotes";
+import fetchNoteFolders from "@/utils/fetch/fetchNoteFolders";
+import { NoteFolderType } from "@/models/personal/NoteFolder";
+import { NoteType } from "@/models/personal/Note";
+import { BsFolderCheck } from "react-icons/bs";
+import Confirm from "@/components/error/Confirm";
+import deleteNoteFolder from "@/utils/delete/deleteNoteFolders";
 
 interface Props {
   handleBack: () => void;
@@ -25,31 +34,80 @@ const NoteCreateForm: React.FC<Props> = ({ handleBack }) => {
 
   const userID = "64c16d804043c533448db52e";
 
-  const [currentFolder, setCurrentFolder] = useState<any>({});
+  const [currentFolder, setCurrentFolder] = useState<NoteFolderType | null>(
+    null
+  );
   const [showFolderForm, setShowFolderForm] = useState(false);
+  const [deleteFolder, setDeleteFolder] = useState("");
 
-  const [folders, setFolders] = useState<any[]>([]);
+  const [folders, setFolders] = useState<NoteFolderType[]>([]);
+  const [notes, setNotes] = useState<NoteType[]>([]);
+  const [openedFolder, setOpenedFolder] = useState("");
 
   useEffect(() => {
-    const fillDatas = async () => {
-      const responseOne = await fetch(`/api/note/folder?userID=${userID}`);
-      const folders: any[] = await responseOne.json();
-      setFolders(folders);
-
-      const responseTwo = await fetch(`/api/note?userID=${userID}`);
+    const getDatas = async () => {
+      const folderDatas = await fetchNoteFolders(userID);
+      folderDatas && setFolders(folderDatas);
+      folderDatas && setCurrentFolder(folderDatas[0]);
+      const noteDatas = await fetchNotes(userID);
+      noteDatas && setNotes(noteDatas);
     };
-    fillDatas();
+    getDatas();
   }, []);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    createNote({ user: userID, title, content, folder: currentFolder._id });
+    const newNote = createNote({
+      user: userID,
+      title,
+      content,
+      folder: currentFolder ? currentFolder._id : "",
+    });
+    newNote && setNotes([newNote, ...notes]);
+  };
+
+  const handleFolderDelete = async (id: string) => {
+    const deletedFolder = await deleteNoteFolder(id);
+    setFolders(folders.filter((folder) => folder._id !== deletedFolder._id));
+    setDeleteFolder("");
+  };
+
+  const displayNotes = (folder: NoteFolderType) => {
+    const items = notes.filter((note) => note.folder === folder._id);
+    return (
+      <div className="text-[0.7rem] font-semibold text-gray-700">
+        {items ? (
+          items.map((item) => (
+            <button key={item._id} className="flex mb-1 pl-3 items-center">
+              <AiOutlineLike className="mb-1" />
+              <span className="ml-2">{item.title}</span>
+            </button>
+          ))
+        ) : (
+          <div>...</div>
+        )}
+      </div>
+    );
   };
 
   return (
     <main className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-gray-200 bg-opacity-50 backdrop-filter backdrop-blur z-50 px-2">
       {showFolderForm && (
-        <NoteFolderCreateForm handleBack={() => setShowFolderForm(false)} />
+        <NoteFolderCreateForm
+          handleBack={() => setShowFolderForm(false)}
+          handleNewFolder={(newFolder) => {
+            setFolders([newFolder, ...folders]);
+          }}
+        />
+      )}
+      {deleteFolder && (
+        <Confirm
+          handleBack={() => setDeleteFolder("")}
+          handleConfirm={() => {
+            handleFolderDelete(deleteFolder);
+          }}
+          text="hi"
+        />
       )}
       <div className="mx-auto">
         <div className="bg-white shadow-md rounded-md py-4 w-full md:w-[600px] lg:w-[120vh] text-xs md:text-sm font-normal">
@@ -65,8 +123,9 @@ const NoteCreateForm: React.FC<Props> = ({ handleBack }) => {
               className="bg-white space-y-4 px-8 py-3 h-[75vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 w-3/4 flex flex-col">
               <div>
                 <label className="block text-xs font-medium text-gray-700">
-                  {currentFolder.name}/{related}-{title}-{currentFolder._id}
+                  {currentFolder ? `` : ""}
                 </label>
+
                 <div className="flex justify-between items-center">
                   <input
                     type="text"
@@ -119,27 +178,49 @@ const NoteCreateForm: React.FC<Props> = ({ handleBack }) => {
                   </button>
                 </div>
                 <div className="h-full px-4">
-                  {folders &&
-                    folders.map((item) => (
-                      <div key={item._id}>
-                        <div className=" font-semibold text-gray-700 text-xs flex justify-between w-full py-1 items-center">
-                          <button
-                            onClick={() => setCurrentFolder(item)}
-                            className="flex items-top">
-                            <AiOutlineFolder className="text-base mr-2" />
-                            {item.name}
-                          </button>
-                          <div className="flex items-center">
-                            <button className="p-1 rounded-full hover:bg-gray-100  mr-2">
-                              <AiOutlineDelete />
+                  {currentFolder
+                    ? folders.map((item) => (
+                        <div key={item._id}>
+                          <div className=" font-semibold text-gray-700 text-xs flex justify-between w-full py-1 items-center">
+                            <button
+                              onClick={() => setCurrentFolder(item)}
+                              className="flex items-top">
+                              {currentFolder._id === item._id ? (
+                                <AiFillFolder className="text-base mr-2" />
+                              ) : (
+                                <AiOutlineFolder className="text-base mr-2" />
+                              )}
+
+                              {item.name}
                             </button>
-                            <button className="p-1 rounded-full hover:bg-gray-100 ">
-                              <AiOutlineFolderOpen />
-                            </button>
+                            <div className="flex items-center">
+                              <button
+                                className="p-1 rounded-full hover:bg-gray-100  mr-2"
+                                onClick={() => {
+                                  setDeleteFolder(item._id);
+                                }}>
+                                <AiOutlineDelete />
+                              </button>
+
+                              <button
+                                className={`p-1 rounded-full hover:bg-gray-100 ${
+                                  openedFolder === item._id
+                                    ? "bg-gray-200 hover:bg-gray-300"
+                                    : ""
+                                }`}
+                                onClick={() => {
+                                  openedFolder === item._id
+                                    ? setOpenedFolder("")
+                                    : setOpenedFolder(item._id);
+                                }}>
+                                <AiOutlineFolderOpen />
+                              </button>
+                            </div>
                           </div>
+                          {openedFolder === item._id && displayNotes(item)}
                         </div>
-                      </div>
-                    ))}
+                      ))
+                    : "...loading"}
                 </div>
               </main>
             </div>

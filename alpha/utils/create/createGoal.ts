@@ -1,4 +1,4 @@
-import { GoalCreateType } from "@/models/personal/Goal";
+import { GoalCreateType, GoalType } from "@/models/personal/Goal";
 
 const createGoal = async ({
   user,
@@ -24,7 +24,10 @@ const createGoal = async ({
     });
     if (response.ok) {
       console.log("success");
+      const datas: GoalType = await response.json();
+      return datas;
     }
+    return false;
   } catch (err) {
     console.log("error", err);
   }

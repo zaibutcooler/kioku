@@ -5,6 +5,7 @@ import { DiaryType } from "@/models/personal/Diary";
 import createDiary from "@/utils/create/createDiray";
 import fetchDiaries from "@/utils/fetch/fetchDiaries";
 import { formatClassicDate, formatDateTime } from "@/utils/formatDates";
+import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 
 interface Props {}
@@ -13,9 +14,11 @@ const DiaryCreateForm: React.FC<Props> = ({}) => {
   const [body, setBody] = useState("");
   const [title, setTitle] = useState("");
 
+  const { data: session } = useSession();
+
   const [myDiaries, setMyDiaries] = useState<DiaryType[]>([]);
 
-  const userID = "64c16d804043c533448db52e";
+  const userID = ''
 
   useEffect(() => {
     const getDatas = async () => {
@@ -28,7 +31,7 @@ const DiaryCreateForm: React.FC<Props> = ({}) => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     const createdDiary = await createDiary({ user: userID, title, body });
-    setMyDiaries([createdDiary, ...myDiaries]);
+    createdDiary && setMyDiaries([createdDiary, ...myDiaries]);
   };
 
   return (

@@ -1,4 +1,4 @@
-import { MarkCreateType } from "@/models/personal/Mark";
+import { MarkCreateType, MarkType } from "@/models/personal/Mark";
 
 const createStatus = async ({
   user,
@@ -24,7 +24,10 @@ const createStatus = async ({
     });
     if (response.ok) {
       console.log("success");
+      const datas: MarkType = await response.json();
+      return datas;
     }
+    return false;
   } catch (err) {
     console.log("error", err);
   }
