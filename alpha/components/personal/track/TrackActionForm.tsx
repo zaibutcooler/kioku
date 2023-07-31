@@ -15,6 +15,7 @@ import { RiRestartFill } from "react-icons/ri";
 import Effort from "./daily/Effort";
 import { TrackType } from "@/models/personal/Track";
 import createTrack from "@/utils/create/createTrack";
+import { useSession } from "next-auth/react";
 
 interface Props {}
 
@@ -57,7 +58,9 @@ const TrackActionForm: React.FC<Props> = ({}) => {
     });
   };
 
-  const userID = "64c16d804043c533448db52e";
+  const { data: session } = useSession();
+  const userID = session?.user._id as string;
+
   useEffect(() => {
     const fetchScaffold = async () => {
       try {

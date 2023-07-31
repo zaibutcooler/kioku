@@ -1,6 +1,7 @@
 "use client";
 
 import createGoal from "@/utils/create/createGoal";
+import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
@@ -13,7 +14,9 @@ const GoalCreateForm: React.FC<Props> = ({}) => {
   const [deadline, setDeadline] = useState<Date | null>(null);
   const [why, setWhy] = useState([""]);
 
-  const userID = "64c16d804043c533448db52e";
+  const { data: session } = useSession();
+
+  const userID = session?.user._id as string;
   const handleSubmit = () => {
     createGoal({
       user: userID,

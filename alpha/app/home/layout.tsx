@@ -18,8 +18,8 @@ export default function HomeLayout({
         <nav>
           <Sidebar />
         </nav>
-        <section className="px-2 md:px-4 lg:px-8 w-full">
-          <div className="h-screen md:h-[calc(100vh-48px)] bg-gray-400 container px-0 md:px-8 overflow-y-auto">
+        <section className="px-2 md:px-4 lg:px-8 w-full  justify-center flex">
+          <div className="h-screen md:h-[calc(100vh-48px)] w-[900px] border container px-0 md:px-8 overflow-y-auto ">
             {children}
           </div>
         </section>

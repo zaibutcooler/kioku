@@ -22,6 +22,7 @@ import { NoteType } from "@/models/personal/Note";
 import { BsFolderCheck } from "react-icons/bs";
 import Confirm from "@/components/error/Confirm";
 import deleteNoteFolder from "@/utils/delete/deleteNoteFolders";
+import { useSession } from "next-auth/react";
 
 interface Props {
   handleBack: () => void;
@@ -32,7 +33,8 @@ const NoteCreateForm: React.FC<Props> = ({ handleBack }) => {
   const [content, setContent] = useState("");
   const [related, setRelated] = useState("default");
 
-  const userID = "64c16d804043c533448db52e";
+  const { data: session } = useSession();
+  const userID = session?.user._id as string;
 
   const [currentFolder, setCurrentFolder] = useState<NoteFolderType | null>(
     null
@@ -44,6 +46,8 @@ const NoteCreateForm: React.FC<Props> = ({ handleBack }) => {
   const [notes, setNotes] = useState<NoteType[]>([]);
   const [openedFolder, setOpenedFolder] = useState("");
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const getDatas = async () => {
       const folderDatas = await fetchNoteFolders(userID);
@@ -51,19 +55,23 @@ const NoteCreateForm: React.FC<Props> = ({ handleBack }) => {
       folderDatas && setCurrentFolder(folderDatas[0]);
       const noteDatas = await fetchNotes(userID);
       noteDatas && setNotes(noteDatas);
+      setIsLoading(false);
     };
     getDatas();
   }, []);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const newNote = createNote({
+    const newNote = await createNote({
       user: userID,
       title,
       content,
       folder: currentFolder ? currentFolder._id : "",
     });
     newNote && setNotes([newNote, ...notes]);
+    setTitle("");
+    setContent("");
+    setRelated("default");
   };
 
   const handleFolderDelete = async (id: string) => {
@@ -97,6 +105,7 @@ const NoteCreateForm: React.FC<Props> = ({ handleBack }) => {
           handleBack={() => setShowFolderForm(false)}
           handleNewFolder={(newFolder) => {
             setFolders([newFolder, ...folders]);
+            setCurrentFolder(newFolder);
           }}
         />
       )}
@@ -185,7 +194,8 @@ const NoteCreateForm: React.FC<Props> = ({ handleBack }) => {
                             <button
                               onClick={() => setCurrentFolder(item)}
                               className="flex items-top">
-                              {currentFolder._id === item._id ? (
+                              {currentFolder &&
+                              currentFolder._id === item._id ? (
                                 <AiFillFolder className="text-base mr-2" />
                               ) : (
                                 <AiOutlineFolder className="text-base mr-2" />
@@ -220,7 +230,7 @@ const NoteCreateForm: React.FC<Props> = ({ handleBack }) => {
                           {openedFolder === item._id && displayNotes(item)}
                         </div>
                       ))
-                    : "...loading"}
+                    : ""}
                 </div>
               </main>
             </div>

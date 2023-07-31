@@ -5,6 +5,7 @@ import {
   NoteFolderType,
 } from "@/models/personal/NoteFolder";
 import createNoteFolder from "@/utils/create/createNoteFolder";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
@@ -19,7 +20,8 @@ const NoteFolderCreateForm: React.FC<Props> = ({
 }) => {
   const [name, setName] = useState("");
 
-  const userID = "64c16d804043c533448db52e";
+  const { data: session } = useSession();
+  const userID = session?.user._id as string;
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();

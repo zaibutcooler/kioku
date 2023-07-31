@@ -14,6 +14,8 @@ import { RiStickyNote2Line } from "react-icons/ri";
 import NoteCreateForm from "../personal/note/NoteCreateForm";
 import TasksBar from "../home/TasksBar";
 import PersonalKit from "../personal/PersonalKit";
+import Link from "next/link";
+import { redirect } from "next/dist/server/api-utils";
 
 interface Props {}
 
@@ -59,7 +61,7 @@ const DesktopNavbar: React.FC<Props> = () => {
           </button>
         </section>
         <section>
-          <div>
+          <div className="flex">
             <button
               onClick={() => {
                 setShowedTool("note");
@@ -81,11 +83,12 @@ const DesktopNavbar: React.FC<Props> = () => {
               className="mx-2 px-1.5 py-1.5 items-center hover:bg-gray-100  rounded-sm border text-xl">
               <AiOutlineProfile />
             </button>
-            <button
+            <Link
+              href="/home/profile"
               onClick={() => {}}
               className="mx-2 px-1.5 py-1.5 items-center hover:bg-gray-100  rounded-sm border text-xl">
               <AiOutlineUser />
-            </button>
+            </Link>
           </div>
         </section>
       </div>

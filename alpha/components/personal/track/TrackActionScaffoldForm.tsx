@@ -6,6 +6,7 @@ import IconDropDown from "./scaffold/IconDropDown";
 import Checkbox from "./scaffold/CheckBox";
 import ChooseDays from "./scaffold/ChooseDays";
 import createTrackScaffold from "@/utils/create/createTrackScaffold";
+import { useSession } from "next-auth/react";
 
 interface Props {
   handleBack: () => void;
@@ -47,7 +48,9 @@ const TrackActionScaffoldForm: React.FC<Props> = ({ handleBack }) => {
     return false;
   };
 
-  const userID = "64c16d804043c533448db52e";
+  const { data: session } = useSession();
+  const userID = session?.user._id as string;
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     createTrackScaffold({
