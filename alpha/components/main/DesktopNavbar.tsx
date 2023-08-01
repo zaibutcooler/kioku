@@ -67,7 +67,7 @@ const DesktopNavbar: React.FC<Props> = () => {
                 setShowedTool("note");
               }}
               className={`mx-2 px-1.5 py-1.5 items-center hover:bg-gray-100  rounded-sm border text-xl ${
-                showedTool === "calendar" && "bg-gray-200"
+                showedTool === "note" && "bg-gray-200"
               }`}>
               <RiStickyNote2Line />
             </button>
@@ -85,7 +85,7 @@ const DesktopNavbar: React.FC<Props> = () => {
                 toggleGadget("taskbar");
               }}
               className={`mx-2 px-1.5 py-1.5 items-center hover:bg-gray-100  rounded-sm border text-xl ${
-                showedTool === "calendar" && "bg-gray-200"
+                showedTool === "taskbar" && "bg-gray-200"
               }`}>
               <AiOutlineProfile />
             </button>

@@ -1,5 +1,7 @@
 import Image from "next/image";
 import hero from "@/public/images/hero.png";
+import GetStartedButton from "../mini/GetStartedButton";
+import Link from "next/link";
 
 const HeroSection = () => {
   return (
@@ -19,13 +21,13 @@ const HeroSection = () => {
             conquer tasks, and stay focused. With intuitive features and smart
             reminders, you'll achieve your goals with ease.
           </p>
-          <div>
-            <button className="px-6 py-2 text-xs bg-black text-superwhite rounded-lg mr-4 border border-black">
-              Get Started
-            </button>
-            <button className="px-5 py-2 text-xs bg-superwhite font-semibold rounded-lg border border-black">
+          <div className="flex items-center">
+            <GetStartedButton />
+            <Link
+              href="/"
+              className="px-5 py-2 text-xs bg-superwhite font-semibold rounded-lg border border-black">
               Support
-            </button>
+            </Link>
           </div>
         </div>
       </div>

@@ -55,12 +55,14 @@ const Taskbar: React.FC<Props> = ({ handleBack }) => {
     <div className="fixed right-0 mt-4 mr-4">
       <div className="container mx-auto">
         <div className="max-w-xs mx-auto">
-          <div className="bg-white border shadow rounded-sm overflow-y-auto w-[38vh] min-h-[40vh]  max-h-[80vh] p-[2vh] scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-50">
+          <div className="bg-white border shadow rounded-sm overflow-y-auto w-[38vh] min-h-[40vh]  max-h-[80vh] p-[2vh] scrollbar-thin scrollbar-thumb-gray-100 scrollbar-track-gray-50">
             <h1 className="text-base mb-[1vh]">Tasks</h1>
             <section>
               {tasks.map((task) => (
-                <div key={task.title} className="mb-2 p-2 border">
-                  <h1 className="text-[0.7rem] mb-1 text-gray-800">
+                <div
+                  key={task.title}
+                  className="mb-2 p-2 border border-gray-100">
+                  <h1 className="text-[0.7rem] mb-2 text-gray-800">
                     {task.title}
                   </h1>
                   <p className="text-[0.5rem] text-gray-500 flex justify-end w-full">
