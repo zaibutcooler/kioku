@@ -3,13 +3,21 @@ import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 import { AiOutlineHome } from "react-icons/ai";
-import { FiLogOut, FiUser, FiUsers } from "react-icons/fi";
+import {
+  FiInfo,
+  FiLifeBuoy,
+  FiLogOut,
+  FiPhone,
+  FiUser,
+  FiUsers,
+} from "react-icons/fi";
+import { landingLinks, desktopPersonalLinks, projectLinks } from "@/data/Links";
 
 const Sidebar = () => {
   const [isFull, setIsFull] = useState(false);
 
   return (
-    <main className="h-[calc(100vh-48px)] border-r hidden md:block md:overflow-hidden">
+    <main className="h-[calc(100vh-48px)] border-r hidden md:block md:overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-gray-50 ">
       <section className="flex">
         <button
           className={
@@ -18,7 +26,89 @@ const Sidebar = () => {
           onClick={() => setIsFull(!isFull)}></button>
         <div className="w-2/3">
           {isFull ? (
-            <div className="w-48 lg:w-52">Full</div>
+            <section className="w-[180px] lg:w-52 p-4 font-semibold mb-2 overflow-y-auto h-full ">
+              <h1 className="px-4 mb-2">Links </h1>
+
+              <Link
+                href="/home"
+                className="flex items-center hover:bg-gray-100 w-full py-2 rounded-lg px-4">
+                <AiOutlineHome />
+                <span className="ml-3 text-xs font-bold mt-0.5">Home</span>
+              </Link>
+
+              <Link
+                href="/home"
+                className="flex items-center hover:bg-gray-100 w-full py-2 rounded-lg px-4">
+                <FiUser />
+                <span className="ml-3 text-xs font-bold mt-0.5">Personal</span>
+              </Link>
+
+              <Link
+                href="/home"
+                className="flex items-center hover:bg-gray-100 w-full py-2 rounded-lg px-4">
+                <FiUsers />
+                <span className="ml-3 text-xs font-bold mt-0.5">Connect</span>
+              </Link>
+              <div className="py-2">
+                <hr />
+              </div>
+              {desktopPersonalLinks.map((item) => (
+                <Link
+                  key={item.go}
+                  href={item.go}
+                  className="flex items-center hover:bg-gray-100 w-full py-2 rounded-lg px-4">
+                  {item.icon}
+                  <span className="ml-3 text-xs font-bold mt-0.5">
+                    {item.name}
+                  </span>
+                </Link>
+              ))}
+              <div className="py-2">
+                <hr />
+              </div>
+              {projectLinks.map((item) => (
+                <Link
+                  key={item.go}
+                  href={item.go}
+                  className="flex items-center hover:bg-gray-100 w-full py-2 rounded-lg px-4">
+                  {item.icon}
+                  <span className="ml-3 text-xs font-bold mt-0.5">
+                    {item.name}
+                  </span>
+                </Link>
+              ))}
+              <div className="py-2">
+                <hr />
+              </div>
+              <Link
+                href="/logout"
+                className="flex items-center hover:bg-gray-100 w-full py-2 rounded-lg px-4">
+                <FiLogOut />
+                <span className="ml-3 text-xs font-bold mt-0.5">Logout</span>
+              </Link>
+
+              <Link
+                href="/about"
+                className="flex items-center hover:bg-gray-100 w-full py-2 rounded-lg px-4">
+                <FiInfo />
+                <span className="ml-3 text-xs font-bold mt-0.5">About</span>
+              </Link>
+
+              <Link
+                href="/contact"
+                className="flex items-center hover:bg-gray-100 w-full py-2 rounded-lg px-4">
+                <FiPhone />
+                <span className="ml-3 text-xs font-bold mt-0.5">Contact</span>
+              </Link>
+
+              <Link
+                href="/support"
+                className="flex items-center hover:bg-gray-100 w-full py-2 rounded-lg px-4">
+                <FiLifeBuoy />
+                <span className="ml-3 text-xs font-bold mt-0.5">Support</span>
+              </Link>
+              <div className="pb-[16vh]"></div>
+            </section>
           ) : (
             <section className="w-14 px-1 flex flex-col items-center">
               <Link

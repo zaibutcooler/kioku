@@ -24,8 +24,28 @@ export const landingLinks = [
   { name: "Support", go: "#support", icon: <AiOutlineQuestionCircle /> },
 ];
 
-export const personalLinks = [
+export const mobilePersonalLinks = [
   { name: "Home", go: "/home/", icon: <AiOutlineHome /> },
+  { name: "My Goals", go: "/home/personal/goals", icon: <AiOutlineFlag /> },
+  {
+    name: "My tasks",
+    go: "/home/personal/tasks",
+    icon: <AiOutlineUnorderedList />,
+  },
+  {
+    name: "My Notes",
+    go: "/home/personal/notes",
+    icon: <AiOutlineFileText />,
+  },
+  { name: "Diary", go: "/home/personal/diary", icon: <AiOutlineBook /> },
+  {
+    name: "Achievements",
+    go: "/home/personal/accomplishments",
+    icon: <AiOutlineTrophy />,
+  },
+];
+
+export const desktopPersonalLinks = [
   { name: "My Goals", go: "/home/personal/goals", icon: <AiOutlineFlag /> },
   {
     name: "My tasks",

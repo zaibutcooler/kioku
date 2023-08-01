@@ -29,7 +29,7 @@ const DesktopNavbar: React.FC<Props> = () => {
         return <Calendar />;
       case "note":
         return <NoteCreateForm handleBack={handleBack} />;
-      case "tasks":
+      case "taskbar":
         return <TasksBar handleBack={handleBack} />;
       case "personal":
         return <PersonalKit handleBack={handleBack} />;
@@ -66,7 +66,9 @@ const DesktopNavbar: React.FC<Props> = () => {
               onClick={() => {
                 setShowedTool("note");
               }}
-              className="mx-2 px-1.5 py-1.5 items-center hover:bg-gray-100 rounded-sm border text-xl">
+              className={`mx-2 px-1.5 py-1.5 items-center hover:bg-gray-100  rounded-sm border text-xl ${
+                showedTool === "calendar" && "bg-gray-200"
+              }`}>
               <RiStickyNote2Line />
             </button>
             <button
@@ -74,13 +76,17 @@ const DesktopNavbar: React.FC<Props> = () => {
                 toggleGadget("calendar");
               }}
               className={`mx-2 px-1.5 py-1.5 items-center hover:bg-gray-100  rounded-sm border text-xl ${
-                showCalendar && "bg-gray-200"
+                showedTool === "calendar" && "bg-gray-200"
               }`}>
               <AiOutlineCalendar />
             </button>
             <button
-              onClick={() => {}}
-              className="mx-2 px-1.5 py-1.5 items-center hover:bg-gray-100  rounded-sm border text-xl">
+              onClick={() => {
+                toggleGadget("taskbar");
+              }}
+              className={`mx-2 px-1.5 py-1.5 items-center hover:bg-gray-100  rounded-sm border text-xl ${
+                showedTool === "calendar" && "bg-gray-200"
+              }`}>
               <AiOutlineProfile />
             </button>
             <Link
