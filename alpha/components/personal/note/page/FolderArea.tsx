@@ -8,7 +8,7 @@ import {
   AiOutlineFolder,
   AiOutlineFolderOpen,
 } from "react-icons/ai";
-import { FaFolderPlus } from "react-icons/fa";
+import { FaFile, FaFolder, FaFolderPlus, FaStickyNote } from "react-icons/fa";
 
 interface Props {
   folders: NoteFolderType[];
@@ -30,17 +30,27 @@ const FolderArea: React.FC<Props> = ({ folders, notes }) => {
   };
 
   return (
-    <div className="w-full h-full border rounded-sm p-5 font-semibold">
+    <div className="w-full h-full border rounded-sm py-5 px-3 font-semibold">
       <section className="w-full">
         <div className=" px-3 flex justify-between items-center pb-3 ">
-          <h1 className="font-semibold text-base">Folders</h1>
-          <button
-            onClick={() => {}}
-            className="p-1 border rounded-sm text-sm hover:bg-gray-50">
-            <FaFolderPlus />
-          </button>
-        </div>
+          <h1 className="font-semibold text-base pl-2">Your Notes</h1>
+          <div>
+            <button
+              onClick={() => {}}
+              className="p-1 border rounded-sm text-sm hover:bg-gray-50 mr-2">
+              <FaStickyNote />
+            </button>
 
+            <button
+              onClick={() => {}}
+              className="p-1 border rounded-sm text-sm hover:bg-gray-50">
+              <FaFolder />
+            </button>
+          </div>
+        </div>
+      </section>
+      <section className="px-2">
+        {" "}
         {folders &&
           folders.map((folder) => (
             <main key={folder._id}>
@@ -66,7 +76,6 @@ const FolderArea: React.FC<Props> = ({ folders, notes }) => {
             </main>
           ))}
       </section>
-      <section></section>
     </div>
   );
 };

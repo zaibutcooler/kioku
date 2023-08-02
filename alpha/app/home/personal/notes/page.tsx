@@ -18,6 +18,25 @@ export default function NotesPage() {
   );
   const [currentNote, setCurrentNote] = useState<NoteType | null>(null);
 
+  //content
+  const [view, setView] = useState("");
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+  const [related, setRelated] = useState("");
+
+  const toggleView = () => {};
+
+  const handleChange = (form: string, value: string) => {
+    if (form === "title") {
+      setTitle(value);
+    } else if (form === "body") {
+      setBody(value);
+    }
+    //still left
+  };
+
+  //
+
   useEffect(() => {
     const fillDatas = async () => {
       const folderDatas =
@@ -33,7 +52,14 @@ export default function NotesPage() {
   return (
     <main className="h-full flex w-full gap-4  py-4">
       <section className="h-full w-2/3 rounded-sm">
-        <NoteContent />
+        <NoteContent
+          title={title}
+          body={body}
+          handleChange={handleChange}
+          view={view}
+          related={related}
+          toggleView={toggleView}
+        />
       </section>
       <section className="h-full w-1/3 rounded-sm">
         <FolderArea folders={folders} notes={notes} />
