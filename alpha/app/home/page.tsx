@@ -15,7 +15,7 @@ export default function HomePage() {
       {/* <TrackActionCreateForm /> */}
       {/* <TrackActionForm /> */}
       {/* <GoalCreateForm /> */}
-      {/* {session?.user && <DiaryCreateForm />} */}
+      {session?.user && <DiaryCreateForm />}
     </main>
   );
 }

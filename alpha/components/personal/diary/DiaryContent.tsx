@@ -22,7 +22,7 @@ const DiaryContent = () => {
   }, []);
 
   return (
-    <main className="w-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-gray-50">
+    <main className="w-full overflow-y-auto">
       {toggleView ? (
         <section className="font-semibold p-3 border rounded-md min-h-[100vh] mb-4">
           <button
