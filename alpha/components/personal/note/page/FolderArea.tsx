@@ -21,9 +21,11 @@ const FolderArea: React.FC<Props> = ({ folders, notes }) => {
   const renderNotes = (folderID: string) => {
     const items = notes.filter((note) => note.folder === folderID);
     return (
-      <main>
+      <main className="text-xs">
         {items.map((item) => (
-          <div>{item.title}</div>
+          <div className="flex">
+            <span>{item.title}</span>
+          </div>
         ))}
       </main>
     );
@@ -65,10 +67,12 @@ const FolderArea: React.FC<Props> = ({ folders, notes }) => {
                   </button>
                   <button
                     className={`p-1.5 rounded-full hover:bg-gray-100 ${
-                      openedFolder === folder._id ? "bg-gray-300" : ""
+                      openedFolder === folder._id
+                        ? "bg-gray-300 hover:bg-gray-400"
+                        : ""
                     }`}
                     onClick={() => setOpenedFolder(folder._id)}>
-                    <AiOutlineFolderOpen />
+                    <AiOutlineUnorderedList />
                   </button>
                 </div>
               </div>
