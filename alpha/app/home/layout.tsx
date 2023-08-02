@@ -19,7 +19,7 @@ export default function HomeLayout({
           <Sidebar />
         </nav>
         <section className="px-2 md:px-4 lg:px-6 w-full  justify-center flex">
-          <div className="h-screen md:h-[calc(100vh-48px)] w-[900px] border container px-0 md:px-4 overflow-y-auto ">
+          <div className="h-screen md:h-[calc(100vh-48px)] w-[900px] border container px-0 md:px-4 overflow-y-auto  scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-gray-50">
             {children}
           </div>
         </section>

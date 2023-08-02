@@ -14,6 +14,7 @@ import {
   AiOutlineStar,
   AiOutlineMail,
   AiOutlineQuestionCircle,
+  AiOutlineDashboard,
 } from "react-icons/ai";
 
 export const landingLinks = [
@@ -48,6 +49,11 @@ export const mobilePersonalLinks = [
 export const desktopPersonalLinks = [
   { name: "My Goals", go: "/home/personal/goals", icon: <AiOutlineFlag /> },
   {
+    name: "Track Actions",
+    go: "/home/personal/track",
+    icon: <AiOutlineDashboard />,
+  },
+  {
     name: "My tasks",
     go: "/home/personal/tasks",
     icon: <AiOutlineUnorderedList />,
@@ -57,7 +63,7 @@ export const desktopPersonalLinks = [
     go: "/home/personal/notes",
     icon: <AiOutlineFileText />,
   },
-  { name: "Diary", go: "/home/personal/diary", icon: <AiOutlineBook /> },
+  { name: "My Diary", go: "/home/personal/diary", icon: <AiOutlineBook /> },
   {
     name: "Achievements",
     go: "/home/personal/accomplishments",
