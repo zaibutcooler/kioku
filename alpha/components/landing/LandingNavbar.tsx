@@ -36,7 +36,7 @@ const LandingNavbar = () => {
 
   return (
     <main className="hidden md:block  text-superblack font-semibold container mx-auto">
-      <div className="flex w-full justify-between bg-superwhite py-1.5 px-2 lg:px-4 items-center border-b border-gray-100 fixed top-0 left-0">
+      <div className="flex w-full justify-between bg-superwhite py-1.5 px-2 lg:px-4 items-center border-b border-gray-100 fixed top-0 left-0 h-14">
         <section className="flex items-center">
           <a className="ml-6 mr-4 font-bold text-lg" href="#root">
             Home
