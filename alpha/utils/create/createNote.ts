@@ -1,11 +1,18 @@
 import { NoteCreateType, NoteType } from "@/models/personal/Note";
 
-const createNote = async ({ user, title, content, folder }: NoteCreateType) => {
+const createNote = async ({
+  user,
+  title,
+  content,
+  folder,
+  related,
+}: NoteCreateType) => {
   const postBody = {
     user,
     title,
     content,
     folder,
+    related,
   };
 
   try {

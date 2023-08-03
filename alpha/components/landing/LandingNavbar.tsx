@@ -44,23 +44,27 @@ const LandingNavbar = () => {
         </section>
         <section className="flex items-center">
           <div className="flex item-center font-semibold text-sm text-slate-600 ">
-            {landingLinks.map((item) => (
-              <a className="mx-4 hover:text-superblack " href={item.go}>
-                {item.name}
-              </a>
-            ))}
+            <a className="mr-10 hover:text-superblack " href="#about">
+              About
+            </a>
+            <a className="mr-10 hover:text-superblack " href="#features">
+              Features
+            </a>
+            <a className="mr-10 hover:text-superblack " href="#contact">
+              Contact
+            </a>
           </div>
           <div>
             {session ? (
               <button
                 onClick={() => signOut()}
-                className="mx-3 px-2 py-1.5 border border-superblack rounded-lg w-[80px] font-normal text-center text-sm bg-black text-superwhite">
+                className="mx-3 px-5 py-1.5 border border-superblack rounded-lg font-normal text-center text-sm bg-black text-superwhite">
                 Log Out
               </button>
             ) : (
               <button
                 onClick={() => toggleDisplay("login")}
-                className="mx-3 px-4 py-1.5 border border-superblack rounded-lg w-[80px] font-normal text-center text-sm bg-black text-superwhite">
+                className="mx-3 px-4 py-1.5 border border-superblack rounded-lg  font-normal text-center text-sm bg-black text-superwhite">
                 Login
               </button>
             )}

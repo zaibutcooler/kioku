@@ -5,7 +5,7 @@ const ManageTimeSection = () => {
   return (
     <section
       className="min-h-screen md:pt-12 lg:pt-14  flex justify-center pb-12 md:pb-0"
-      id="root">
+      id="features">
       <div className="container w-[860px] px-0 md:px-2">
         <div className="mx-2 lg:px-[30px]">
           <h1 className="lg:text-4xl text-2xl font-black mb-2">

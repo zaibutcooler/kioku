@@ -1,5 +1,7 @@
 "use client";
 
+import { NoteCreateType, NoteType } from "@/models/personal/Note";
+import createNote from "@/utils/create/createNote";
 import { useState } from "react";
 
 interface Props {
@@ -8,7 +10,10 @@ interface Props {
   title: string;
   body: string;
   related: string;
-  toggleView: () => void;
+  toggleView: (input: string) => void;
+  handleNewNote: () => void;
+  handleEditNote: () => void;
+  hanldeDeleteNote: () => void;
 }
 
 const NoteContent: React.FC<Props> = ({
@@ -18,7 +23,14 @@ const NoteContent: React.FC<Props> = ({
   related,
   handleChange,
   toggleView,
+  handleNewNote,
+  handleEditNote,
+  hanldeDeleteNote,
 }) => {
+  const handleDeleteClick = () => {};
+
+  const handleEditClick = () => {};
+
   return (
     <div className="w-full h-full">
       {view === "create" && (
@@ -34,7 +46,12 @@ const NoteContent: React.FC<Props> = ({
               className="mb-1 border mr-2 focus:ring-gray-400 focus:border-gray-400 block w-full text-xs border-gray-200 rounded-sm p-2"
               placeholder="Your Title"
             />
-            <button className="py-1 px-4 mb-1 text-xs bg-black text-white rounded-sm">
+            <button
+              onClick={() => {
+                window.alert("clicked");
+                handleNewNote();
+              }}
+              className="py-1 px-4 mb-1 text-xs bg-black text-white rounded-sm">
               Create
             </button>
           </div>
@@ -54,14 +71,16 @@ const NoteContent: React.FC<Props> = ({
       {view === "read" && (
         <section className="w-full h-full border rounded-sm p-4">
           <div className="w-full flex justify-end">
-            <button className="px-1 font-semibold text-xs text-black rounded-sm">
+            <button
+              className="px-1 font-semibold text-xs text-black rounded-sm"
+              onClick={() => toggleView("")}>
               Close
             </button>
           </div>
           <main className="p-2">
-            <h1 className="font-semibold">This is title of the note</h1>
+            <h1 className="font-semibold mb-4">{title}</h1>
 
-            <div></div>
+            <div className="leading-loosen text-sm text-gray-600">{body}</div>
           </main>
         </section>
       )}

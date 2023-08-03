@@ -11,7 +11,9 @@ const AboutSection = () => {
   const [showDetail, setShowDetail] = useState(false);
 
   return (
-    <section className="min-h-screen md:pt-12 lg:pt-14 pb-12 md:pb-0" id="root">
+    <section
+      className="min-h-screen md:pt-12 lg:pt-14 pb-12 md:pb-0"
+      id="about">
       <div className="w-full flex justify-center">
         <div className="container w-[800px] px-2">
           <h1 className="lg:text-4xl text-2xl font-black mb-2">

@@ -5,7 +5,7 @@ import { RiUserLocationLine } from "react-icons/ri";
 
 const ContactSection = () => {
   return (
-    <section className="flex justify-center pt-16">
+    <section className="flex justify-center pt-16" id="contact">
       <main className="w-[1300px] h-screen flex items-center ">
         <div className="w-1/2 h-full  flex items-center border-r">
           <section className="h-3/4   w-full md:p-6 lg:p-8">
