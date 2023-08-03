@@ -67,6 +67,7 @@ const NoteCreateForm: React.FC<Props> = ({ handleBack }) => {
       title,
       content,
       folder: currentFolder ? currentFolder._id : "",
+      related,
     });
     newNote && setNotes([newNote, ...notes]);
     setTitle("");

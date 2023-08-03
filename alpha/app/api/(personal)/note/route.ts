@@ -69,6 +69,7 @@ export async function PATCH(req: Request) {
         content,
         folder,
         related,
+        updated: Date.now(),
       },
       { new: true }
     );

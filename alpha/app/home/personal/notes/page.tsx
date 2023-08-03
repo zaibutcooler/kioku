@@ -6,8 +6,10 @@ import NoteContent from "@/components/personal/note/page/NoteContent";
 import { NoteType } from "@/models/personal/Note";
 import { NoteFolderType } from "@/models/personal/NoteFolder";
 import createNote from "@/utils/create/createNote";
+import deleteNote from "@/utils/delete/deleteNotes";
 import fetchNoteFolders from "@/utils/fetch/fetchNoteFolders";
 import fetchNotes from "@/utils/fetch/fetchNotes";
+import updateNote from "@/utils/update/updateNote";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
@@ -32,11 +34,12 @@ export default function NotesPage() {
 
   const handleEditNoteView = (note: NoteType) => {
     setView("edit");
+    setID(note._id);
     setTitle(note.title);
     setBody(note.content);
     setRelated(note.related);
-    setCreated(note.created.toString);
-    note.updated && setUpdated(note.updated.toString);
+    setCreated(String(note.created));
+    note.updated && setUpdated(String(note.updated));
   };
 
   const handleReadNoteView = (note: NoteType) => {
@@ -63,9 +66,26 @@ export default function NotesPage() {
     }
   };
 
-  const handleEditNote = () => {};
+  const handleEditNote = async () => {
+    if (session?.user) {
+      const updatedNote = await updateNote(id, {
+        title,
+        content: body,
+        related,
+      });
+      if (updatedNote) {
+        const noteArray = [...notes];
+        const index = notes.findIndex((note) => note._id === updatedNote._id);
+        noteArray[index] = updatedNote;
+        setNotes(noteArray);
+      }
+      setView("read");
+    }
+  };
 
-  const handleDeleteNote = () => {};
+  const handleDeleteNote = async (input: NoteType) => {
+    setNotes(notes.filter((note) => note._id !== input._id));
+  };
 
   const handleDeleteFolder = (input: NoteFolderType) => {
     setFolders(folders.filter((folder) => folder._id !== input._id));
@@ -77,6 +97,7 @@ export default function NotesPage() {
 
   //content
   const [view, setView] = useState("");
+  const [id, setID] = useState("");
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [related, setRelated] = useState("");
@@ -129,6 +150,7 @@ export default function NotesPage() {
         <FolderArea
           folders={folders}
           notes={notes}
+          handleDeleteNote={handleDeleteNote}
           showNewFolderForm={() => setNewFolderForm(true)}
           handleNewNoteView={handleNewNoteView}
           handleEditNoteView={handleEditNoteView}

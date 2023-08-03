@@ -1,11 +1,13 @@
 import { NoteType } from "@/models/personal/Note";
 
-const fetchNotes = async (userID: string) => {
+const deleteNote = async (id: string) => {
   try {
-    const response = await fetch(`/api/note?userID=${userID}`);
-    const datas = await response.json();
+    const response = await fetch(`/api/note?id=${id}`, {
+      method: "DELETE",
+    });
+    const data = await response.json();
     if (response.ok) {
-      const result: NoteType[] = datas.slice().reverse();
+      const result: NoteType = data;
       return result;
     }
     return false;
@@ -14,4 +16,4 @@ const fetchNotes = async (userID: string) => {
   }
 };
 
-export default fetchNotes;
+export default deleteNote;

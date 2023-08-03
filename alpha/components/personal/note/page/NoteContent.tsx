@@ -12,8 +12,8 @@ interface Props {
   related: string;
   toggleView: (input: string) => void;
   handleNewNote: () => void;
-  handleEditNote: () => void;
-  hanldeDeleteNote: () => void;
+  handleEditNote: (id: string) => void;
+  hanldeDeleteNote: (input: NoteType) => void;
 }
 
 const NoteContent: React.FC<Props> = ({
@@ -33,7 +33,7 @@ const NoteContent: React.FC<Props> = ({
 
   return (
     <div className="w-full h-full">
-      {view === "create" && (
+      {(view === "create" || view === "edit") && (
         <section className="w-full h-full flex flex-col">
           <div className="w-full mb-2 flex">
             <input
@@ -48,11 +48,12 @@ const NoteContent: React.FC<Props> = ({
             />
             <button
               onClick={() => {
-                window.alert("clicked");
-                handleNewNote();
+                view === "edit"
+                  ? handleEditNote()
+                  : title.length > 0 && body.length > 0 && handleNewNote();
               }}
-              className="py-1 px-4 mb-1 text-xs bg-black text-white rounded-sm">
-              Create
+              className={`py-1 px-4 mb-1 text-xs bg-black text-white rounded-sm w-[80px] `}>
+              {view === "edit" ? "Save" : "Create"}
             </button>
           </div>
           <div className="flex-grow pb-1">
