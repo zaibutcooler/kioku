@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import DropDown from "./scaffold/DropDown";
 import IconDropDown from "./scaffold/IconDropDown";
@@ -7,6 +7,8 @@ import Checkbox from "./scaffold/CheckBox";
 import ChooseDays from "./scaffold/ChooseDays";
 import createTrackScaffold from "@/utils/create/createTrackScaffold";
 import { useSession } from "next-auth/react";
+import { TrackScaffoldType } from "@/models/personal/TrackScaffold";
+import fetchTrackScaffold from "@/utils/fetch/fetchTrackScaffolds";
 
 interface Props {
   handleBack: () => void;
@@ -20,7 +22,19 @@ const TrackActionScaffoldForm: React.FC<Props> = ({ handleBack }) => {
   const [countType, setCountType] = useState("default");
   const [repeatEvery, setRepeatEvery] = useState<string[]>([]);
 
-  const [datas, setDatas] = useState([]);
+  const { data: session } = useSession();
+  const userID = session?.user._id as string;
+
+  const [scaffolds, setScaffolds] = useState<TrackScaffoldType[]>([]);
+  useEffect(() => {
+    const fillDatas = async () => {
+      if (session?.user) {
+        const scaffoldDatas = await fetchTrackScaffold(userID);
+        scaffoldDatas && setScaffolds(scaffoldDatas);
+      }
+    };
+    fillDatas();
+  }, []);
 
   const days = [
     "monday",
@@ -33,7 +47,6 @@ const TrackActionScaffoldForm: React.FC<Props> = ({ handleBack }) => {
   ];
 
   const [showChooseDays, setShowChooseDays] = useState(false);
-  const iconOptions = [{ value: "book" }, { value: "work" }, { value: "idea" }];
   const countOptions = [
     { value: "hour" },
     { value: "minute" },
@@ -48,12 +61,9 @@ const TrackActionScaffoldForm: React.FC<Props> = ({ handleBack }) => {
     return false;
   };
 
-  const { data: session } = useSession();
-  const userID = session?.user._id as string;
-
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    createTrackScaffold({
+    const createdScaffold = await createTrackScaffold({
       user: userID,
       name: title,
       countType,
@@ -63,17 +73,7 @@ const TrackActionScaffoldForm: React.FC<Props> = ({ handleBack }) => {
       repeat: repeatEvery,
       type: related,
     });
-  };
-
-  const fetchDatas = async () => {
-    try {
-      const response = await fetch(`/api/track/scaffold?userID=${userID}`);
-      if (response.ok) {
-        handleBack();
-      }
-    } catch (err) {
-      console.log("error");
-    }
+    createdScaffold && setScaffolds([createdScaffold, ...scaffolds]);
   };
 
   return (
@@ -81,14 +81,16 @@ const TrackActionScaffoldForm: React.FC<Props> = ({ handleBack }) => {
       <div className="bg-white shadow-md rounded-md py-4 w-[500px] md:w-[600px] lg:w-[120vh] text-xs md:text-sm font-normal mx-3 md:mx-0">
         <div className="h-[40px] px-8 flex border-b border-gray-100 justify-between items-top">
           <span className="font-semibold">Actions You Want To Track</span>
-          <button onClick={() => {}}>
+          <button onClick={handleBack}>
             <AiOutlineClose className="font-bold" />
           </button>
         </div>
         <section className="flex">
           <div className="p-3 w-2/5 hidden md:block  border-r">
             {/* // part one */}
-            <main className="w-full h-full bg-white"></main>
+            <main className="w-full h-full bg-white">
+              {scaffolds && scaffolds.map((item) => <div>{item.name}</div>)}
+            </main>
           </div>
           <form
             onSubmit={handleSubmit}
