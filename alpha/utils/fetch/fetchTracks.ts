@@ -16,3 +16,16 @@ const fetchTracks = async (userID: string, scaffoldID: string) => {
 };
 
 export default fetchTracks;
+
+export const fetchAllTracks = async (userID: string) => {
+  try {
+    const response = await fetch(`/api/track?userID=${userID}`);
+    const datas = await response.json();
+    if (response.ok) {
+      const result: TrackType[] = datas.slice().reverse();
+      return result;
+    }
+  } catch (err) {
+    console.log("error", err);
+  }
+};

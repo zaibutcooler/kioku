@@ -1,18 +1,21 @@
 "use client";
 import { RootState } from "@/data/store";
 import { setDiaries } from "@/data/store/diarySlice";
+import { setGadget } from "@/data/store/gadgetSlice";
 import { DiaryType } from "@/models/personal/Diary";
 import createDiary from "@/utils/create/createDiray";
 import fetchDiaries from "@/utils/fetch/fetchDiaries";
 import { formatClassicDate, formatDateTime } from "@/utils/formatDates";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 interface Props {
-  handleBack: () => void;
+  handleReset: () => void;
+  handleDone: () => void;
 }
 
-const DiaryCreateForm: React.FC<Props> = ({}) => {
+const DiaryCreateForm: React.FC<Props> = ({ handleReset }) => {
   const [body, setBody] = useState("");
   const [title, setTitle] = useState("");
 
@@ -21,6 +24,7 @@ const DiaryCreateForm: React.FC<Props> = ({}) => {
   const [myDiaries, setMyDiaries] = useState<DiaryType[]>([]);
 
   const userID = session?.user._id || "";
+  const dispatch = useDispatch();
   useEffect(() => {
     const getDatas = async () => {
       const datas = await fetchDiaries(userID);
@@ -87,12 +91,19 @@ const DiaryCreateForm: React.FC<Props> = ({}) => {
                   Add Image
                 </label>
               </div>
-
-              <button
-                type="submit"
-                className="px-4 py-1.5 rounded-sm bg-black text-white hover:bg-gray-900">
-                Done
-              </button>
+              <div>
+                <button
+                  type="button"
+                  onClick={() => dispatch(setGadget(""))}
+                  className="px-4 py-1.5 rounded-sm text-black font-semibold mr-4">
+                  Back
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-1.5 rounded-sm bg-black text-white hover:bg-gray-900">
+                  Done
+                </button>
+              </div>
             </div>
           </section>
         </form>

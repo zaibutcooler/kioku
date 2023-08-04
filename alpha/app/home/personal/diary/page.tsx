@@ -2,6 +2,7 @@ import Link from "next/link";
 import DiaryCreateForm from "@/components/personal/diary/DiaryCreateForm";
 import DiaryProgressForm from "@/components/personal/diary/DiaryContent";
 import DiaryContent from "@/components/personal/diary/DiaryContent";
+import WriteDiaryButton from "@/components/personal/diary/WriteDiaryButton";
 
 export default function DiaryPage() {
   return (
@@ -17,9 +18,7 @@ export default function DiaryPage() {
             of wonderful memories
           </p>
           <div className="w-full flex justify-end">
-            <button className="py-2 rounded-md px-4 bg-black text-white text-xs">
-              Write Diary
-            </button>
+            <WriteDiaryButton />
           </div>
         </div>
       </section>

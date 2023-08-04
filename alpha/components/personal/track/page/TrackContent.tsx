@@ -8,11 +8,17 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Line } from "rc-progress";
+import fetchTracks from "@/utils/delete/deleteTracks";
+import { fetchAllTracks } from "@/utils/fetch/fetchTracks";
+import MainTrackerForm from "../MainTrackerForm";
 
 const TrackContent = () => {
   const dispatch = useDispatch();
   const [scaffolds, setScaffolds] = useState<TrackScaffoldType[]>([]);
+  const [tracks, setTracks] = useState<TrackType[]>([]);
   const [displayedTracks, setDisplayedTracks] = useState<TrackType[]>([]);
+  const [currentScaffold, setCurrentScaffold] =
+    useState<TrackScaffoldType | null>(null);
 
   const { data: session } = useSession();
 
@@ -21,6 +27,9 @@ const TrackContent = () => {
       if (session?.user) {
         const scaffoldDatas = await fetchTrackScaffold(session.user._id);
         scaffoldDatas && setScaffolds(scaffoldDatas);
+        const trackDatas = await fetchAllTracks(session.user._id);
+        trackDatas && setTracks(trackDatas);
+        console.log("tracks", tracks);
       }
     };
 
@@ -34,8 +43,10 @@ const TrackContent = () => {
             {scaffolds &&
               scaffolds.map((item, index) => (
                 <div className="mb-2 p-2 border rounded-md" key={index}>
-                  <span className="pb-2">{item.name}</span>
-                  <Line percent={10} strokeWidth={3} strokeColor="#000" />
+                  <span className="">{item.name}</span>
+                  <div className="mt-2">
+                    <Line percent={10} strokeWidth={3} strokeColor="#000" />
+                  </div>
                 </div>
               ))}
           </div>
@@ -52,13 +63,11 @@ const TrackContent = () => {
       </div>
       <div className="w-2/3 h-full rounded-sm border">
         <section className="p-2">
-          {" "}
-          {scaffolds &&
-            scaffolds.map((item, index) => (
-              <div className="mb-2 p-2 border rounded-md" key={index}>
-                {item.name}
-              </div>
-            ))}
+          <MainTrackerForm
+            handleDone={}
+            handleReset={}
+            currentScaffold={currentScaffold}
+          />
         </section>
       </div>
     </main>
