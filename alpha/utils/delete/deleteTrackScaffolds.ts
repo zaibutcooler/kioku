@@ -1,11 +1,15 @@
 import { TrackScaffoldType } from "@/models/personal/TrackScaffold";
 
-const deleteTrackScaffold = async (userID: string) => {
+export const deleteTrackScaffold = async (scaffoldID: string) => {
   try {
-    const response = await fetch(`/api/track/scaffold?userID=${userID}`);
-    const datas = await response.json();
+    console.log("started");
+    const response = await fetch(`/api/track/scaffold?id=${scaffoldID}`, {
+      method: "DELETE",
+    });
+    console.log("passed one");
+
     if (response.ok) {
-      const result: TrackScaffoldType[] = datas.slice().reverse();
+      const result: TrackScaffoldType = await response.json();
       return result;
     }
   } catch (err) {
@@ -13,4 +17,18 @@ const deleteTrackScaffold = async (userID: string) => {
   }
 };
 
-export default deleteTrackScaffold;
+export const hideTrackScaffold = async (id: string) => {
+  try {
+    const response = await fetch(`/api/track/scaffold?id=${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ hide: true }),
+    });
+
+    if (response.ok) {
+      const result: TrackScaffoldType = await response.json();
+      return result;
+    }
+  } catch (err) {
+    console.log("error", err);
+  }
+};

@@ -8,6 +8,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        "font-classic": "var(--font-yellowtail)",
+      },
       colors: {
         primary: "#FF5A5F",
         secondary: "#B9B5B2",

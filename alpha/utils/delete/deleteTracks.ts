@@ -1,10 +1,10 @@
 import { TrackType } from "@/models/personal/Track";
 
-const fetchTracks = async (userID: string, scaffoldID: string) => {
+export const deleteTracks = async (userID: string, id: string) => {
   try {
-    const response = await fetch(
-      `/api/track?userID=${userID}&scaffoldID=${scaffoldID}`
-    );
+    const response = await fetch(`/api/track?userID=${userID}&id=${id}`, {
+      method: "DELETE",
+    });
     const datas = await response.json();
     if (response.ok) {
       const result: TrackType[] = datas.slice().reverse();
@@ -14,5 +14,3 @@ const fetchTracks = async (userID: string, scaffoldID: string) => {
     console.log("error", err);
   }
 };
-
-export default fetchTracks;

@@ -54,7 +54,7 @@ const Sidebar = () => {
               </div>
               {desktopPersonalLinks.map((item) => (
                 <Link
-                  key={item.go}
+                  key={item.name}
                   href={item.go}
                   className="flex items-center hover:bg-gray-100 w-full py-2 rounded-lg px-4">
                   {item.icon}
@@ -68,7 +68,7 @@ const Sidebar = () => {
               </div>
               {projectLinks.map((item) => (
                 <Link
-                  key={item.go}
+                  key={item.name}
                   href={item.go}
                   className="flex items-center hover:bg-gray-100 w-full py-2 rounded-lg px-4">
                   {item.icon}

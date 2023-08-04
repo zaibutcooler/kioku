@@ -8,17 +8,19 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Line } from "rc-progress";
-import fetchTracks from "@/utils/delete/deleteTracks";
-import { fetchAllTracks, fetchTrackWithDay } from "@/utils/fetch/fetchTracks";
+import { fetchTrackWithDay } from "@/utils/fetch/fetchTracks";
 import MainTrackerForm from "./MainTrackerForm";
 import createTrack from "@/utils/create/createTrack";
 import { AiOutlineDelete, AiOutlineEyeInvisible } from "react-icons/ai";
+import Confirm from "@/components/error/Confirm";
+import {
+  deleteTrackScaffold,
+  hideTrackScaffold,
+} from "@/utils/delete/deleteTrackScaffolds";
 
 const TrackContent = () => {
   const dispatch = useDispatch();
   const [scaffolds, setScaffolds] = useState<TrackScaffoldType[]>([]);
-  const [tracks, setTracks] = useState<TrackType[]>([]);
-  const [displayedTracks, setDisplayedTracks] = useState<TrackType[]>([]);
 
   const [currentScaffold, setCurrentScaffold] =
     useState<TrackScaffoldType | null>(null);
@@ -26,19 +28,26 @@ const TrackContent = () => {
   const [currentTrack, setCurrentTrack] = useState<TrackType | null>(null);
   const [mainTrack, setMainTrack] = useState<TrackType[]>([]);
 
+  const [confirmHide, setConfirmHide] = useState("");
+  const [confirmDelete, setConfirmDelete] = useState("");
+
   const { data: session } = useSession();
 
   useEffect(() => {
     const fillDatas = async () => {
       if (session?.user) {
         const scaffoldDatas = await fetchTrackScaffold(session.user._id);
-        scaffoldDatas && setScaffolds(scaffoldDatas);
-        !currentTrack && setCurrentScaffold(scaffolds[0]);
-        const trackDatas = await fetchAllTracks(session.user._id);
-        const trackDays = await fetchTrackWithDay(session.user._id, "");
-        trackDays && setMainTrack(trackDays);
-        console.log(trackDays);
-        // trackDatas && setTracks(trackDatas);
+        const filteredScaffolds = await scaffoldDatas?.filter(
+          (item) => item.hide !== true
+        );
+
+        !currentTrack &&
+          filteredScaffolds &&
+          setCurrentScaffold(filteredScaffolds[0]);
+        filteredScaffolds && setScaffolds(filteredScaffolds);
+
+        const trackDatas = await fetchTrackWithDay(session.user._id, "");
+        trackDatas && setMainTrack(trackDatas);
       }
     };
 
@@ -48,7 +57,7 @@ const TrackContent = () => {
   const handleSubmit = async (input: TrackCreateType) => {
     const newTrack = await createTrack(input);
     if (newTrack) {
-      const trackArray = [...tracks];
+      const trackArray = [...mainTrack];
       const index = trackArray.findIndex((item) => item._id === newTrack._id);
       trackArray[index] = newTrack;
       setMainTrack(trackArray);
@@ -58,7 +67,7 @@ const TrackContent = () => {
 
   const handleChoose = (input: TrackScaffoldType) => {
     setCurrentScaffold(input);
-    const track = tracks.find((item) => item.item === input._id);
+    const track = mainTrack.find((item) => item.item === input._id);
     track ? setCurrentTrack(track) : setCurrentTrack(null);
   };
 
@@ -72,12 +81,44 @@ const TrackContent = () => {
     }
   };
 
-  const handleDelete = () => {};
+  const handleDelete = async () => {
+    if (session?.user && confirmDelete) {
+      window.alert("clicked");
+      const deletedScaffold = await deleteTrackScaffold(confirmDelete);
+      console.log("ds", deletedScaffold);
+      setScaffolds(
+        scaffolds.filter((item) => item._id !== deletedScaffold?._id)
+      );
+      setConfirmDelete("");
+    }
+  };
 
-  const handleHide = () => {};
+  const handleHide = async () => {
+    if (session?.user && confirmHide) {
+      const hidedScaffold = await hideTrackScaffold(confirmHide);
+      setScaffolds(scaffolds.filter((item) => item._id !== hidedScaffold?._id));
+      setConfirmHide("");
+    }
+  };
 
   return (
     <main className="h-[500px] gap-4 w-full flex">
+      {confirmHide && (
+        <Confirm
+          handleBack={() => {
+            setConfirmHide("");
+          }}
+          handleConfirm={handleHide}
+          text="hide"
+        />
+      )}
+      {confirmDelete && (
+        <Confirm
+          handleBack={() => setConfirmDelete("")}
+          handleConfirm={handleDelete}
+          text="delete"
+        />
+      )}
       <div className="w-1/3 h-full rounded-sm border p-4">
         <section className="h-full overflow-y-auto w-full ">
           <div className="text-sx font-semibold">
@@ -89,15 +130,21 @@ const TrackContent = () => {
                       {item.name}
                     </button>
                     <div className="flex gap-2">
-                      <button className="p-1 rounded-full hover:bg-gray-200">
+                      <button
+                        className="p-1 rounded-full hover:bg-gray-200"
+                        onClick={() => setConfirmHide(item._id)}>
                         <AiOutlineEyeInvisible />
                       </button>
-                      <button className="p-1 rounded-full hover:bg-gray-200">
+                      <button
+                        className="p-1 rounded-full hover:bg-gray-200"
+                        onClick={() => setConfirmDelete(item._id)}>
                         <AiOutlineDelete />
                       </button>
                     </div>
                   </div>
-                  <div className="mt-2" onClick={() => handleChoose(item)}>
+                  <div
+                    className="mt-2 cursor-pointer"
+                    onClick={() => handleChoose(item)}>
                     <Line
                       percent={getPercent(item)}
                       strokeWidth={3}

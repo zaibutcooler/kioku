@@ -66,7 +66,7 @@ export async function POST(req: Request) {
 export async function PATCH(req: Request) {
   try {
     await connectDB();
-    const { user, name, countType, count, goal, everyday, repeat, type } =
+    const { user, name, countType, count, goal, everyday, repeat, type, hide } =
       await req.json();
 
     const { searchParams } = new URL(req.url);
@@ -82,6 +82,7 @@ export async function PATCH(req: Request) {
         goal,
         everyday,
         repeat,
+        hide,
         type,
       },
       { new: true }
@@ -98,6 +99,7 @@ export async function PATCH(req: Request) {
 }
 
 export async function DELETE(req: Request) {
+  console.log("started");
   try {
     await connectDB();
 
@@ -105,6 +107,7 @@ export async function DELETE(req: Request) {
     const id = searchParams.get("id");
 
     const deletedItem = await Model.findByIdAndDelete(id);
+    console.log("deleted");
     return new Response(JSON.stringify(deletedItem), {
       status: 200,
     });
