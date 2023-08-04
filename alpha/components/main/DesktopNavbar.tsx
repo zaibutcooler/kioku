@@ -5,9 +5,17 @@ import Login from "../auth/Login";
 import Register from "../auth/Register";
 import {
   AiOutlineCalendar,
+  AiOutlineCheckSquare,
+  AiOutlineCodepen,
+  AiOutlineFlag,
+  AiOutlineForm,
   AiOutlineMenu,
   AiOutlineProfile,
+  AiOutlineProject,
+  AiOutlineTool,
+  AiOutlineTrademark,
   AiOutlineUser,
+  AiOutlineVerified,
 } from "react-icons/ai";
 import Calendar from "../home/Calendar";
 import { RiStickyNote2Line } from "react-icons/ri";
@@ -16,41 +24,78 @@ import TasksBar from "../home/TasksBar";
 import PersonalKit from "../personal/PersonalKit";
 import Link from "next/link";
 import { redirect } from "next/dist/server/api-utils";
+import DiaryCreateForm from "../personal/diary/DiaryCreateForm";
+import TrackActionScaffoldForm from "../personal/track/TrackActionScaffoldForm";
+import TrackActionForm from "../personal/track/TrackActionForm";
+import TaskCreateForm from "../personal/task/TaskCreateForm";
+import GoalCreateForm from "../personal/goal/GoalCreateForm";
+import StatusCreateForm from "../personal/status/StatusCreateForm";
+import Gadgets from "./Gadgets";
+import { useDispatch, useSelector } from "react-redux";
+import { clearGadget, setGadget } from "@/data/store/gadgetSlice";
+import { RootState } from "@/data/store";
+import { BsPencil } from "react-icons/bs";
 
 interface Props {}
 
 const DesktopNavbar: React.FC<Props> = () => {
-  const [showCalendar, setShowCalendar] = useState(false);
-  const [showedTool, setShowedTool] = useState("");
+  const showedGadget = useSelector(
+    (state: RootState) => state.gadget.showedGadget
+  );
+  const dispatch = useDispatch();
 
-  const displayGadgets = () => {
-    switch (showedTool) {
-      case "calendar":
-        return <Calendar />;
-      case "note":
-        return <NoteCreateForm handleBack={handleBack} />;
-      case "taskbar":
-        return <TasksBar handleBack={handleBack} />;
-      case "personal":
-        return <PersonalKit handleBack={handleBack} />;
-      default:
-        return null;
-    }
-  };
+  const [pencilDropDown, setPencilDropDown] = useState(false);
+  const [goalDropDown, setGoalDropDown] = useState(false);
+
+  const pencilArray = [
+    {
+      name: "Write Note",
+      function: () => {
+        dispatch(setGadget("note"));
+      },
+    },
+    {
+      name: "Write Diary",
+      function: () => {
+        dispatch(setGadget("diary"));
+      },
+    },
+    // {
+    //   name: "Add Tasks",
+    //   function: () => {
+    //     dispatch(setGadget("task"));
+    //   },
+    // },
+  ];
+
+  const goalArray = [
+    {
+      name: "Finish Actions",
+      function: () => {
+        dispatch(setGadget("track"));
+      },
+    },
+    {
+      name: "Add More Actions",
+      function: () => {
+        dispatch(setGadget("scaffold"));
+      },
+    },
+    {
+      name: "Add Goals",
+      function: () => {
+        dispatch(setGadget("goal"));
+      },
+    },
+    {
+      name: "Add Status",
+      function: () => {
+        dispatch(setGadget("status"));
+      },
+    },
+  ];
 
   const toggleBar = () => {};
-
-  const handleBack = () => {
-    setShowedTool("");
-  };
-
-  const toggleGadget = (input: string) => {
-    if (showedTool === "") {
-      setShowedTool(input);
-    } else {
-      setShowedTool("");
-    }
-  };
 
   return (
     <main className="hidden md:block bg-superwhite text-superblack font-semibold">
@@ -64,41 +109,89 @@ const DesktopNavbar: React.FC<Props> = () => {
           <div className="flex">
             <button
               onClick={() => {
-                setShowedTool("note");
+                showedGadget === "calendar"
+                  ? dispatch(clearGadget())
+                  : dispatch(setGadget("calendar"));
               }}
               className={`mx-2 px-1.5 py-1.5 items-center hover:bg-gray-100  rounded-sm border text-xl ${
-                showedTool === "note" && "bg-gray-200"
-              }`}>
-              <RiStickyNote2Line />
-            </button>
-            <button
-              onClick={() => {
-                toggleGadget("calendar");
-              }}
-              className={`mx-2 px-1.5 py-1.5 items-center hover:bg-gray-100  rounded-sm border text-xl ${
-                showedTool === "calendar" && "bg-gray-200"
+                showedGadget === "calendar" && "bg-gray-200"
               }`}>
               <AiOutlineCalendar />
             </button>
             <button
               onClick={() => {
-                toggleGadget("taskbar");
+                showedGadget === "taskbar"
+                  ? dispatch(clearGadget())
+                  : dispatch(setGadget("taskbar"));
               }}
               className={`mx-2 px-1.5 py-1.5 items-center hover:bg-gray-100  rounded-sm border text-xl ${
-                showedTool === "taskbar" && "bg-gray-200"
+                showedGadget === "taskbar" && "bg-gray-200"
               }`}>
               <AiOutlineProfile />
             </button>
-            <Link
-              href="/home/profile"
-              onClick={() => {}}
-              className="mx-2 px-1.5 py-1.5 items-center hover:bg-gray-100  rounded-sm border text-xl">
-              <AiOutlineUser />
-            </Link>
+            <div>
+              <button
+                onClick={() => {
+                  setPencilDropDown(pencilDropDown ? false : true);
+                  setGoalDropDown(false);
+                }}
+                className="mx-2 px-1.5 py-1.5 items-center hover:bg-gray-100  rounded-sm border text-xl">
+                <AiOutlineForm />
+              </button>
+              {pencilDropDown && (
+                <div
+                  className="absolute top-12 right-16 py-3 bg-white border border-gray-200 w-[150px] rounded-md shadow-md "
+                  onMouseLeave={() => {
+                    setPencilDropDown(false);
+                  }}>
+                  <div
+                    className="px-1 w-full"
+                    onClick={() => setPencilDropDown(false)}>
+                    {pencilArray.map((item) => (
+                      <button
+                        className="block px-4 py-3 text-xs text-gray-700 hover:bg-gray-100 w-full rounded-md  text-left"
+                        onClick={item.function}>
+                        {item.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+            <div>
+              <button
+                onClick={() => {
+                  setGoalDropDown(goalDropDown ? false : true);
+                  setPencilDropDown(false);
+                }}
+                className="mx-2 px-1.5 py-1.5 items-center hover:bg-gray-100  rounded-sm border text-xl">
+                <AiOutlineCheckSquare />
+              </button>
+              {goalDropDown && (
+                <div
+                  className="absolute top-12 right-4 lg:right-6 py-3 bg-white border border-gray-200 w-[150px] rounded-md shadow-md "
+                  onMouseLeave={() => {
+                    setGoalDropDown(false);
+                  }}>
+                  <div
+                    className="px-1 w-full"
+                    onClick={() => setGoalDropDown(false)}>
+                    {goalArray.map((item) => (
+                      <button
+                        className="block px-4 py-3 text-xs text-gray-700 hover:bg-gray-100 w-full rounded-md  text-left"
+                        onClick={item.function}>
+                        {item.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </section>
       </div>
-      {displayGadgets()}
+
+      <Gadgets />
     </main>
   );
 };

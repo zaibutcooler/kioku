@@ -12,7 +12,7 @@ interface Props {
   related: string;
   toggleView: (input: string) => void;
   handleNewNote: () => void;
-  handleEditNote: (id: string) => void;
+  handleEditNote: () => void;
   hanldeDeleteNote: (input: NoteType) => void;
 }
 

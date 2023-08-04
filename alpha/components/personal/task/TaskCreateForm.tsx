@@ -1,6 +1,10 @@
 "use client";
 
-const TaskCreateForm = () => {
+interface Props {
+  handleBack: () => void;
+}
+
+const TaskCreateForm: React.FC<Props> = ({ handleBack }) => {
   return <div>TaskCreateForm</div>;
 };
 

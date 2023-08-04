@@ -37,7 +37,7 @@ const Sidebar = () => {
               </Link>
 
               <Link
-                href="/home"
+                href="/home/personal"
                 className="flex items-center hover:bg-gray-100 w-full py-2 rounded-lg px-4">
                 <FiUser />
                 <span className="ml-3 text-xs font-bold mt-0.5">Personal</span>

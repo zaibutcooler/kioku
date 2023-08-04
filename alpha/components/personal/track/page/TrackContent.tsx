@@ -14,9 +14,10 @@ const TrackContent = () => {
 
   useEffect(() => {
     const fillDatas = async () => {
-      const scaffoldDatas =
-        session?.user && (await fetchTrackScaffold(session?.user._id));
-      scaffoldDatas && setScaffolds(scaffoldDatas);
+      if (session?.user) {
+        const scaffoldDatas = await fetchTrackScaffold(session.user._id);
+        scaffoldDatas && setScaffolds(scaffoldDatas);
+      }
     };
 
     fillDatas();
@@ -26,14 +27,19 @@ const TrackContent = () => {
       <div className="w-1/3 h-full rounded-sm border p-4">
         <section className="h-2/3 w-full bg-gray-300">
           <div className="">
-            {scaffolds.map((item, index) => (
-              <div className="mb-3" key={index}>
-                {item.name}
-              </div>
-            ))}
+            {scaffolds &&
+              scaffolds.map((item, index) => (
+                <div className="mb-3" key={index}>
+                  {item.countType}
+                </div>
+              ))}
           </div>
         </section>
-        <section className="h-1/3 w-full bg-black">Hello</section>
+        <section className="h-1/3 w-full bg-gray-200">
+          <button className="bg-black text-white py-2 px-4 rounded-sm">
+            Add Actions
+          </button>
+        </section>
       </div>
       <div className="w-2/3 h-full rounded-sm border">
         <section></section>

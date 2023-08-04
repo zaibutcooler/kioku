@@ -5,9 +5,11 @@ import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
-interface Props {}
+interface Props {
+  handleBack: () => void;
+}
 
-const GoalCreateForm: React.FC<Props> = ({}) => {
+const GoalCreateForm: React.FC<Props> = ({ handleBack }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [rank, setRank] = useState("");

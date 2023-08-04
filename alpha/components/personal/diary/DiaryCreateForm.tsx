@@ -8,7 +8,9 @@ import { formatClassicDate, formatDateTime } from "@/utils/formatDates";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 
-interface Props {}
+interface Props {
+  handleBack: () => void;
+}
 
 const DiaryCreateForm: React.FC<Props> = ({}) => {
   const [body, setBody] = useState("");

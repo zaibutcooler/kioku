@@ -17,9 +17,11 @@ import { TrackType } from "@/models/personal/Track";
 import createTrack from "@/utils/create/createTrack";
 import { useSession } from "next-auth/react";
 
-interface Props {}
+interface Props {
+  handleBack: () => void;
+}
 
-const TrackActionForm: React.FC<Props> = ({}) => {
+const TrackActionForm: React.FC<Props> = ({handleBack}) => {
   const [scaffold, setScaffold] = useState<TrackScaffoldType[]>([]);
   const [count, setCount] = useState(0);
   const [note, setNote] = useState("");

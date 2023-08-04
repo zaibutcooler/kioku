@@ -4,9 +4,11 @@ import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { IoRemove, IoRemoveOutline, IoRemoveSharp } from "react-icons/io5";
 
-interface Props {}
+interface Props {
+  handleBack: () => void;
+}
 
-const StatusCreateForm: React.FC<Props> = ({}) => {
+const StatusCreateForm: React.FC<Props> = ({ handleBack }) => {
   const [title, setTitle] = useState("");
   const [why, setWhy] = useState([""]);
   const [lessons, setLessons] = useState([""]);
