@@ -29,3 +29,16 @@ export const fetchAllTracks = async (userID: string) => {
     console.log("error", err);
   }
 };
+
+export const fetchTrackWithDay = async (userID: string, day: string) => {
+  try {
+    const response = await fetch(`/api/track/day?userID=${userID}&day=${day}`);
+    const data = await response.json();
+    if (response.ok) {
+      const result: TrackType[] = data.slice().reverse();
+      return result;
+    }
+  } catch (err) {
+    console.log("error", err);
+  }
+};

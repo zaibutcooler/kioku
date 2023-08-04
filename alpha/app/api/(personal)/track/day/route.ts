@@ -10,6 +10,7 @@ export async function GET(req: Request) {
     const userID = searchParams.get("userID");
     const day = searchParams.get("daysAgo");
     const daysAgo = parseInt(day ? day : "");
+
     if (userID && Number.isInteger(daysAgo)) {
       const startDate = startOfDay(subDays(new Date(), daysAgo));
       const endDate = endOfDay(new Date());
@@ -19,6 +20,13 @@ export async function GET(req: Request) {
         createdAt: { $gte: startDate, $lte: endDate },
       });
 
+      return new Response(JSON.stringify(items), {
+        status: 200,
+      });
+    }
+
+    if (userID) {
+      const items = await Model.find({ user: userID });
       return new Response(JSON.stringify(items), {
         status: 200,
       });

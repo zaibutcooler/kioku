@@ -17,12 +17,14 @@ import { useSession } from "next-auth/react";
 interface Props {
   handleDone: (input: TrackCreateType) => void;
   handleReset: () => void;
+  pastTrack: TrackType | null;
   currentScaffold: TrackScaffoldType | null;
 }
 
 const MainTrackerForm: React.FC<Props> = ({
   handleDone,
   handleReset,
+  pastTrack,
   currentScaffold,
 }) => {
   const [count, setCount] = useState(0);
@@ -31,6 +33,14 @@ const MainTrackerForm: React.FC<Props> = ({
   const effortOptions = ["100", "80", "60", "40", "25", "0"];
 
   const { data: session } = useSession();
+
+  useEffect(() => {
+    if (pastTrack) {
+      setCount(pastTrack.count);
+      setNote(pastTrack.note || "");
+      setEffort(pastTrack.effort || "");
+    }
+  }, [pastTrack]);
 
   const percentage = currentScaffold
     ? (count / currentScaffold.count) * 100
@@ -141,7 +151,7 @@ const MainTrackerForm: React.FC<Props> = ({
               <button
                 type="submit"
                 className="px-4 py-1.5 rounded-sm bg-black text-white hover:bg-gray-900">
-                Done
+                {pastTrack ? "Save" : "Create"}
               </button>
             </div>
           </section>

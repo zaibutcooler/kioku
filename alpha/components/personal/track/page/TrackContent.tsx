@@ -9,9 +9,10 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Line } from "rc-progress";
 import fetchTracks from "@/utils/delete/deleteTracks";
-import { fetchAllTracks } from "@/utils/fetch/fetchTracks";
+import { fetchAllTracks, fetchTrackWithDay } from "@/utils/fetch/fetchTracks";
 import MainTrackerForm from "./MainTrackerForm";
 import createTrack from "@/utils/create/createTrack";
+import { AiOutlineDelete, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const TrackContent = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const TrackContent = () => {
     useState<TrackScaffoldType | null>(null);
 
   const [currentTrack, setCurrentTrack] = useState<TrackType | null>(null);
+  const [mainTrack, setMainTrack] = useState<TrackType[]>([]);
 
   const { data: session } = useSession();
 
@@ -31,10 +33,12 @@ const TrackContent = () => {
       if (session?.user) {
         const scaffoldDatas = await fetchTrackScaffold(session.user._id);
         scaffoldDatas && setScaffolds(scaffoldDatas);
-        setCurrentScaffold(scaffolds[0]);
+        !currentTrack && setCurrentScaffold(scaffolds[0]);
         const trackDatas = await fetchAllTracks(session.user._id);
-        trackDatas && setTracks(trackDatas);
-        console.log(scaffolds[0]);
+        const trackDays = await fetchTrackWithDay(session.user._id, "");
+        trackDays && setMainTrack(trackDays);
+        console.log(trackDays);
+        // trackDatas && setTracks(trackDatas);
       }
     };
 
@@ -47,41 +51,62 @@ const TrackContent = () => {
       const trackArray = [...tracks];
       const index = trackArray.findIndex((item) => item._id === newTrack._id);
       trackArray[index] = newTrack;
-      setTracks(trackArray);
+      setMainTrack(trackArray);
       window.alert("success");
     }
   };
 
-  const handleChoose = (scaffold: TrackScaffoldType) => {
-    setCurrentScaffold(scaffold);
+  const handleChoose = (input: TrackScaffoldType) => {
+    setCurrentScaffold(input);
+    const track = tracks.find((item) => item.item === input._id);
+    track ? setCurrentTrack(track) : setCurrentTrack(null);
   };
+
+  const getPercent = (input: TrackScaffoldType) => {
+    const track = mainTrack.find((item) => item.item === input._id);
+    if (track) {
+      const result = (Number(track?.count) / Number(input.count)) * 100;
+      return Number(result.toFixed(2));
+    } else {
+      return 0;
+    }
+  };
+
+  const handleDelete = () => {};
+
+  const handleHide = () => {};
 
   return (
     <main className="h-[500px] gap-4 w-full flex">
       <div className="w-1/3 h-full rounded-sm border p-4">
-        <section className="h-2/3 w-full ">
+        <section className="h-full overflow-y-auto w-full ">
           <div className="text-sx font-semibold">
             {scaffolds &&
               scaffolds.map((item, index) => (
-                <div className="mb-2 p-2 border rounded-md" key={index}>
-                  <button className="" onClick={() => handleChoose(item)}>
-                    {item.name}
-                  </button>
-                  <div className="mt-2">
-                    <Line percent={10} strokeWidth={3} strokeColor="#000" />
+                <div className="mb-2 p-2 border rounded-" key={index}>
+                  <div className="w-full flex justify-between">
+                    <button className="" onClick={() => handleChoose(item)}>
+                      {item.name}
+                    </button>
+                    <div className="flex gap-2">
+                      <button className="p-1 rounded-full hover:bg-gray-200">
+                        <AiOutlineEyeInvisible />
+                      </button>
+                      <button className="p-1 rounded-full hover:bg-gray-200">
+                        <AiOutlineDelete />
+                      </button>
+                    </div>
+                  </div>
+                  <div className="mt-2" onClick={() => handleChoose(item)}>
+                    <Line
+                      percent={getPercent(item)}
+                      strokeWidth={3}
+                      strokeColor="#000"
+                    />
                   </div>
                 </div>
               ))}
           </div>
-        </section>
-        <section className="h-1/3 w-full bg-gray-200">
-          <button
-            className="bg-black text-white py-2 px-4 rounded-sm"
-            onClick={() => {
-              dispatch(setGadget("scaffold"));
-            }}>
-            Add Actions
-          </button>
         </section>
       </div>
       <div className="w-2/3 h-full rounded-sm border">
@@ -91,12 +116,28 @@ const TrackContent = () => {
               handleDone={handleSubmit}
               handleReset={() => {}}
               currentScaffold={currentScaffold}
+              pastTrack={currentTrack}
             />
           )}
         </section>
-        <section className="p-2 h-1/3 w-full flex">
-          <div className="w-1/3 h-full bg-black"></div>
-          <div className="w-2/3 h-full bg-blue-300"></div>
+        <section className="p-2 h-1/3 w-full flex gap-2">
+          <div className="w-1/3 h-full border rounded-md p-3">
+            <h1 className="font-semibold mb-2">Add More</h1>
+            <p className="text-[0.6rem] text-gray-500 mb-2">
+              Track your habits and actions in order to build good habits and
+              destory bad habits.
+            </p>
+            <button
+              className="bg-black text-xs text-white py-2 px-4 rounded-sm"
+              onClick={() => {
+                dispatch(setGadget("scaffold"));
+              }}>
+              Create
+            </button>
+          </div>
+          <div className="w-2/3 h-full border rounded-md p-3">
+            <h1 className="font-semibold mb-2">Overall progress</h1>
+          </div>
         </section>
       </div>
     </main>

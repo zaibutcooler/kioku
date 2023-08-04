@@ -1,6 +1,6 @@
 import { TrackScaffoldType } from "@/models/personal/TrackScaffold";
 
-const fetchTrackScaffold = async (userID: string) => {
+const deleteTrackScaffold = async (userID: string) => {
   try {
     const response = await fetch(`/api/track/scaffold?userID=${userID}`);
     const datas = await response.json();
@@ -13,4 +13,4 @@ const fetchTrackScaffold = async (userID: string) => {
   }
 };
 
-export default fetchTrackScaffold;
+export default deleteTrackScaffold;
