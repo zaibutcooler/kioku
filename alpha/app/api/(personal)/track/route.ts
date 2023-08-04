@@ -1,6 +1,7 @@
 import { connectDB } from "@/utils/connectDB";
 import Model from "@/models/personal/Track";
 import User from "@/models/User";
+import { endOfDay, startOfDay } from "date-fns";
 
 export async function GET(req: Request) {
   try {
@@ -48,19 +49,44 @@ export async function POST(req: Request) {
         status: 400,
       });
     }
-    const newItem = new Model({
+
+    const today = startOfDay(new Date());
+    const existingEntry = await Model.findOne({
       user,
       item,
-      countType,
-      count,
-      note,
-      effort,
+      createdAt: { $gte: today, $lte: endOfDay(today) },
     });
-    await newItem.save();
 
-    return new Response(JSON.stringify(newItem), {
-      status: 200,
-    });
+    if (existingEntry) {
+      console.log("updating");
+      existingEntry.item = item;
+      existingEntry.countType = countType;
+      existingEntry.count = count;
+      existingEntry.note = note;
+      existingEntry.effort = effort;
+
+      await existingEntry.save();
+
+      return new Response(JSON.stringify(existingEntry), {
+        status: 200,
+      });
+    } else {
+      console.log("creating");
+      const newItem = new Model({
+        user,
+        item,
+        countType,
+        count,
+        note,
+        effort,
+      });
+
+      await newItem.save();
+
+      return new Response(JSON.stringify(newItem), {
+        status: 200,
+      });
+    }
   } catch (error) {
     return new Response(JSON.stringify({ message: "Internal Server Error" }), {
       status: 500,

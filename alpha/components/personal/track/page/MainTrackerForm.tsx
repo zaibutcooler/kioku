@@ -10,30 +10,31 @@ import {
   IoReloadOutline,
 } from "react-icons/io5";
 import { FaBrain, FaMinus } from "react-icons/fa";
-import Effort from "./daily/Effort";
-import { TrackType } from "@/models/personal/Track";
+import Effort from "../daily/Effort";
+import { TrackCreateType, TrackType } from "@/models/personal/Track";
+import { useSession } from "next-auth/react";
 
 interface Props {
-  handleDone: () => void;
+  handleDone: (input: TrackCreateType) => void;
   handleReset: () => void;
   currentScaffold: TrackScaffoldType | null;
 }
 
-const MainTrackerForm: React.FC<Props> = ({}) => {
-  const [scaffold, setScaffold] = useState<TrackScaffoldType[]>([]);
+const MainTrackerForm: React.FC<Props> = ({
+  handleDone,
+  handleReset,
+  currentScaffold,
+}) => {
   const [count, setCount] = useState(0);
   const [note, setNote] = useState("");
   const [effort, setEffort] = useState("default");
   const effortOptions = ["100", "80", "60", "40", "25", "0"];
 
-  const [selectedScaffold, setSelectedScaffold] =
-    useState<TrackScaffoldType | null>(null);
+  const { data: session } = useSession();
 
-  const percentage = selectedScaffold
-    ? (count / selectedScaffold.count) * 100
+  const percentage = currentScaffold
+    ? (count / currentScaffold.count) * 100
     : 0;
-
-  const [history, setHistory] = useState<TrackType[]>([]);
 
   const handleCountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
@@ -46,7 +47,18 @@ const MainTrackerForm: React.FC<Props> = ({}) => {
     }
   };
 
-  const handleSubmit = async (event: React.FormEvent) => {};
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (session?.user && currentScaffold)
+      handleDone({
+        user: session.user._id,
+        item: currentScaffold._id,
+        countType: currentScaffold?.countType,
+        count,
+        note,
+        effort,
+      });
+  };
 
   useEffect(() => {}, []);
 
@@ -55,15 +67,15 @@ const MainTrackerForm: React.FC<Props> = ({}) => {
       <form onSubmit={handleSubmit} className="h-2/3 px-4 py-2">
         <h1 className="font-semibold text-sx mb-3 flex items-center">
           <FaBrain className="text-md mr-3" />
-          Title
+          {currentScaffold?.name}
         </h1>
         <div className="flex">
           <section className="w-[30vh] rounded-lg border">
             <div className="h-[30vh] text-black p-2 text-xs font-semibold ">
               <CircularProgressbar
                 value={percentage}
-                text={`${count}/${selectedScaffold && selectedScaffold.count} ${
-                  selectedScaffold && selectedScaffold.countType
+                text={`${count}/${currentScaffold && currentScaffold.count} ${
+                  currentScaffold && currentScaffold.countType
                 }`}
                 styles={{
                   path: {
