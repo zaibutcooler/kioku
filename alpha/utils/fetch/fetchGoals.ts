@@ -16,7 +16,7 @@ export const fetchGoals = async (userID: string) => {
 
 export const fetchMiniGoals = async (userID: string) => {
   try {
-    const response = await fetch(`/api/goal?userID=${userID}`);
+    const response = await fetch(`/api/goal/minor?userID=${userID}`);
     const datas = await response.json();
     if (response.ok) {
       const result: MinorGoalType[] = datas.slice().reverse();

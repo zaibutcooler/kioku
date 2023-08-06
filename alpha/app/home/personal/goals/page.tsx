@@ -25,10 +25,19 @@ export default function GoalsPage() {
     window.alert("success");
   };
 
+  const handleUpdateGoal = (input: GoalType) => {
+    let goalArray = [...goals];
+    let index = goals.findIndex((item) => item._id === input._id);
+    goalArray[index] = input;
+    setGoals(goalArray);
+  };
+
   return (
     <main className="flex w-full h-full py-4">
       <section className="h-full w-3/5  ">
-        {goals && <GoalContents goals={goals} />}
+        {goals && (
+          <GoalContents goals={goals} handleUpdateGoal={handleUpdateGoal} />
+        )}
       </section>
       <section className="h-full w-2/5 ml-4">
         <GoalForm handleNewGoal={handleNewGoal} />
