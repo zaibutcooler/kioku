@@ -6,9 +6,9 @@ export interface MinorGoalType {
   title: string;
   description: string;
   deadline: Date;
-  why: string[];
   major: string;
-  finished: boolean[];
+  status: string;
+  finished: boolean;
   created: Date;
 }
 
@@ -17,7 +17,6 @@ export interface MinorGoalCreateType {
   title: string;
   description: string;
   deadline: Date;
-  why: string[];
   major: string;
 }
 
@@ -26,9 +25,9 @@ const minorGoalSchema = new Schema({
   title: { type: String },
   description: { type: String },
   deadline: { type: Date },
-  why: { type: [String] },
+  status: { type: String, default: "default" },
   major: { type: Schema.Types.ObjectId, ref: "MajorGoal" },
-  finished: [{ type: Boolean, default: false }],
+  finished: { type: Boolean, default: false },
   created: { type: Date, default: Date.now },
 });
 

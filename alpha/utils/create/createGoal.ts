@@ -1,6 +1,7 @@
 import { GoalCreateType, GoalType } from "@/models/personal/Goal";
+import { MinorGoalCreateType } from "@/models/personal/MinorGoal";
 
-const createGoal = async ({
+export const createGoal = async ({
   user,
   title,
   description,
@@ -33,4 +34,35 @@ const createGoal = async ({
   }
 };
 
-export default createGoal;
+export const createMinorGoal = async ({
+  user,
+  title,
+  description,
+  deadline,
+  major,
+  status,
+}: MinorGoalCreateType) => {
+  const postBody = {
+    user,
+    title,
+    description,
+    deadline,
+    major,
+    status,
+  };
+
+  try {
+    const response = await fetch("/api/goal", {
+      method: "POST",
+      body: JSON.stringify(postBody),
+    });
+    if (response.ok) {
+      console.log("success");
+      const datas: GoalType = await response.json();
+      return datas;
+    }
+    return false;
+  } catch (err) {
+    console.log("error", err);
+  }
+};

@@ -31,7 +31,8 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     await connectDB();
-    const { user, title, description, rank, deadline, why } = await req.json();
+    const { user, title, status, description, rank, deadline, why } =
+      await req.json();
 
     const userExists = await User.findById(user);
 
@@ -43,6 +44,7 @@ export async function POST(req: Request) {
     const newItem = new Model({
       user,
       title,
+      status,
       description,
       rank,
       deadline,
@@ -63,7 +65,7 @@ export async function POST(req: Request) {
 export async function PATCH(req: Request) {
   try {
     await connectDB();
-    const { user, title, description, rank, deadline, why, finished } =
+    const { user, title, status, description, rank, deadline, why, finished } =
       await req.json();
 
     const { searchParams } = new URL(req.url);
@@ -74,6 +76,7 @@ export async function PATCH(req: Request) {
       {
         user,
         title,
+        status,
         description,
         rank,
         deadline,

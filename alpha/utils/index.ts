@@ -10,3 +10,14 @@ export function truncateParagraph(
   }
   return truncatedParagraph;
 }
+
+export function getDaysLeft(deadline: string) {
+  const today = new Date();
+  const deadlineDate = new Date(deadline);
+
+  const timeDiff = deadlineDate.getTime() - today.getTime();
+
+  const daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+  return daysLeft;
+}

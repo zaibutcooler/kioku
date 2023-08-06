@@ -5,6 +5,7 @@ export interface GoalType {
   user: string;
   title: string;
   description: string;
+  status: string;
   rank: string;
   deadline: Date;
   why: string[];
@@ -25,6 +26,7 @@ const goalSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: "User" },
   title: { type: String },
   description: { type: String },
+  status: { type: String },
   rank: { type: String },
   deadline: { type: Date },
   why: { type: [String] },

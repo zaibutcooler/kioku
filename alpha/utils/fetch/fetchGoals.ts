@@ -1,6 +1,7 @@
 import { GoalType } from "@/models/personal/Goal";
+import { MinorGoalType } from "@/models/personal/MinorGoal";
 
-const fetchGoals = async (userID: string) => {
+export const fetchGoals = async (userID: string) => {
   try {
     const response = await fetch(`/api/goal?userID=${userID}`);
     const datas = await response.json();
@@ -13,4 +14,15 @@ const fetchGoals = async (userID: string) => {
   }
 };
 
-export default fetchGoals;
+export const fetchMiniGoals = async (userID: string) => {
+  try {
+    const response = await fetch(`/api/goal?userID=${userID}`);
+    const datas = await response.json();
+    if (response.ok) {
+      const result: MinorGoalType[] = datas.slice().reverse();
+      return result;
+    }
+  } catch (err) {
+    console.log("error", err);
+  }
+};

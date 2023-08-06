@@ -31,7 +31,8 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     await connectDB();
-    const { user, title, description, major, deadline, why } = await req.json();
+    const { user, title, status, description, major, deadline } =
+      await req.json();
 
     const userExists = await User.findById(user);
 
@@ -43,10 +44,10 @@ export async function POST(req: Request) {
     const newItem = new Model({
       user,
       title,
+      status,
       description,
       major,
       deadline,
-      why,
     });
     await newItem.save();
 
@@ -63,7 +64,7 @@ export async function POST(req: Request) {
 export async function PATCH(req: Request) {
   try {
     await connectDB();
-    const { user, title, description, major, deadline, why, finished } =
+    const { user, title, status, description, major, deadline, finished } =
       await req.json();
 
     const { searchParams } = new URL(req.url);
@@ -74,10 +75,11 @@ export async function PATCH(req: Request) {
       {
         user,
         title,
+        status,
         description,
         major,
         deadline,
-        why,
+
         finished,
       },
       { new: true }

@@ -1,6 +1,6 @@
 "use client";
 
-import createGoal from "@/utils/create/createGoal";
+import { createGoal } from "@/utils/create/createGoal";
 import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
