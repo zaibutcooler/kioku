@@ -1,6 +1,7 @@
 import { GoalType } from "@/models/personal/Goal";
 import { MinorGoalType } from "@/models/personal/MinorGoal";
 import { getDaysLeft } from "@/utils";
+import { createMinorGoal } from "@/utils/create/createGoal";
 import { fetchMiniGoals } from "@/utils/fetch/fetchGoals";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -13,6 +14,7 @@ interface Props {
 const GoalContents: React.FC<Props> = ({ goals }) => {
   const { data: session } = useSession();
   const [opened, setOpened] = useState("");
+  const [showDetail, setShowDetail] = useState("");
   const [minorGoals, setMinorGoals] = useState<MinorGoalType[]>([]);
 
   const [title, setTitle] = useState("");
@@ -29,6 +31,26 @@ const GoalContents: React.FC<Props> = ({ goals }) => {
     fillDatas();
   }, []);
 
+  const handleCreate = async (input: string) => {
+    if (session?.user) {
+      let deadlineSubmit = new Date(deadline);
+      const newItem = await createMinorGoal({
+        user: session.user._id,
+        title,
+        description,
+        deadline: deadlineSubmit,
+        major: input,
+      });
+      if (newItem) {
+        setMinorGoals([newItem, ...minorGoals]);
+        setOpened("");
+        setTitle("");
+        setDeadline("");
+        setDescription("");
+      }
+    }
+  };
+
   return (
     <div className="w-full h-full px-3">
       {goals &&
@@ -38,23 +60,60 @@ const GoalContents: React.FC<Props> = ({ goals }) => {
               <div className="w-full flex items-center justify-between text-sm mb-3">
                 <h1 className="font-semibold text-black">{item.title} </h1>
 
-                <div className="py-1 px-2 rounded-full border text-[0.6rem] min-w-[70px] font-semibold">
+                <div className="py-1 px-2 rounded-full border text-[0.6rem] min-w-[60px] text-center font-semibold">
                   {getDaysLeft(String(item.deadline))} days
                 </div>
               </div>
-              <div className="text-gray-600 text-xs mb-4">
-                {item.description}
-              </div>
 
-              <div className="flex justify-between items-center">
+              {showDetail === item._id && (
+                <div className="mb-4">
+                  <div className="text-gray-600 text-xs mb-2">
+                    {item.description}
+                  </div>
+                  <div className="flex">
+                    <button className={`py-1.5 w-16 `}>Default</button>
+                    <button className={`py-1.5 w-16 `}>Planned</button>
+                    <button className={`py-1.5 w-16 `}>Working</button>
+                    <button className={`py-1.5 w-16 `}>Finished</button>
+                  </div>
+
+                  <ul>
+                    {item.why.map((whyItem, index) => (
+                      <li
+                        className="text-[0.6rem] text-gray-600 mb-1"
+                        key={index}>
+                        - {whyItem}
+                      </li>
+                    ))}
+                  </ul>
+                  <div>
+                    {minorGoals.map((minorGoal) => (
+                      <section key={minorGoal._id}>
+                        {minorGoal.major === item._id && (
+                          <div className="bg-blue-400 p-4">
+                            {minorGoal.title}
+                          </div>
+                        )}
+                      </section>
+                    ))}
+                  </div>
+                  <button
+                    className="px-2 py-1.5 rounded-md text-xs text-black font-semibold"
+                    onClick={() => setOpened(item._id)}>
+                    Add Mini Goals
+                  </button>
+                </div>
+              )}
+
+              <div className="flex justify-end items-center">
                 <button
-                  className="px-2 py-1.5 rounded-md text-xs text-black font-semibold"
-                  onClick={() => setOpened(item._id)}>
-                  Add Mini Goals
-                </button>
-
-                <button className="px-2 py-1.5 w-16 rounded-md bg-black text-xs text-white">
-                  Finish
+                  className="py-1.5 px-2 rounded-md text-xs text-black font-semibold"
+                  onClick={() =>
+                    showDetail === item._id
+                      ? setShowDetail("")
+                      : setShowDetail(item._id)
+                  }>
+                  {showDetail === item._id ? "Save" : "Detail"}
                 </button>
               </div>
             </section>
@@ -98,7 +157,9 @@ const GoalContents: React.FC<Props> = ({ goals }) => {
                     onClick={() => setOpened("")}>
                     Back
                   </button>
-                  <button className="px-2 py-1.5 w-14 rounded-md bg-black text-xs text-white">
+                  <button
+                    className="px-2 py-1.5 w-14 rounded-md bg-black text-xs text-white"
+                    onClick={() => handleCreate(item._id)}>
                     Add
                   </button>
                 </div>

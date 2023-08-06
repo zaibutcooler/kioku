@@ -8,7 +8,7 @@ export async function GET(req: Request) {
     await connectDB();
     const { searchParams } = new URL(req.url);
     const userID = searchParams.get("userID");
-    const day = searchParams.get("daysAgo");
+    const day = searchParams.get("day");
     const daysAgo = parseInt(day ? day : "");
 
     if (userID && Number.isInteger(daysAgo)) {
@@ -17,7 +17,7 @@ export async function GET(req: Request) {
 
       const items = await Model.find({
         user: userID,
-        createdAt: { $gte: startDate, $lte: endDate },
+        created: { $gte: startDate, $lte: endDate },
       });
 
       return new Response(JSON.stringify(items), {

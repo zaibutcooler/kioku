@@ -31,6 +31,8 @@ const TrackContent = () => {
   const [confirmHide, setConfirmHide] = useState("");
   const [confirmDelete, setConfirmDelete] = useState("");
 
+  const [showDate, setShowDate] = useState();
+
   const { data: session } = useSession();
 
   useEffect(() => {
@@ -38,7 +40,7 @@ const TrackContent = () => {
       if (session?.user) {
         const scaffoldDatas = await fetchTrackScaffold(session.user._id);
         const filteredScaffolds = await scaffoldDatas?.filter(
-          (item) => item.hide !== true
+          (item: TrackScaffoldType) => item.hide !== true
         );
 
         !currentTrack &&

@@ -27,7 +27,7 @@ const goalSchema = new Schema({
   title: { type: String },
   description: { type: String },
   status: { type: String },
-  rank: { type: String },
+  rank: { type: String ,default:"default"},
   deadline: { type: Date },
   why: { type: [String] },
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSession } from "next-auth/react";
-import { ChevronDownIcon } from "@heroicons/react/solid"; // Import ChevronDownIcon from Heroicons
+import { ChevronDownIcon } from "@heroicons/react/solid";
 import { createGoal } from "@/utils/create/createGoal";
 import { GoalType } from "@/models/personal/Goal";
 import { set } from "mongoose";
