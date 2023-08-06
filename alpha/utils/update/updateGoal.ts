@@ -1,5 +1,4 @@
 import { GoalType } from "@/models/personal/Goal";
-import { NoteCreateType, NoteType } from "@/models/personal/Note";
 
 export const updateGoal = async (
   id: string,

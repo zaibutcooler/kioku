@@ -8,7 +8,7 @@ export default function LandingPage() {
     <main>
       <LandingNavbar />
       <LandingMobileNavbar />
-      <div className="">
+      <div>
         <section>
           <LandingContents />
         </section>
