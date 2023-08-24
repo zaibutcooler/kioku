@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
+import { AiOutlineApple, AiOutlineGoogle } from "react-icons/ai";
 
 interface Props {
   toggleDisplay: (input: string) => void;
@@ -29,7 +30,7 @@ const Login: React.FC<Props> = ({ toggleDisplay }) => {
   return (
     <div>
       <div className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-gray-100 bg-opacity-50 backdrop-filter backdrop-blur first-line:z-50 px-2">
-        <div className="bg-superwhite px-6 pb-6 pt-4 rounded-xl shadow-md lg:w-1/3 w-[320px] md:w-1/2 min-h-[400px] text-secondary_bold">
+        <div className="bg-superwhite px-6 pb-6 pt-4 rounded-xl shadow-md  md:w-[400px] w-[320px]  min-h-[490px] text-secondary_bold">
           <div className="flex justify-end m-0 p-0">
             <button className="text-xs" onClick={() => toggleDisplay("")}>
               Back
@@ -71,15 +72,15 @@ const Login: React.FC<Props> = ({ toggleDisplay }) => {
                 />
               </div>
             </div>
-            <div className="mb-8">
+            <div className="mb-4">
               <button
                 type="submit"
-                className="w-full rounded-lg bg-black text-white px-4 py-2">
+                className="w-full rounded-lg bg-black text-white px-4 py-2 gap-2">
                 Login
               </button>
             </div>
           </form>
-          <p className="text-[0.6rem] font-medium text-center text-gray-400 ">
+          <p className="text-[0.6rem] font-medium text-center text-gray-400 mb-6 ">
             Don't have an Account?{" "}
             <button
               onClick={() => toggleDisplay("register")}
@@ -87,6 +88,26 @@ const Login: React.FC<Props> = ({ toggleDisplay }) => {
               Register
             </button>
           </p>
+          <div className="mb-5 text-sm font-medium">
+            <button
+              onClick={() => signIn("google")}
+              className="w-full rounded-lg bg-[#4285F4] text-white px-4 py-2 flex justify-center items-center gap-2">
+              <span className="text-xl">
+                <AiOutlineGoogle />
+              </span>{" "}
+              Continue With Google
+            </button>
+          </div>
+          <div className="mb-5 text-sm font-medium">
+            <button
+              onClick={() => signIn("apple")}
+              className="w-full rounded-lg bg-[#888888] text-white px-4 py-2 flex justify-center items-center gap-2">
+              <span className="text-xl">
+                <AiOutlineApple />
+              </span>{" "}
+              Continue With Apple
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -37,7 +37,7 @@ const Register: React.FC<Props> = ({ toggleDisplay }) => {
   return (
     <div>
       <div className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-gray-100 bg-opacity-50 backdrop-filter backdrop-blur first-line:z-50 px-2">
-        <div className="bg-superwhite px-6 pb-6 pt-4 rounded-xl shadow-md lg:w-1/3 w-[320px] md:w-1/2 min-h-[490px] text-secondary_bold">
+        <div className="bg-superwhite px-6 pb-6 pt-4 rounded-xl shadow-md w-[320px] md:w-[400px] min-h-[490px] text-secondary_bold">
           <div className="flex justify-end m-0 p-0">
             <button className="text-xs" onClick={() => toggleDisplay("")}>
               Back

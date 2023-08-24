@@ -11,11 +11,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 interface Props {
-  handleReset: () => void;
-  handleDone: () => void;
+  handleBack: () => void;
 }
 
-const DiaryCreateForm: React.FC<Props> = ({ handleReset }) => {
+const DiaryCreateForm: React.FC<Props> = ({ handleBack }) => {
   const [body, setBody] = useState("");
   const [title, setTitle] = useState("");
 
