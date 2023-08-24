@@ -97,6 +97,7 @@ const DesktopNavbar: React.FC<Props> = () => {
 
   const toggleBar = () => {};
 
+
   return (
     <main className="hidden md:block bg-superwhite text-superblack font-semibold">
       <div className="flex w-full justify-between py-1.5 px-2 lg:px-4 items-center border-b border-gray-100">
