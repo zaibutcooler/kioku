@@ -23,7 +23,7 @@ const createTrack = async ({
       body: JSON.stringify(postBody),
     });
     if (response.ok) {
-      console.log("success");
+      console.log("jj");
       const datas: TrackType = await response.json();
       return datas;
     }

@@ -31,17 +31,17 @@ const TrackContent = () => {
   const [confirmHide, setConfirmHide] = useState("");
   const [confirmDelete, setConfirmDelete] = useState("");
 
-  const [showDate, setShowDate] = useState();
+  const [date, setDate] = useState(new Date());
 
   const { data: session } = useSession();
   const [loadingOne, setLoadingOne] = useState(true);
-  const [loadingTwo, setLoadingTwo] = useState(true);
+  const [showMain, setShowMain] = useState(false);
 
   useEffect(() => {
     const fillDatas = async () => {
       if (session?.user) {
         setLoadingOne(true);
-        setLoadingTwo(true);
+
         const scaffoldDatas = await fetchTrackScaffold(session.user._id);
         const filteredScaffolds = await scaffoldDatas?.filter(
           (item: TrackScaffoldType) => item.hide !== true
@@ -53,9 +53,12 @@ const TrackContent = () => {
           setCurrentScaffold(filteredScaffolds[0]);
         filteredScaffolds && setScaffolds(filteredScaffolds);
 
-        const trackDatas = await fetchTrackWithDay(session.user._id, "");
-        trackDatas && setMainTrack(trackDatas);
-        setLoadingTwo(false);
+        const trackDatas = await fetchTrackWithDay(
+          session.user._id,
+          new Date().toString()
+        );
+        console.log("track datas", trackDatas);
+        trackDatas && trackDatas && setMainTrack(trackDatas);
       }
     };
 
@@ -66,8 +69,15 @@ const TrackContent = () => {
     const newTrack = await createTrack(input);
     if (newTrack) {
       const trackArray = [...mainTrack];
+      console.log("before", trackArray);
       const index = trackArray.findIndex((item) => item._id === newTrack._id);
-      trackArray[index] = newTrack;
+      if (index) {
+        trackArray[index] = newTrack;
+        console.log("after", trackArray);
+      } else {
+        trackArray.push(newTrack);
+        console.log("after", trackArray);
+      }
       setMainTrack(trackArray);
       window.alert("success");
     }
@@ -77,6 +87,7 @@ const TrackContent = () => {
     setCurrentScaffold(input);
     const track = mainTrack.find((item) => item.item === input._id);
     track ? setCurrentTrack(track) : setCurrentTrack(null);
+    setShowMain(true);
   };
 
   const getPercent = (input: TrackScaffoldType) => {
@@ -169,7 +180,7 @@ const TrackContent = () => {
       </div>
       <div className="w-2/3 h-full rounded-sm border">
         <section className="p-2 h-2/3 w-full">
-          {!loadingTwo ? (
+          {showMain ? (
             <MainTrackerForm
               handleDone={handleSubmit}
               handleReset={() => {}}
@@ -177,7 +188,7 @@ const TrackContent = () => {
               pastTrack={currentTrack}
             />
           ) : (
-            <div>Loading Two</div>
+            <div>Nothing</div>
           )}
         </section>
         <section className="p-2 h-1/3 w-full flex gap-2">

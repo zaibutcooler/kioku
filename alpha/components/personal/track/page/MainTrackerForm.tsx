@@ -72,6 +72,12 @@ const MainTrackerForm: React.FC<Props> = ({
 
   useEffect(() => {}, []);
 
+  const handleClear = () => {
+    setCount(0);
+    setNote("");
+    setEffort("default");
+  };
+
   return (
     <div className="bg-white  h-[75vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100 w-full">
       <form onSubmit={handleSubmit} className="h-2/3 px-4 py-2">
@@ -129,6 +135,7 @@ const MainTrackerForm: React.FC<Props> = ({
                 />
                 <button
                   type="button"
+                  onClick={handleClear}
                   className="px-1 py-1 text-sx rounded-full bg-white text-gray-800 hover:bg-gray-50 border">
                   <IoReloadOutline />
                 </button>

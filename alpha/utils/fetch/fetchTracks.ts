@@ -33,6 +33,7 @@ export const fetchAllTracks = async (userID: string) => {
 export const fetchTrackWithDay = async (userID: string, day: string) => {
   try {
     const response = await fetch(`/api/track/day?userID=${userID}&day=${day}`);
+    console.log("day", day);
     const data = await response.json();
     if (response.ok) {
       const result: TrackType[] = data.slice().reverse();

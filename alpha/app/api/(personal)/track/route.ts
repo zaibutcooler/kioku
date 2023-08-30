@@ -54,11 +54,10 @@ export async function POST(req: Request) {
     const existingEntry = await Model.findOne({
       user,
       item,
-      createdAt: { $gte: today, $lte: endOfDay(today) },
+      created: { $gte: today, $lte: endOfDay(today) },
     });
 
     if (existingEntry) {
-      console.log("updating");
       existingEntry.item = item;
       existingEntry.countType = countType;
       existingEntry.count = count;
@@ -67,11 +66,12 @@ export async function POST(req: Request) {
 
       await existingEntry.save();
 
+      console.log("updating");
+
       return new Response(JSON.stringify(existingEntry), {
         status: 200,
       });
     } else {
-      console.log("creating");
       const newItem = new Model({
         user,
         item,
@@ -79,6 +79,7 @@ export async function POST(req: Request) {
         count,
         note,
         effort,
+        createdAt: new Date(), // Ensure that the created date is set for new entry
       });
 
       await newItem.save();
