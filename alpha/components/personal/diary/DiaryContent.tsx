@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { formatClassicDate } from "@/utils/formatDates";
 import { truncateParagraph } from "@/utils";
 import { Yellowtail } from "next/font/google";
+import LoadingDiaries from "./LoadingDiaries";
 
 const yellowTail = Yellowtail({
   weight: "400",
@@ -75,7 +76,6 @@ const DiaryContent = () => {
             <>
               {diaries ? (
                 <div>
-                  (
                   {diaries.map((diary) => (
                     <div
                       className="p-4 border rounded-lg mb-3 font-semibold text-gray-800"
@@ -103,7 +103,9 @@ const DiaryContent = () => {
               )}
             </>
           ) : (
-            <div>Loading</div>
+            <div>
+              <LoadingDiaries />
+            </div>
           )}
         </section>
       )}

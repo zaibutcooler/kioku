@@ -34,7 +34,7 @@ const NoteContent: React.FC<Props> = ({
   return (
     <div className="w-full h-full">
       {(view === "create" || view === "edit") && (
-        <section className="w-full h-full flex flex-col">
+        <section className="w-full h-full flex flex-col p-3 border rounded-sm">
           <div className="w-full mb-2 flex">
             <input
               type="text"

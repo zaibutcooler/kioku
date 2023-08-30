@@ -1,6 +1,7 @@
 "use client";
 import GoalContents from "@/components/personal/goal/page/GoalContents";
 import GoalForm from "@/components/personal/goal/page/GoalForm";
+import LoadingGoal from "@/components/personal/goal/page/LoadingGoal";
 import { GoalType } from "@/models/personal/Goal";
 import { fetchGoals } from "@/utils/fetch/fetchGoals";
 import { useSession } from "next-auth/react";
@@ -50,7 +51,9 @@ export default function GoalsPage() {
             )}
           </div>
         ) : (
-          <div>Loading</div>
+          <div>
+            <LoadingGoal />
+          </div>
         )}
       </section>
       <section className="h-full w-2/5 ml-4">

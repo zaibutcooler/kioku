@@ -17,6 +17,7 @@ import {
   deleteTrackScaffold,
   hideTrackScaffold,
 } from "@/utils/delete/deleteTrackScaffolds";
+import LoadingCard from "./LoadingCards";
 
 const TrackContent = () => {
   const dispatch = useDispatch();
@@ -173,7 +174,9 @@ const TrackContent = () => {
                 </div>
               ))
             ) : (
-              <div>loadingOne</div>
+              <div>
+                <LoadingCard />
+              </div>
             )}
           </div>
         </section>

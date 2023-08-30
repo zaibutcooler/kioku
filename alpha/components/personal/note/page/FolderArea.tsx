@@ -15,6 +15,7 @@ import {
   AiOutlineUnorderedList,
 } from "react-icons/ai";
 import { FaFile, FaFolder, FaFolderPlus, FaStickyNote } from "react-icons/fa";
+import LoadingFolder from "./LoadingFolder";
 
 interface Props {
   folders: NoteFolderType[];
@@ -64,36 +65,42 @@ const FolderArea: React.FC<Props> = ({
     const items = notes.filter((note) => note.folder === folderID);
     return (
       <main className="text-xs pl-3 w-full">
-        {items.map((item) => (
-          <div
-            className={`flex items-center justify-between py-1 my-1 w-full px-2 rounded-md ${
-              selectedNote === item._id ? "bg-gray-100" : ""
-            }`}
-            key={item._id}>
-            <button
-              className="flex items-center"
-              onClick={() => selectNote(item)}>
-              <div className="mr-2 ">
-                <FaFile />
+        {!loadingTwo ? (
+          items.map((item) => (
+            <div
+              className={`flex items-center justify-between py-1 my-1 w-full px-2 rounded-md ${
+                selectedNote === item._id ? "bg-gray-100" : ""
+              }`}
+              key={item._id}>
+              <button
+                className="flex items-center"
+                onClick={() => selectNote(item)}>
+                <div className="mr-2 ">
+                  <FaFile />
+                </div>
+                <span>{item.title}</span>
+              </button>
+              <div className="text-sm">
+                <button
+                  className="mx-2 p-1 rounded-full hover:bg-gray-200"
+                  onClick={() => {
+                    setNoteDeleteConfirm(item._id);
+                  }}>
+                  <AiOutlineDelete />
+                </button>
+                <button
+                  className=" p-1 rounded-full hover:bg-gray-200"
+                  onClick={() => handleEditNoteView(item)}>
+                  <AiOutlineEdit />
+                </button>
               </div>
-              <span>{item.title}</span>
-            </button>
-            <div className="text-sm">
-              <button
-                className="mx-2 p-1 rounded-full hover:bg-gray-200"
-                onClick={() => {
-                  setNoteDeleteConfirm(item._id);
-                }}>
-                <AiOutlineDelete />
-              </button>
-              <button
-                className=" p-1 rounded-full hover:bg-gray-200"
-                onClick={() => handleEditNoteView(item)}>
-                <AiOutlineEdit />
-              </button>
             </div>
+          ))
+        ) : (
+          <div className="py-1 my-1 rounded-lg animate-pulse flex gap-4 items-center">
+            <div className="w-full h-6 bg-gray-100 rounded"></div>
           </div>
-        ))}
+        )}
       </main>
     );
   };
@@ -203,7 +210,9 @@ const FolderArea: React.FC<Props> = ({
             )}
           </>
         ) : (
-          <div>Loading</div>
+          <div>
+            <LoadingFolder />
+          </div>
         )}
       </section>
     </div>

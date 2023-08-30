@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react";
 import { isRouteMatch } from "next/dist/server/future/route-matches/route-match";
 import { useEffect, useState } from "react";
 import { IoArrowDownCircle } from "react-icons/io5";
+import LoadingMiniGoal from "./LoadingMiniGoal";
 
 interface Props {
   goals: GoalType[];
@@ -20,8 +21,8 @@ const GoalContents: React.FC<Props> = ({ goals, handleUpdateGoal }) => {
   const [showDetail, setShowDetail] = useState("");
   const [minorGoals, setMinorGoals] = useState<MinorGoalType[]>([]);
 
-  const [loading, setLoading] = useState(true);
-  const [isNone, setIsNone] = useState(true);
+  const [loadingOne, setLoadingOne] = useState(true);
+  const [loadingTwo, setLoadingTwo] = useState(true);
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -31,10 +32,10 @@ const GoalContents: React.FC<Props> = ({ goals, handleUpdateGoal }) => {
   useEffect(() => {
     const fillDatas = async () => {
       if (session?.user) {
-        setLoading(true);
+        setLoadingOne(true);
         const minorGoalDatas = await fetchMiniGoals(session.user._id);
         minorGoalDatas && setMinorGoals(minorGoalDatas);
-        setLoading(false);
+        setLoadingOne(false);
       }
     };
     fillDatas();
@@ -177,7 +178,13 @@ const GoalContents: React.FC<Props> = ({ goals, handleUpdateGoal }) => {
               )}
 
               <div className="">
-                {!loading ? renderMinigoals(item) : <div>Loading </div>}
+                {!loadingOne ? (
+                  renderMinigoals(item)
+                ) : (
+                  <div>
+                    <LoadingMiniGoal />
+                  </div>
+                )}
               </div>
               <div className="flex justify-end items-center">
                 <button
