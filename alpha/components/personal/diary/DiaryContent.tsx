@@ -19,6 +19,8 @@ const DiaryContent = () => {
   const { data: session } = useSession();
   const [toggleView, setToggleView] = useState(false);
 
+  const [loading, setLoading] = useState(true);
+
   const renderBody = (inputBody: string) => {
     const body = inputBody.split("\n");
 
@@ -39,8 +41,10 @@ const DiaryContent = () => {
   useEffect(() => {
     const fillDatas = async () => {
       if (session?.user._id) {
+        setLoading(true);
         const datas = await fetchDiaries(session.user._id);
-        setDiaries(datas as DiaryType[]);
+        datas && setDiaries(datas as DiaryType[]);
+        setLoading(false);
       }
     };
     fillDatas();
@@ -67,27 +71,40 @@ const DiaryContent = () => {
         </section>
       ) : (
         <section>
-          {diaries &&
-            diaries.map((diary) => (
-              <div
-                className="p-4 border rounded-lg mb-3 font-semibold text-gray-800"
-                key={diary._id}>
-                <h1
-                  className="cursor-pointer mb-2"
-                  onClick={() => {
-                    setCurrentDiary(diary);
-                    setToggleView(true);
-                  }}>
-                  {diary.title}
-                </h1>
-                <p className="text-xs text-gray-500">
-                  {truncateParagraph(diary.body)}
-                </p>
-                <div className="flex justify-end text-[0.6rem] text-gray-500 font-medium">
-                  <p>{formatClassicDate(diary.created)}</p>
+          {!loading ? (
+            <>
+              {diaries ? (
+                <div>
+                  (
+                  {diaries.map((diary) => (
+                    <div
+                      className="p-4 border rounded-lg mb-3 font-semibold text-gray-800"
+                      key={diary._id}>
+                      <h1
+                        className="cursor-pointer mb-2"
+                        onClick={() => {
+                          setCurrentDiary(diary);
+                          setToggleView(true);
+                        }}>
+                        {diary.title}
+                      </h1>
+                      <p className="text-xs text-gray-500">
+                        {truncateParagraph(diary.body)}
+                      </p>
+                      <div className="flex justify-end text-[0.6rem] text-gray-500 font-medium">
+                        <p>{formatClassicDate(diary.created)}</p>
+                      </div>
+                    </div>
+                  ))}
+                  )
                 </div>
-              </div>
-            ))}
+              ) : (
+                <div>None</div>
+              )}
+            </>
+          ) : (
+            <div>Loading</div>
+          )}
         </section>
       )}
     </main>

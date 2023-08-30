@@ -10,11 +10,17 @@ export default function GoalsPage() {
   const { data: session } = useSession();
   const [goals, setGoals] = useState<GoalType[]>([]);
 
+  const [isNone, setIsNone] = useState(true);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fillDatas = async () => {
       if (session?.user) {
+        setLoading(true);
         const goalDatas = await fetchGoals(session.user._id);
         goalDatas && setGoals(goalDatas);
+        goalDatas && setIsNone(false);
+        setLoading(false);
       }
     };
     fillDatas();
@@ -35,8 +41,16 @@ export default function GoalsPage() {
   return (
     <main className="flex w-full h-full py-4">
       <section className="h-full w-3/5  ">
-        {goals && (
-          <GoalContents goals={goals} handleUpdateGoal={handleUpdateGoal} />
+        {!loading ? (
+          <div>
+            {isNone ? (
+              <div>None</div>
+            ) : (
+              <GoalContents goals={goals} handleUpdateGoal={handleUpdateGoal} />
+            )}
+          </div>
+        ) : (
+          <div>Loading</div>
         )}
       </section>
       <section className="h-full w-2/5 ml-4">

@@ -34,14 +34,19 @@ const TrackContent = () => {
   const [showDate, setShowDate] = useState();
 
   const { data: session } = useSession();
+  const [loadingOne, setLoadingOne] = useState(true);
+  const [loadingTwo, setLoadingTwo] = useState(true);
 
   useEffect(() => {
     const fillDatas = async () => {
       if (session?.user) {
+        setLoadingOne(true);
+        setLoadingTwo(true);
         const scaffoldDatas = await fetchTrackScaffold(session.user._id);
         const filteredScaffolds = await scaffoldDatas?.filter(
           (item: TrackScaffoldType) => item.hide !== true
         );
+        setLoadingOne(false);
 
         !currentTrack &&
           filteredScaffolds &&
@@ -50,6 +55,7 @@ const TrackContent = () => {
 
         const trackDatas = await fetchTrackWithDay(session.user._id, "");
         trackDatas && setMainTrack(trackDatas);
+        setLoadingTwo(false);
       }
     };
 
@@ -124,7 +130,7 @@ const TrackContent = () => {
       <div className="w-1/3 h-full rounded-sm border p-4">
         <section className="h-full overflow-y-auto w-full ">
           <div className="text-sx font-semibold">
-            {scaffolds &&
+            {!loadingOne ? (
               scaffolds.map((item, index) => (
                 <div className="mb-2 p-2 border rounded-" key={index}>
                   <div className="w-full flex justify-between">
@@ -154,19 +160,24 @@ const TrackContent = () => {
                     />
                   </div>
                 </div>
-              ))}
+              ))
+            ) : (
+              <div>loadingOne</div>
+            )}
           </div>
         </section>
       </div>
       <div className="w-2/3 h-full rounded-sm border">
         <section className="p-2 h-2/3 w-full">
-          {currentScaffold && (
+          {!loadingTwo ? (
             <MainTrackerForm
               handleDone={handleSubmit}
               handleReset={() => {}}
               currentScaffold={currentScaffold}
               pastTrack={currentTrack}
             />
+          ) : (
+            <div>Loading Two</div>
           )}
         </section>
         <section className="p-2 h-1/3 w-full flex gap-2">

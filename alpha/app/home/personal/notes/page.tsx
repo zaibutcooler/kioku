@@ -24,6 +24,11 @@ export default function NotesPage() {
 
   const [newFolderForm, setNewFolderForm] = useState(false);
 
+  const [loadingOne, setLoadingOne] = useState(true);
+  const [loadingTwo, setLoadingTwo] = useState(true);
+
+  const [isNone, setIsNone] = useState(true);
+
   //views
   const handleNewNoteView = () => {
     setView("create");
@@ -96,7 +101,7 @@ export default function NotesPage() {
   };
 
   //content
-  const [view, setView] = useState("");
+  const [view, setView] = useState("create");
   const [id, setID] = useState("");
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -121,12 +126,16 @@ export default function NotesPage() {
 
   useEffect(() => {
     const fillDatas = async () => {
+      setLoadingOne(true);
+      setLoadingTwo(true);
       const folderDatas =
         session?.user && (await fetchNoteFolders(session.user._id));
       folderDatas && setFolders(folderDatas);
+      folderDatas && setIsNone(false);
+      setLoadingOne(false);
       const noteDatas = session?.user && (await fetchNotes(session.user._id));
       noteDatas && setNotes(noteDatas);
-      console.log("done fetching");
+      setLoadingTwo(false);
     };
     fillDatas();
   }, []);
@@ -150,6 +159,8 @@ export default function NotesPage() {
         <FolderArea
           folders={folders}
           notes={notes}
+          loadingOne={loadingOne}
+          loadingTwo={loadingTwo}
           handleDeleteNote={handleDeleteNote}
           showNewFolderForm={() => setNewFolderForm(true)}
           handleNewNoteView={handleNewNoteView}

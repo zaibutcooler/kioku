@@ -20,6 +20,9 @@ const GoalContents: React.FC<Props> = ({ goals, handleUpdateGoal }) => {
   const [showDetail, setShowDetail] = useState("");
   const [minorGoals, setMinorGoals] = useState<MinorGoalType[]>([]);
 
+  const [loading, setLoading] = useState(true);
+  const [isNone, setIsNone] = useState(true);
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [deadline, setDeadline] = useState("");
@@ -28,8 +31,10 @@ const GoalContents: React.FC<Props> = ({ goals, handleUpdateGoal }) => {
   useEffect(() => {
     const fillDatas = async () => {
       if (session?.user) {
+        setLoading(true);
         const minorGoalDatas = await fetchMiniGoals(session.user._id);
         minorGoalDatas && setMinorGoals(minorGoalDatas);
+        setLoading(false);
       }
     };
     fillDatas();
@@ -171,7 +176,9 @@ const GoalContents: React.FC<Props> = ({ goals, handleUpdateGoal }) => {
                 </div>
               )}
 
-              <div className="">{renderMinigoals(item)}</div>
+              <div className="">
+                {!loading ? renderMinigoals(item) : <div>Loading </div>}
+              </div>
               <div className="flex justify-end items-center">
                 <button
                   className="py-1.5 px-2 rounded-md text-xs text-black font-semibold"
