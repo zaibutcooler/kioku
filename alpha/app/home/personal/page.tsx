@@ -1,4 +1,5 @@
 "use client";
+import { DiaryLoading } from "@/components/personal/Loadings";
 import ProfileCard from "@/components/personal/status/page/ProfileCard";
 import ProgressBar from "@/components/personal/track/page/ProgressBar";
 import { setDiaries } from "@/data/store/diarySlice";
@@ -63,11 +64,16 @@ export default function PersonalPage() {
               {!loadingTwo ? (
                 <main>
                   {diaries.map((item) => (
-                    <div key={item._id}>{item.title}</div>
+                    <div key={item._id} className="w-full p-1 mb-2">
+                      <h1 className="text-sm font-medium">{item.title}</h1>
+                      <p className="text-[0.6rem] text-gray-400 text-right w-full ">
+                        23 August 2023
+                      </p>
+                    </div>
                   ))}
                 </main>
               ) : (
-                <div>Loading Diaries</div>
+                <div>{DiaryLoading()}</div>
               )}
             </div>
           </div>
