@@ -2,6 +2,7 @@
 import { MarkType } from "@/models/personal/Mark";
 import TimeLine from "./TimeLine";
 import { useEffect, useState } from "react";
+import StatusLoadingCard from "./StatusLoadingCard";
 
 interface Props {}
 
@@ -88,27 +89,34 @@ const ProfileCard: React.FC<Props> = () => {
   }, []);
 
   return (
-    <div className="w-full h-full border p-4 text-xs font-medium">
+    <div className="w-full h-full border p-4 text-xs font-medium overflow-y-auto">
       <div>
+        <div className="font-medium text-green-500">Starting Point</div>
         {!loading ? (
           <div>
             {dummyMarks.map((item) => (
               <div key={item.title} className="flex gap-3 ">
-                <section className="pr-2">
+                <section className="pr-2 w-[110px]">
                   <div className="py-2">2022/9/12</div>
                   <div></div>
                 </section>
-                <section className="border-l pb-3 pl-3 w-full border-black">
-                  <div className="p-2 border rounded-md w-full min-h-[100px]">
-                    {item.title}
+                <section className="border-l-2 py-2 pl-3 w-full border-gray-300">
+                  <div
+                    className="p-2 border rounded-md w-full cursor-pointer"
+                    onClick={() => {}}>
+                    <h1 className="font-medium mb-2">{item.title}</h1>
+                    <p className="text-[0.7rem] text-gray-500">{item.note}</p>
                   </div>
                 </section>
               </div>
             ))}
           </div>
         ) : (
-          <div>Loading</div>
+          <div>
+            <StatusLoadingCard />
+          </div>
         )}
+        <div className="font-medium text-green-500">Ending Point</div>
       </div>
     </div>
   );
