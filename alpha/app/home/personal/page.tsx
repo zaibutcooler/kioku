@@ -6,8 +6,9 @@ import { setDiaries } from "@/data/store/diarySlice";
 import { DiaryType } from "@/models/personal/Diary";
 import { GoalType } from "@/models/personal/Goal";
 import { MarkType } from "@/models/personal/Mark";
+import { MinorGoalType } from "@/models/personal/MinorGoal";
 import fetchDiaries from "@/utils/fetch/fetchDiaries";
-import { fetchGoals } from "@/utils/fetch/fetchGoals";
+import { fetchGoals, fetchMiniGoals } from "@/utils/fetch/fetchGoals";
 import fetchMarks from "@/utils/fetch/fetchMarks";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -16,10 +17,12 @@ export default function PersonalPage() {
   const { data: session } = useSession();
   const [goals, setGoals] = useState<GoalType[]>([]);
   const [diaries, setDiaries] = useState<DiaryType[]>([]);
+  const [miniGoals, setMiniGoals] = useState<MinorGoalType[]>([]);
 
   const [isNone, setIsNone] = useState(true);
   const [loadingOne, setLoadingOne] = useState(true);
   const [loadingTwo, setLoadingTwo] = useState(true);
+  const [loadingThree, setLoadingThree] = useState(true);
 
   useEffect(() => {
     const fillGoals = async () => {
@@ -39,8 +42,17 @@ export default function PersonalPage() {
         setLoadingTwo(false);
       }
     };
+    const fillMiniGoals = async () => {
+      if (session?.user) {
+        setLoadingThree(true);
+        const minorGoalDatas = await fetchMiniGoals(session.user._id);
+        minorGoalDatas && setMiniGoals(minorGoalDatas);
+        setLoadingThree(false);
+      }
+    };
     fillGoals();
     fillDiaries();
+    fillMiniGoals();
   }, []);
   return (
     <main className="w-full h-full pt-3">
@@ -51,11 +63,13 @@ export default function PersonalPage() {
               <main>
                 {" "}
                 {goals.map((item) => (
-                  <div key={item._id}>{item.title}</div>
+                  <div key={item._id} className="mb-2 text-sm font-medium px-2">
+                    <h1>{item.title}</h1>
+                  </div>
                 ))}
               </main>
             ) : (
-              <div>Loading</div>
+              <div></div>
             )}
           </div>
           <div className="w-1/2 h-full flex flex-col gap-4">
