@@ -50,6 +50,7 @@ const NoteCreateForm: React.FC<Props> = ({ handleBack }) => {
 
   useEffect(() => {
     const getDatas = async () => {
+      setIsLoading(true);
       const folderDatas = await fetchNoteFolders(userID);
       folderDatas && setFolders(folderDatas);
       folderDatas && setCurrentFolder(folderDatas[0]);
@@ -188,50 +189,56 @@ const NoteCreateForm: React.FC<Props> = ({ handleBack }) => {
                   </button>
                 </div>
                 <div className="h-full px-4">
-                  {currentFolder
-                    ? folders.map((item) => (
-                        <div key={item._id}>
-                          <div className=" font-semibold text-gray-700 text-xs flex justify-between w-full py-1 items-center">
-                            <button
-                              onClick={() => setCurrentFolder(item)}
-                              className="flex items-top">
-                              {currentFolder &&
-                              currentFolder._id === item._id ? (
-                                <AiFillFolder className="text-base mr-2" />
-                              ) : (
-                                <AiOutlineFolder className="text-base mr-2" />
-                              )}
+                  {!isLoading ? (
+                    <section>
+                      {currentFolder
+                        ? folders.map((item) => (
+                            <div key={item._id}>
+                              <div className=" font-semibold text-gray-700 text-xs flex justify-between w-full py-1 items-center">
+                                <button
+                                  onClick={() => setCurrentFolder(item)}
+                                  className="flex items-top">
+                                  {currentFolder &&
+                                  currentFolder._id === item._id ? (
+                                    <AiFillFolder className="text-base mr-2" />
+                                  ) : (
+                                    <AiOutlineFolder className="text-base mr-2" />
+                                  )}
 
-                              {item.name}
-                            </button>
-                            <div className="flex items-center">
-                              <button
-                                className="p-1 rounded-full hover:bg-gray-100  mr-2"
-                                onClick={() => {
-                                  setDeleteFolder(item._id);
-                                }}>
-                                <AiOutlineDelete />
-                              </button>
+                                  {item.name}
+                                </button>
+                                <div className="flex items-center">
+                                  <button
+                                    className="p-1 rounded-full hover:bg-gray-100  mr-2"
+                                    onClick={() => {
+                                      setDeleteFolder(item._id);
+                                    }}>
+                                    <AiOutlineDelete />
+                                  </button>
 
-                              <button
-                                className={`p-1 rounded-full hover:bg-gray-100 ${
-                                  openedFolder === item._id
-                                    ? "bg-gray-200 hover:bg-gray-300"
-                                    : ""
-                                }`}
-                                onClick={() => {
-                                  openedFolder === item._id
-                                    ? setOpenedFolder("")
-                                    : setOpenedFolder(item._id);
-                                }}>
-                                <AiOutlineFolderOpen />
-                              </button>
+                                  <button
+                                    className={`p-1 rounded-full hover:bg-gray-100 ${
+                                      openedFolder === item._id
+                                        ? "bg-gray-200 hover:bg-gray-300"
+                                        : ""
+                                    }`}
+                                    onClick={() => {
+                                      openedFolder === item._id
+                                        ? setOpenedFolder("")
+                                        : setOpenedFolder(item._id);
+                                    }}>
+                                    <AiOutlineFolderOpen />
+                                  </button>
+                                </div>
+                              </div>
+                              {openedFolder === item._id && displayNotes(item)}
                             </div>
-                          </div>
-                          {openedFolder === item._id && displayNotes(item)}
-                        </div>
-                      ))
-                    : ""}
+                          ))
+                        : ""}
+                    </section>
+                  ) : (
+                    <section>Loading...</section>
+                  )}
                 </div>
               </main>
             </div>

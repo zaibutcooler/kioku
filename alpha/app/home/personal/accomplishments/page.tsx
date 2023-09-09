@@ -28,10 +28,10 @@ export default function Accomplishments() {
 
   return (
     <main className="flex w-full h-full py-4">
-      <section className="h-full w-2/5 mr-4 overflow-y-auto">
+      <section className="h-full w-2/5 mr-4 overflow-y-auto ">
         <ProfileCard />
       </section>
-      <section className="h-full w-3/5 overflow-y-auto">
+      <section className="h-full w-3/5 overflow-y-auto  scrollbar-thin scrollbar-thumb-white scrollbar-track-white">
         <StatusContent marks={marks} handleNewItem={handleNewItem} />
       </section>
     </main>

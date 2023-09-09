@@ -17,7 +17,7 @@ const Sidebar = () => {
   const [isFull, setIsFull] = useState(false);
 
   return (
-    <main className="h-[calc(100vh-48px)] border-r hidden md:block md:overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-gray-50 ">
+    <main className="h-[calc(100vh-48px)] border-r hidden md:block md:overflow-y-auto scrollbar-thin scrollbar-thumb-white scrollbar-track-white ">
       <section className="flex">
         <button
           className={

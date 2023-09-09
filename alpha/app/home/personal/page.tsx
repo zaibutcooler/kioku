@@ -7,6 +7,7 @@ import { DiaryType } from "@/models/personal/Diary";
 import { GoalType } from "@/models/personal/Goal";
 import { MarkType } from "@/models/personal/Mark";
 import { MinorGoalType } from "@/models/personal/MinorGoal";
+import { getDaysLeft } from "@/utils";
 import fetchDiaries from "@/utils/fetch/fetchDiaries";
 import { fetchGoals, fetchMiniGoals } from "@/utils/fetch/fetchGoals";
 import fetchMarks from "@/utils/fetch/fetchMarks";
@@ -54,6 +55,32 @@ export default function PersonalPage() {
     fillDiaries();
     fillMiniGoals();
   }, []);
+
+  const renderMinigoals = (input: GoalType) => {
+    return (
+      <section className="text-xs">
+        {!loadingThree ? (
+          <div>
+            {miniGoals.map((minorGoal) => (
+              <section className="" key={minorGoal._id}>
+                {minorGoal.major === input._id && (
+                  <div className=" pl-3  mt-2 ">{minorGoal.title}</div>
+                )}
+              </section>
+            ))}
+          </div>
+        ) : (
+          <div className="animate-pulse">
+            <div className="w-full rounded-md h-5 bg-gray-100 mt-1 ml-3" />
+            <div className="w-full rounded-md h-5 bg-gray-100 mt-1 ml-3" />
+          </div>
+        )}
+      </section>
+    );
+  };
+
+  const loadingArr = ["", "", "", "", ""];
+
   return (
     <main className="w-full h-full pt-3">
       <section className="w-full flex mb-4 h-[500px] gap-4">
@@ -63,13 +90,26 @@ export default function PersonalPage() {
               <main>
                 {" "}
                 {goals.map((item) => (
-                  <div key={item._id} className="mb-2 text-sm font-medium px-2">
+                  <div key={item._id} className="mb-3 text-sm font-medium px-2">
                     <h1>{item.title}</h1>
+                    <div>{renderMinigoals(item)}</div>
                   </div>
                 ))}
               </main>
             ) : (
-              <div></div>
+              <div className="w-full animate-pulse">
+                {loadingArr.map((item, index) => (
+                  <div key={index}>
+                    <div className="w-full rounded-md h-5 bg-gray-100 " />
+                    <div className="w-full pl-3">
+                      <div className="w-full rounded-md h-4 bg-gray-100 mt-2" />
+                    </div>
+                    <div className="w-full pl-3">
+                      <div className="w-full rounded-md h-4 bg-gray-100 mt-2 mb-3" />
+                    </div>
+                  </div>
+                ))}
+              </div>
             )}
           </div>
           <div className="w-1/2 h-full flex flex-col gap-4">
