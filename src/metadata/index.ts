@@ -1,10 +1,10 @@
-import { type Metadata } from "next"
+import { type Metadata } from "next";
 // import icons from "@/metadata/icons"
-import openGraph from "@/metadata/openGraph"
-import robots from "@/metadata/robot"
-import twitter from "@/metadata/twitter"
+import openGraph from "@/metadata/openGraph";
+import robots from "@/metadata/robot";
+import twitter from "@/metadata/twitter";
 
-import { siteConfig } from "@/config/site"
+import { siteConfig } from "@/config/site";
 
 export const siteMetadata: Metadata = {
   title: siteConfig.name,
@@ -27,4 +27,4 @@ export const siteMetadata: Metadata = {
   openGraph,
   robots,
   twitter,
-}
+};

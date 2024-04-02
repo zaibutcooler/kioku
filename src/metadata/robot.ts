@@ -1,4 +1,4 @@
-import { type Robots } from 'next/dist/lib/metadata/types/metadata-types'
+import { type Robots } from "next/dist/lib/metadata/types/metadata-types";
 
 const robots: Robots = {
   index: true,
@@ -8,10 +8,10 @@ const robots: Robots = {
     index: true,
     follow: true,
     noimageindex: true,
-    'max-image-preview': 'large',
-    'max-video-preview': 'large',
-    'max-snippet': -1
-  }
-}
+    "max-image-preview": "large",
+    "max-video-preview": "large",
+    "max-snippet": -1,
+  },
+};
 
-export default robots
+export default robots;

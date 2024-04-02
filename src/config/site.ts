@@ -1,7 +1,8 @@
-export type SiteConfig = typeof siteConfig
+export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
   name: "Kioku",
+  logoName: "記憶",
   description:
     "real estate agents with cutting-edge AI technology to supercharge productivity and streamline operations. Discover how Premerly revolutionizes the real estate industry with generative ai.",
   mainNav: [
@@ -15,4 +16,4 @@ export const siteConfig = {
     twitter: "https://twitter.com/ArchaicAI",
     docs: `${process.env.ARCHAIC_URL}/docs`,
   },
-}
+};

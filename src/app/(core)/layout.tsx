@@ -41,6 +41,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Kioku } from "@/components/logo";
+import { Heading } from "@/components/heading";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -70,7 +72,7 @@ export default function Layout({ children }: LayoutProps) {
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent side="right" sideOffset={5}>
-                  Playground
+                  <Kioku />
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
@@ -187,7 +189,10 @@ export default function Layout({ children }: LayoutProps) {
         </aside>
         <div className="flex flex-col">
           <header className="sticky top-0 z-10 flex h-[53px] items-center gap-1 border-b bg-background px-4">
-            <h1 className="text-xl font-semibold">Playground</h1>
+            {/* <h1 className="text-xl font-semibold">                  <Kioku/>
+</h1> */}
+
+            <Heading />
             <Drawer>
               <DrawerTrigger asChild>
                 <Button variant="ghost" size="icon" className="md:hidden">

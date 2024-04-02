@@ -1,19 +1,18 @@
-'use client'
+"use client";
 
-import NextError from 'next/error'
-import React, { useEffect } from 'react'
-import * as Sentry from '@sentry/nextjs'
-
+import NextError from "next/error";
+import React, { useEffect } from "react";
+import * as Sentry from "@sentry/nextjs";
 
 //TODO handle error with sentry
 const GlobalError = ({
-  error
+  error,
 }: {
-  error: Error & { digest?: string }
+  error: Error & { digest?: string };
 }): JSX.Element => {
   useEffect(() => {
-    Sentry.captureException(error)
-  }, [error])
+    Sentry.captureException(error);
+  }, [error]);
 
   return (
     <html>
@@ -22,7 +21,7 @@ const GlobalError = ({
         <NextError statusCode={undefined as any} />
       </body>
     </html>
-  )
-}
+  );
+};
 
-export default GlobalError
+export default GlobalError;

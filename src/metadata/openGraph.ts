@@ -1,6 +1,6 @@
-import { type OpenGraph } from "next/dist/lib/metadata/types/opengraph-types"
+import { type OpenGraph } from "next/dist/lib/metadata/types/opengraph-types";
 
-import { siteConfig } from "@/config/site"
+import { siteConfig } from "@/config/site";
 
 const openGraph: OpenGraph = {
   type: "website",
@@ -18,6 +18,6 @@ const openGraph: OpenGraph = {
       height: "48",
     },
   ],
-}
+};
 
-export default openGraph
+export default openGraph;

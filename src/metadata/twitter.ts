@@ -1,6 +1,6 @@
-import { type Twitter } from "next/dist/lib/metadata/types/twitter-types"
+import { type Twitter } from "next/dist/lib/metadata/types/twitter-types";
 
-import { siteConfig } from "@/config/site"
+import { siteConfig } from "@/config/site";
 
 const twitter: Twitter = {
   card: "summary",
@@ -9,6 +9,6 @@ const twitter: Twitter = {
     template: "% - PWA App",
   },
   description: siteConfig.description,
-}
+};
 
-export default twitter
+export default twitter;

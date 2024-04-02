@@ -1,9 +1,9 @@
-interface PageProps{
-    params:{
-        id:string;
-    }
+interface PageProps {
+  params: {
+    id: string;
+  };
 }
 
-export default function Page({params}:PageProps){
-    return <div></div>
+export default function Page({ params }: PageProps) {
+  return <div></div>;
 }
